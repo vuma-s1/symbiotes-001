@@ -1,3 +1,4 @@
+import SectionTwo from '@/components/SectionTwo';
 import HeroSection from '@/components/HeroSection';
 import Navbar from '@/components/Navbar';
 import FeaturesSection from '@/components/FeaturesSection';
@@ -13,8 +14,9 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#111]">
       <Navbar />
-      <div className="pt-16">
+      
         <HeroSection />
+        <SectionTwo />
         <CardSection />
         <FeaturesSection />
         <AboutSection />
@@ -23,7 +25,7 @@ export default function Home() {
         <TestimonialsSection />
         <ContactSection />
         <Footer />
-      </div>
+      
     </main>
   );
 }
