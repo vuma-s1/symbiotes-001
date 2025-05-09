@@ -23,7 +23,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`fixed ${isScrolled ? 'top-0 left-0 w-full' : 'top-6 left-1/2 transform -translate-x-1/2 w-[90vw]'} max-w-7xl z-30 ${isScrolled ? 'rounded-none' : 'rounded-2xl'} shadow-2xl backdrop-blur-lg transition-all duration-300 ${isScrolled ? 'bg-black' : ''}`}>
+    <nav className={`fixed top-0 left-1/2 transform -translate-x-1/2 w-[90vw] max-w-7xl z-30 ${isScrolled ? 'rounded-none bg-black' : 'top-6 rounded-2xl'} shadow-2xl backdrop-blur-lg transition-all duration-300`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-24">
           {/* Logo Left */}

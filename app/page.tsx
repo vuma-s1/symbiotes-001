@@ -1,4 +1,6 @@
 import SectionTwo from '@/components/SectionTwo';
+import SectionThree from '@/components/SectionThree';
+import QuestionsSection from '@/components/QuestionsSection';
 import HeroSection from '@/components/HeroSection';
 import Navbar from '@/components/Navbar';
 import FeaturesSection from '@/components/FeaturesSection';
@@ -17,6 +19,8 @@ export default function Home() {
       
         <HeroSection />
         <SectionTwo />
+        <SectionThree />
+        <QuestionsSection />
         <CardSection />
         <FeaturesSection />
         <AboutSection />

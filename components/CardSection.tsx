@@ -13,6 +13,7 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
   const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [discSizes, setDiscSizes] = useState([320, 260, 180, 100]);
 
   const titles = [
     "Your Brand Blueprint",
@@ -21,9 +22,46 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
     "Launch Your Success"
   ];
 
+  const subPoints = [
+    [
+      "Brand Strategy Development",
+      "Market Research & Analysis",
+      "Competitive Positioning",
+      "Brand Architecture"
+    ],
+    [
+      "Brand Purpose & Values",
+      "Target Audience Definition",
+      "Brand Promise",
+      "Brand Story"
+    ],
+    [
+      "Logo & Visual Identity",
+      "Brand Voice & Messaging",
+      "Brand Guidelines",
+      "Brand Assets"
+    ],
+    [
+      "Brand Launch Strategy",
+      "Marketing Campaign",
+      "Brand Activation",
+      "Performance Tracking"
+    ]
+  ];
+
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      const isMobileView = window.innerWidth < 768;
+      setIsMobile(isMobileView);
+      
+      // Update disc sizes based on window width
+      if (isMobileView) {
+        setDiscSizes([270, 220, 170, 120]);
+      } else if (window.innerWidth >= 1024) {
+        setDiscSizes([500, 400, 280, 160]);
+      } else {
+        setDiscSizes([320, 260, 180, 100]);
+      }
     };
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -73,24 +111,17 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
     return {
       opacity,
       filter: isActive ? 'none' : 'blur(2px)',
-      transform: `translate(-50%, -50%)`,
+      transform: 'translate(-50%, -50%)',
       transition: 'all 0.5s ease-out',
       boxShadow: isActive ? 'inset 0 0 100px #d0ed01' : 'none'
     };
   };
 
-  // Disc sizes
-  const discSizes = isMobile
-    ? [270, 220, 170, 120]
-    : window.innerWidth >= 1024
-      ? [500, 400, 280, 160]
-      : [320, 260, 180, 100];
-
   return (
     <section
       ref={sectionRef}
       className={cn(
-        'relative min-h-[80vh] md:min-h-[400vh] bg-black flex flex-col items-center justify-start',
+        'relative min-h-[80vh] md:min-h-[500vh] bg-black flex flex-col items-center justify-start',
         className
       )}
     >
@@ -102,7 +133,7 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
         <div className={
             isMobile
               ? 'relative flex flex-col items-center justify-center mx-auto overflow-visible w-[min(90vw,65vh)] h-[min(90vw,65vh)]'
-              : 'relative flex flex-col items-center justify-center mx-auto overflow-visible w-[400px] md:w-[600px] h-[320px] md:h-[480px]'
+              : 'relative flex flex-col items-center justify-center mx-auto overflow-visible w-[500px] md:w-[700px] h-[400px] md:h-[560px]'
           }
         >
           {/* Concentric discs */}
@@ -115,8 +146,8 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
                 loading="lazy"
                 className={cn(`disk _${4 - index}`, 'mx-auto')}
                 style={{
-                  width: `${size}px`,
-                  height: `${size}px`,
+                  width: size + 'px',
+                  height: size + 'px',
                   willChange: 'opacity, filter, transform, box-shadow',
                   ...discStyle,
                   position: 'absolute',
@@ -143,14 +174,14 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
           <div
             className="absolute left-1/2 z-30"
             style={{
-              top: 'calc(50% + 32px)', // 32px below center for a 24-32px icon, adjust as needed
+              top: 'calc(50% + 32px)',
               transform: 'translateX(-50%)',
               margin: 0,
               padding: 0
             }}
           >
             <h1
-              className="text-center text-lg md:text-2xl lg:text-4xl font-light leading-tight transition-all duration-300 whitespace-nowrap"
+              className="text-center text-lg md:text-3xl lg:text-5xl font-light leading-tight transition-all duration-300 whitespace-nowrap"
               style={{
                 fontFamily: 'Inter, sans-serif',
                 color: '#fff',
@@ -163,6 +194,34 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
             >
               {titles[currentTitleIndex]}
             </h1>
+            <div className="mt-6 flex flex-col items-start gap-2">
+              {subPoints[currentTitleIndex].map((point, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-2 text-sm md:text-lg lg:text-xl text-gray-300 transition-all duration-300"
+                  style={{
+                    opacity: 0.8,
+                    transform: 'translateY(0)',
+                    transition: 'all 0.5s ease-out'
+                  }}
+                >
+                  <div className="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 border border-[#d0ed01] rounded-sm flex items-center justify-center flex-shrink-0">
+                    <svg
+                      className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                        fill="#d0ed01"
+                      />
+                    </svg>
+                  </div>
+                  <span className="whitespace-nowrap">{point}</span>
+                </div>
+              ))}
+            </div>
           </div>
           {/* Gradient overlay */}
           <div

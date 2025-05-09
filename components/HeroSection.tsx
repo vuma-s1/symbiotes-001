@@ -73,7 +73,7 @@ const HeroSection = () => {
     initialAnimation
       .fromTo(rocketRef.current, 
         { 
-          y: 150,
+          y: 500,  // Start from further down
           opacity: 0,
           scale: 0.5
         },
@@ -81,7 +81,7 @@ const HeroSection = () => {
           y: 0,
           opacity: 1,
           scale: 1,
-          duration: 2,
+          duration: 2.5,  // Slightly longer duration
           ease: "power2.out"
         }
       );
@@ -158,14 +158,11 @@ const HeroSection = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto mt-[55vh] sm:mt-[45vh]">
+      <div className="relative z-10 max-w-7xl mx-auto mt-[70vh] sm:mt-[65vh]">
         <div className="text-center">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text">
             Launchpad for all your<br />startup ideas
           </h1>
-          <p className="text-base sm:text-lg md:text-xl max-w-[600px] mx-auto text-gray-300">
-            Discover amazing features and possibilities with our innovative solutions
-          </p>
         </div>
       </div>
     </section>

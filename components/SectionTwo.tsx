@@ -61,10 +61,8 @@ const SectionTwo = () => {
       if (cursorRef.current) {
         const dx = cursorPosition.x - parseFloat(cursorRef.current.style.left || '0');
         const dy = cursorPosition.y - parseFloat(cursorRef.current.style.top || '0');
-        
-        cursorRef.current.style.left = `${parseFloat(cursorRef.current.style.left || '0') + dx * 0.15}px`;
-        cursorRef.current.style.top = `${parseFloat(cursorRef.current.style.top || '0') + dy * 0.15}px`;
-        
+        cursorRef.current.style.left = (parseFloat(cursorRef.current.style.left || '0') + dx * 0.15) + 'px';
+        cursorRef.current.style.top = (parseFloat(cursorRef.current.style.top || '0') + dy * 0.15) + 'px';
         if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
           animationFrameId = requestAnimationFrame(updateCursorPosition);
         }
@@ -117,8 +115,8 @@ const SectionTwo = () => {
         setCursorPosition({ x: e.clientX, y: e.clientY });
         if (cursorRef.current) {
           cursorRef.current.style.display = 'flex';
-          cursorRef.current.style.left = `${e.clientX}px`;
-          cursorRef.current.style.top = `${e.clientY}px`;
+          cursorRef.current.style.left = e.clientX + 'px';
+          cursorRef.current.style.top = e.clientY + 'px';
         }
         setIsActive(true);
         setIsHoveringRectangle(true);
@@ -157,9 +155,7 @@ const SectionTwo = () => {
       {/* Blue Rectangle Background */}
       <div
         ref={blueRectRef}
-        className={`absolute left-0 right-0 mx-auto top-4 sm:top-8 w-[92vw] sm:w-[97.5vw] h-[95vh] sm:h-[78vh] max-h-[46rem] border-[1.5px] border-[#6248ff] rounded-3xl overflow-visible cursor-none transition-all duration-300 backdrop-blur-md bg-black/30 ${
-          isActive ? 'shadow-[inset_0_0_40px_10px_#d0ed01]' : ''
-        }`}
+        className={"absolute left-0 right-0 mx-auto top-4 sm:top-8 w-[92vw] sm:w-[97.5vw] h-[95vh] sm:h-[78vh] max-h-[46rem] border-[1.5px] border-[#6248ff] rounded-3xl overflow-visible cursor-none transition-all duration-300 backdrop-blur-md bg-black/30"}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
@@ -221,16 +217,16 @@ const SectionTwo = () => {
 
           {/* Center Content */}
           <div className="flex-2 text-center z-10 max-w-full px-4">
-            <div className="inline-block px-4 sm:px-5 py-2 text-sm text-[#d0ed01] border border-[#d0ed01] rounded-full mb-5">
-              <span className="bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text font-bold">
+            <div className="inline-block px-4 sm:px-5 py-2 text-sm text-white rounded-full mb-5 relative before:absolute before:inset-0 before:rounded-full before:p-[2px] before:bg-gradient-to-r before:from-[#d0ed01] before:to-[#eaff6b] before:-z-10 after:absolute after:inset-[2px] after:rounded-full after:bg-black">
+              <span className="text-white font-bold relative z-10">
                 400k+
               </span>
-              {" "}Designers & Developers trust Relume
+              <span className="text-white relative z-10">{" "}Designers & Developers trust Relume</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold mb-5 bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text">
+            <h1 className="text-3xl sm:text-4xl font-bold mb-5 text-white">
               Websites designed & built faster with AI
             </h1>
-            <p className="text-lg sm:text-xl max-w-[600px] mx-auto bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text">
+            <p className="text-lg sm:text-xl max-w-[600px] mx-auto text-white">
               Use AI as your design ally, not a replacement. Instantly generate Sitemaps, Wireframes and Style Guides for marketing websites—all in minutes.
             </p>
           </div>
@@ -296,7 +292,7 @@ const SectionTwo = () => {
             <polygon points="2,2 30,16 18,18 16,30" fill="#d0ed01" stroke="#000" strokeWidth="2"/>
           </svg>
         </span>
-        <span className="text-base font-semibold bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text px-3 py-1 ml-1 shadow-lg">
+        <span className="text-base font-semibold text-white px-3 py-1 ml-1 shadow-lg">
           Guest
         </span>
       </div>
