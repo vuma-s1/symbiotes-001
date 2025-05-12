@@ -28,8 +28,8 @@ const ReferenceImageSection = () => {
   return (
     <section className="relative flex items-center justify-center min-h-[70vh] py-16 bg-black overflow-x-hidden w-full">
       <div className="relative z-10 w-full max-w-xl mx-auto bg-white/5 rounded-2xl shadow-2xl border border-[#d0ed01]/30 p-8 flex flex-col items-center backdrop-blur-md">
-        <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#d0ed01] to-[#baff39] flex items-center justify-center mb-4 shadow-lg">
-          <span className="block w-7 h-7 bg-black rounded-full"></span>
+        <div className="flex justify-center mb-4">
+          <img src="/images/icon.jpg" alt="Symbiotes Icon" className="w-16 h-16 object-contain" />
         </div>
         <h2 className="text-3xl font-bold text-white mb-2 text-center">Symbiotes AI Chat</h2>
         <p className="text-lg text-gray-200 mb-6 text-center">Start writing to create with Symbiotes AI Chat.</p>

@@ -61,8 +61,10 @@ const SectionTwo = () => {
       if (cursorRef.current) {
         const dx = cursorPosition.x - parseFloat(cursorRef.current.style.left || '0');
         const dy = cursorPosition.y - parseFloat(cursorRef.current.style.top || '0');
-        cursorRef.current.style.left = (parseFloat(cursorRef.current.style.left || '0') + dx * 0.15) + 'px';
-        cursorRef.current.style.top = (parseFloat(cursorRef.current.style.top || '0') + dy * 0.15) + 'px';
+        
+        cursorRef.current.style.left = `${parseFloat(cursorRef.current.style.left || '0') + dx * 0.15}px`;
+        cursorRef.current.style.top = `${parseFloat(cursorRef.current.style.top || '0') + dy * 0.15}px`;
+        
         if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
           animationFrameId = requestAnimationFrame(updateCursorPosition);
         }
@@ -115,8 +117,8 @@ const SectionTwo = () => {
         setCursorPosition({ x: e.clientX, y: e.clientY });
         if (cursorRef.current) {
           cursorRef.current.style.display = 'flex';
-          cursorRef.current.style.left = e.clientX + 'px';
-          cursorRef.current.style.top = e.clientY + 'px';
+          cursorRef.current.style.left = `${e.clientX}px`;
+          cursorRef.current.style.top = `${e.clientY}px`;
         }
         setIsActive(true);
         setIsHoveringRectangle(true);
@@ -151,32 +153,23 @@ const SectionTwo = () => {
   };
 
   return (
-    <section className="relative overflow-hidden py-6 px-4 min-h-screen sm:py-20 sm:px-8 bg-black">
+    <section className="relative flex items-center justify-center min-h-screen w-full bg-black overflow-x-hidden py-6 sm:py-0 px-0">
       {/* Blue Rectangle Background */}
       <div
         ref={blueRectRef}
-        className={"absolute left-0 right-0 mx-auto top-4 sm:top-8 w-[92vw] sm:w-[97.5vw] h-[95vh] sm:h-[78vh] max-h-[46rem] border-[1.5px] border-[#6248ff] rounded-3xl overflow-visible cursor-none transition-all duration-300 backdrop-blur-md bg-black/30"}
+        className="relative sm:absolute sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full sm:w-[97.5vw] h-auto sm:h-[90vh] border-[1.5px] border-[#6248ff] rounded-3xl overflow-hidden cursor-none transition-all duration-300 backdrop-blur-md bg-black/30 flex flex-col justify-center items-center py-8 sm:py-0"
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
         <div className="absolute -bottom-[6px] -left-[6px] w-3 h-3 bg-[#6248ff] rounded" />
         <div className="absolute -bottom-[6px] -right-[6px] w-3 h-3 bg-[#6248ff] rounded" />
-        
-        {/* Shuffle Button */}
-        <button
-          onClick={handleShuffle}
-          className="absolute left-[2%] -bottom-4 z-10 flex items-center gap-2 bg-[#ede7ff] text-[#6248ff] rounded-lg px-5 py-2 font-medium text-base shadow-lg hover:bg-[#6248ff] hover:text-white transition-colors duration-200"
-        >
-          <Shuffle className="w-5 h-5" />
-          <span>Shuffle</span>
-        </button>
 
-        <div className="flex justify-between items-center gap-4 sm:gap-8 max-w-[1300px] mx-auto relative flex-col lg:flex-row h-full pt-8 sm:pt-0">
-          {/* Left Images */}
-          <div className="hero-left flex flex-row lg:flex-col gap-3 sm:gap-6 flex-1 items-center justify-center flex-wrap">
+        <div className="flex flex-col lg:flex-row justify-between items-center gap-4 sm:gap-8 max-w-[1300px] w-full flex-1 mx-auto relative py-4 sm:py-8 px-2 sm:px-4 overflow-visible pb-8 sm:pb-12">
+          {/* Left Images (Top on mobile) */}
+          <div className="hero-left flex flex-row lg:flex-col gap-2 sm:gap-6 flex-1 items-center justify-center flex-wrap lg:w-1/4 mb-4 lg:mb-0">
             <Image
               src="https://cdn.prod.website-files.com/6177739448baa66404ce1d9c/65af4a6a6baf2d1aa79d942d_Image%203%20(3).webp" 
-              className={`hero-img w-[150px] sm:w-[180px] rounded-xl opacity-0 scale-95 transition-all duration-700 ease-in-out ${
+              className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out ${
                 isHoveringRectangle ? 'scale-110' : ''
               } ${hoveredImage === 'left1' ? 'scale-150 z-10' : ''} ${
                 isActive ? 'animate-pulse-subtle' : ''
@@ -189,7 +182,7 @@ const SectionTwo = () => {
             />
             <Image 
               src="https://cdn.prod.website-files.com/6177739448baa66404ce1d9c/66d6c3c1a04a8ab6b5868d6f_Image%2011.png" 
-              className={`hero-img w-[150px] sm:w-[180px] rounded-xl opacity-0 scale-95 transition-all duration-700 ease-in-out ${
+              className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out ${
                 isHoveringRectangle ? 'scale-110' : ''
               } ${hoveredImage === 'left2' ? 'scale-150 z-10' : ''} ${
                 isActive ? 'animate-pulse-subtle' : ''
@@ -202,7 +195,7 @@ const SectionTwo = () => {
             />
             <Image 
               src="https://cdn.prod.website-files.com/6177739448baa66404ce1d9c/658e82332d3f45a22e364d75_Image%201.webp" 
-              className={`hero-img w-[150px] sm:w-[180px] rounded-xl opacity-0 scale-95 transition-all duration-700 ease-in-out ${
+              className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out ${
                 isHoveringRectangle ? 'scale-110' : ''
               } ${hoveredImage === 'left3' ? 'scale-150 z-10' : ''} ${
                 isActive ? 'animate-pulse-subtle' : ''
@@ -216,26 +209,36 @@ const SectionTwo = () => {
           </div>
 
           {/* Center Content */}
-          <div className="flex-2 text-center z-10 max-w-full px-4">
-            <div className="inline-block px-4 sm:px-5 py-2 text-sm text-white rounded-full mb-5 relative before:absolute before:inset-0 before:rounded-full before:p-[2px] before:bg-gradient-to-r before:from-[#d0ed01] before:to-[#eaff6b] before:-z-10 after:absolute after:inset-[2px] after:rounded-full after:bg-black">
+          <div className="flex-2 text-center z-10 max-w-full px-2 sm:px-4 lg:w-2/4 flex flex-col items-center justify-center h-full gap-4 lg:gap-4">
+            <div className="inline-block px-4 sm:px-5 py-2 text-sm text-white rounded-full mb-3 sm:mb-5 relative before:absolute before:inset-0 before:rounded-full before:p-[2px] before:bg-gradient-to-r before:from-[#d0ed01] before:to-[#eaff6b] before:-z-10 after:absolute after:inset-[2px] after:rounded-full after:bg-black max-w-full break-words">
               <span className="text-white font-bold relative z-10">
-                400k+
+                 100+
               </span>
-              <span className="text-white relative z-10">{" "}Designers & Developers trust Relume</span>
+              <span className="text-white relative z-10">{" "}Business owners, Startups, and Trust</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold mb-5 text-white">
-              Websites designed & built faster with AI
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2 text-white max-w-[800px] mx-auto leading-tight break-words">
+                Ignite Your Startup Launch<br className="hidden lg:block" />
+                Conquer the 0-to-1 Journey & Dramatically Increase Your Odds
             </h1>
-            <p className="text-lg sm:text-xl max-w-[600px] mx-auto text-white">
-              Use AI as your design ally, not a replacement. Instantly generate Sitemaps, Wireframes and Style Guides for marketing websites—all in minutes.
+            <p className="text-base sm:text-lg lg:text-xl max-w-[600px] mx-auto text-white mb-2 sm:mb-3 break-words">
+            You have the passion, the vision. But 99% of ventures stall. Symbiotes.ai is your strategic co-pilot, transforming that fire into a focused launch. Get your AI-powered flight plan, master PMF, and navigate the critical early stages with a system built to beat the odds.
             </p>
+            <a 
+              href="https://calendly.com/your-calendly-link" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-block px-6 sm:px-8 py-3 sm:py-4 bg-[#d0ed01] text-black font-bold rounded-lg hover:bg-[[#d0ed22] transition-all duration-300 shadow-lg hover:shadow-[0_0_20px_rgba(208,237,1,0.5)] hover:scale-105 text-sm sm:text-base max-w-full"
+              style={{wordBreak: 'break-word'}}
+            >
+              Book a Call
+            </a>
           </div>
 
-          {/* Right Images */}
-          <div className="hero-right flex flex-row lg:flex-col gap-3 sm:gap-6 flex-1 items-center justify-center flex-wrap">
+          {/* Right Images (Bottom on mobile) */}
+          <div className="hero-right flex flex-row lg:flex-col gap-2 sm:gap-6 flex-1 items-center justify-center flex-wrap lg:w-1/4 mt-4 lg:mt-0">
             <Image 
               src="https://cdn.prod.website-files.com/6177739448baa66404ce1d9c/66d6c3c1d03db2b8ae8b2926_Image%207.png" 
-              className={`hero-img w-[150px] sm:w-[180px] rounded-xl opacity-0 scale-95 transition-all duration-700 ease-in-out ${
+              className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out ${
                 isHoveringRectangle ? 'scale-110' : ''
               } ${hoveredImage === 'right1' ? 'scale-150 z-10' : ''} ${
                 isActive ? 'animate-pulse-subtle' : ''
@@ -248,7 +251,7 @@ const SectionTwo = () => {
             />
             <Image 
               src="https://cdn.prod.website-files.com/6177739448baa66404ce1d9c/658e839495208ba1f0d1329b_Image%204.webp" 
-              className={`hero-img w-[150px] sm:w-[180px] rounded-xl opacity-0 scale-95 transition-all duration-700 ease-in-out lg:-ml-5 ${
+              className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out lg:-ml-5 ${
                 isHoveringRectangle ? 'scale-110' : ''
               } ${hoveredImage === 'right2' ? 'scale-150 z-10' : ''} ${
                 isActive ? 'animate-pulse-subtle' : ''
@@ -261,7 +264,7 @@ const SectionTwo = () => {
             />
             <Image 
               src="https://cdn.prod.website-files.com/6177739448baa66404ce1d9c/658e823332cb3de9f06c7e10_Image%205.webp" 
-              className={`hero-img w-[150px] sm:w-[180px] rounded-xl opacity-0 scale-95 transition-all duration-700 ease-in-out ${
+              className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out ${
                 isHoveringRectangle ? 'scale-110' : ''
               } ${hoveredImage === 'right3' ? 'scale-150 z-10' : ''} ${
                 isActive ? 'animate-pulse-subtle' : ''
@@ -274,6 +277,17 @@ const SectionTwo = () => {
             />
           </div>
         </div>
+      </div>
+
+      {/* Shuffle Button - outside blue rectangle, overlapping bottom left */}
+      <div className="absolute z-20" style={{left: 'calc(4% + 0.5rem)', bottom: '2.5%'}}>
+        <button
+          onClick={handleShuffle}
+          className="flex items-center gap-2 bg-[#2563eb] text-white rounded-lg px-7 py-3 font-bold text-lg shadow-xl hover:bg-[#1d4ed8] transition-colors duration-200 "
+        >
+          <Shuffle className="w-6 h-6" />
+          <span>Shuffle</span>
+        </button>
       </div>
 
       {/* Custom Cursor */}

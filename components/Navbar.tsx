@@ -23,8 +23,8 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-1/2 transform -translate-x-1/2 w-[90vw] max-w-7xl z-30 ${isScrolled ? 'rounded-none bg-black' : 'top-6 rounded-2xl'} shadow-2xl backdrop-blur-lg transition-all duration-300`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className={`fixed top-0 left-0 -translate-x-0 w-full max-w-none z-30 ${isScrolled ? 'rounded-none bg-black' : 'top-6 rounded-2xl'} shadow-2xl backdrop-blur-lg transition-all duration-300`}>
+      <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-24">
           {/* Logo Left */}
           <div className="flex-shrink-0 flex items-center justify-center h-full">
@@ -43,13 +43,13 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Connect Button Right */}
+          {/* Sign up / Login Button Right */}
           <div className="hidden md:flex items-center">
             <Link 
-              href="#connect" 
-              className="bg-[#d0ed01] text-black px-4 py-2 rounded-lg font-bold text-lg relative overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_4px_#a6ff2f] active:scale-95"
+              href="/signup" 
+              className="px-6 py-2 rounded-full font-bold text-lg text-black bg-gradient-to-r from-lime-300 via-lime-400 to-green-500 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_4px_#a6ff2f] active:scale-95 text-center"
             >
-              Connect
+              Sign up / Login
             </Link>
           </div>
 
@@ -74,11 +74,10 @@ const Navbar = () => {
             <Link href="#partners" className="block px-3 py-2 text-gray-300 font-bold text-lg hover:text-[#d0ed01] transition-colors">Partners</Link>
             <Link href="#contact" className="block px-3 py-2 text-gray-300 font-bold text-lg hover:text-[#d0ed01] transition-colors">Contact us</Link>
             <Link 
-
-              href="#connect" 
-              className="block px-3 py-2 bg-[#d0ed01] text-black rounded-lg text-center mt-4 font-bold text-lg relative overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_4px_#a6ff2f] active:scale-95"
+              href="/signup" 
+              className="block px-3 py-2 rounded-full font-bold text-lg text-black bg-gradient-to-r from-lime-300 via-lime-400 to-green-500 shadow-lg mt-4 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_4px_#a6ff2f] active:scale-95 text-center"
             >
-              Connect
+              Sign up / Login
             </Link>
           </div>
         </div>

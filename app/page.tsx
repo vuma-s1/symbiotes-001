@@ -8,17 +8,19 @@ import AboutSection from '@/components/AboutSection';
 import ServicesSection from '@/components/ServicesSection';
 import PricingSection from '@/components/PricingSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
+import FiveProcessSection from '@/components/FiveProcessSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import CardSection from '@/components/CardSection';
+import HeadingSection from '@/components/HeadingSection';
+import FAQSection from '@/components/FAQSection';
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#111]">
-      <Navbar />
-      
         <HeroSection />
         <SectionTwo />
+        <HeadingSection />
         <SectionThree />
         <QuestionsSection />
         <CardSection />
@@ -27,8 +29,10 @@ export default function Home() {
         <ServicesSection />
         <PricingSection />
         <TestimonialsSection />
+        <FiveProcessSection />
         <ContactSection />
-        <Footer />
+        <FAQSection />
+        
       
     </main>
   );
