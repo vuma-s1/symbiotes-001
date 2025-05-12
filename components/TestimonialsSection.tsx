@@ -1,105 +1,126 @@
 'use client';
-import React, { useRef, useState, useEffect } from 'react';
+import React from 'react';
+import { motion } from 'framer-motion';
 
-interface Avatar {
-  src: string;
-  color: string;
-  style: string;
+interface Testimonial {
+  name: string;
+  role: string;
+  company: string;
+  image: string;
+  quote: string;
 }
 
-const avatars: Avatar[] = [
-  { src: 'https://randomuser.me/api/portraits/men/32.jpg', color: 'bg-orange-500', style: 'top-8 left-16' },
-  { src: 'https://randomuser.me/api/portraits/women/44.jpg', color: 'bg-yellow-400', style: 'top-1/3 left-4' },
-  { src: 'https://randomuser.me/api/portraits/men/45.jpg', color: 'bg-blue-400', style: 'bottom-16 left-40' },
-  { src: 'https://randomuser.me/api/portraits/women/65.jpg', color: 'bg-green-400', style: 'top-8 right-16' },
-  { src: 'https://randomuser.me/api/portraits/men/66.jpg', color: 'bg-blue-600', style: 'top-1/2 right-8' },
-  { src: 'https://randomuser.me/api/portraits/women/67.jpg', color: 'bg-purple-400', style: 'bottom-24 right-32' },
+const testimonials: Testimonial[] = [
+  {
+    name: "Sarah Johnson",
+    role: "Product Manager",
+    company: "TechCorp",
+    image: "https://randomuser.me/api/portraits/women/44.jpg",
+    quote: "This platform has completely transformed how our team manages projects. The intuitive interface and powerful features have increased our productivity by 40%."
+  },
+  {
+    name: "Michael Chen",
+    role: "Software Engineer",
+    company: "InnovateX",
+    image: "https://randomuser.me/api/portraits/men/32.jpg",
+    quote: "The automation capabilities are game-changing. We've reduced manual work by 60% and can focus on what really matters - building great products."
+  },
+  {
+    name: "Emily Rodriguez",
+    role: "Marketing Director",
+    company: "GrowthLabs",
+    image: "https://randomuser.me/api/portraits/women/65.jpg",
+    quote: "The analytics and reporting features give us unprecedented insights into our team's performance. It's like having a crystal ball for project management."
+  }
 ];
 
-const ReferenceImageSection: React.FC = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [collected, setCollected] = useState(false);
-
-  // Trigger animation on scroll into view or hover
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.7 && rect.bottom > 0) {
-        setCollected(true);
-      } else {
-        setCollected(false);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Tick mark position (relative to section)
-  // We'll use bottom center (50% horizontally, 90% vertically)
-  const tickX = '50%';
-  const tickY = '90%';
-
+const TestimonialsSection: React.FC = () => {
   return (
-    <section
-      ref={sectionRef}
-      className="relative bg-[#f7f7f7] py-24 overflow-visible"
-    >
-      {/* Floating Avatars */}
-      {avatars.map((avatar, i) => (
-        <div
-          key={i}
-          className={`absolute ${avatar.style} rounded-full shadow-lg flex items-center justify-center z-10 transition-all duration-700 ease-in-out
-            ${collected ? ' pointer-events-none' : ''}`}
-          style={{
-            width: i === 2 ? '110px' : '60px',
-            height: i === 2 ? '110px' : '60px',
-            left: collected ? '50%' : undefined,
-            right: collected ? undefined : undefined,
-            top: collected ? '90%' : undefined,
-            bottom: undefined,
-            transform: collected
-              ? `translate(-50%, -50%) scale(0.3) rotate(${i * 30}deg)`
-              : 'none',
-            opacity: collected ? 0 : 1,
-            transition: `all 0.9s cubic-bezier(.7,.2,.2,1) ${collected ? i * 0.13 : 0}s`,
-          }}
-        >
-          <div className={`rounded-full ${avatar.color} w-full h-full flex items-center justify-center`}>
-            <img
-              src={avatar.src}
-              alt="avatar"
-              className="rounded-full object-cover w-full h-full border-4 border-white"
-            />
-          </div>
+    <section className="py-32 relative overflow-hidden bg-black/80">
+      {/* Space-themed SVG background */}
+      <div className="absolute inset-0 opacity-10">
+        <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <defs>
+            <pattern id="space-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1" fill="white" />
+              <circle cx="10" cy="10" r="0.5" fill="white" />
+              <circle cx="15" cy="5" r="0.7" fill="white" />
+              <circle cx="5" cy="15" r="0.3" fill="white" />
+            </pattern>
+          </defs>
+          <rect x="0" y="0" width="100" height="100" fill="url(#space-pattern)" />
+        </svg>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div className="text-center mb-20">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-5xl font-bold text-white mb-6"
+          >
+            Voices of Success
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-xl text-purple-200 max-w-2xl mx-auto"
+          >
+            Discover how teams are achieving extraordinary results
+          </motion.p>
         </div>
-      ))}
-      <div className="max-w-3xl mx-auto flex flex-col items-center justify-center text-center relative z-20">
-        <h1 className="text-5xl md:text-6xl font-extrabold text-black mb-6 leading-tight">
-          Time Management<br />
-          <span className="relative inline-block">
-            with <span className="relative z-10">Style</span>
-            <svg className="absolute left-0 right-0 mx-auto -bottom-2 w-full h-4 z-0" viewBox="0 0 220 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M5 10C60 20 160 0 215 10" stroke="#FFD600" strokeWidth="6" strokeLinecap="round"/>
-            </svg>
-          </span>
-        </h1>
-        <p className="text-gray-500 text-lg mb-10 max-w-xl">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit tincidunt vivamus felis elementum eget enim elementum nisl.
-        </p>
-        <div className="flex flex-col sm:flex-row items-center gap-4 mb-10">
-          <button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-8 py-3 rounded-full text-lg shadow transition">
-            Start Tracking Your Time
-          </button>
-          <button className="flex items-center gap-2 font-semibold text-black hover:underline text-lg">
-            Check out the features
-            <span className="inline-block">→</span>
-          </button>
-        </div>
-        <div className="flex justify-center mt-8">
-          <div className="bg-yellow-400 rounded-xl p-3 flex items-center justify-center">
-            <svg width="32" height="32" fill="none" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#FFD600"/><path d="M10 17l4 4 8-8" stroke="#111" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/></svg>
+
+        <div className="relative">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10">
+            {testimonials.map((testimonial, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                viewport={{ once: true }}
+                className={`relative group ${
+                  index === 1 ? 'lg:translate-y-12' : index === 2 ? 'lg:translate-y-24' : ''
+                }`}
+              >
+                <div className="relative bg-black/60 backdrop-blur-sm rounded-2xl p-8 border border-purple-500/10 hover:border-purple-500/20 transition-colors">
+                  <div className="flex items-center mb-6">
+                    <div className="relative">
+                      <img
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                        className="relative w-16 h-16 rounded-full object-cover border-2 border-purple-500/50"
+                      />
+                    </div>
+                    <div className="ml-4">
+                      <h3 className="text-lg font-semibold text-white">{testimonial.name}</h3>
+                      <p className="text-sm text-purple-200">{testimonial.role} at {testimonial.company}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="relative px-6">
+                    <div className="absolute -left-2 top-0 text-4xl text-purple-500/30 font-serif">&ldquo;</div>
+                    <p className="text-gray-300 leading-relaxed mb-6 relative z-10 italic">{testimonial.quote}</p>
+                    <div className="absolute -right-2 bottom-0 text-4xl text-purple-500/30 font-serif">&rdquo;</div>
+                  </div>
+
+                  <div className="flex items-center mt-4">
+                    {[...Array(5)].map((_, i) => (
+                      <svg
+                        key={i}
+                        className="w-5 h-5 text-yellow-400"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </div>
@@ -107,4 +128,4 @@ const ReferenceImageSection: React.FC = () => {
   );
 };
 
-export default ReferenceImageSection;
+export default TestimonialsSection;

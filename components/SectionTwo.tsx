@@ -153,7 +153,7 @@ const SectionTwo = () => {
   };
 
   return (
-    <section className="relative flex items-center justify-center min-h-screen w-full bg-black overflow-x-hidden py-6 sm:py-0 px-0">
+    <section className="relative flex items-center justify-center min-h-screen w-full bg-black overflow-x-hidden py-6 sm:py-0 px-4 sm:px-0">
       {/* Blue Rectangle Background */}
       <div
         ref={blueRectRef}

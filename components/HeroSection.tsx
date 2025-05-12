@@ -160,7 +160,7 @@ const HeroSection = () => {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto mt-[70vh] sm:mt-[65vh]">
         <div className="text-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-[#e0e0e0] to-[#baff39] text-transparent bg-clip-text">
             Launchpad for all your<br />startup ideas
           </h1>
         </div>
