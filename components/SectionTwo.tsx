@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Shuffle } from 'lucide-react';
 import Image from 'next/image';
+import gsap from 'gsap';
 
 const SectionTwo = () => {
   // Add keyframes for the pulse animation
@@ -80,6 +81,73 @@ const SectionTwo = () => {
       cancelAnimationFrame(animationFrameId);
     };
   }, [cursorPosition, isActive]);
+
+  useEffect(() => {
+    // GSAP animations for floating images
+    const leftImages = document.querySelectorAll('.hero-left .hero-img');
+    const rightImages = document.querySelectorAll('.hero-right .hero-img');
+
+    // Create floating animations for left images
+    leftImages.forEach((img, index) => {
+      gsap.to(img, {
+        y: `${(index + 1) * 15}px`,
+        x: `${(index + 1) * 10}px`,
+        duration: 2 + index,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        delay: index * 0.2,
+        paused: true // Start paused
+      });
+    });
+
+    // Create floating animations for right images
+    rightImages.forEach((img, index) => {
+      gsap.to(img, {
+        y: `${-(index + 1) * 15}px`,
+        x: `${-(index + 1) * 10}px`,
+        duration: 2 + index,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        delay: index * 0.2,
+        paused: true // Start paused
+      });
+    });
+
+    // Function to play all animations
+    const playAllAnimations = () => {
+      leftImages.forEach((img) => {
+        gsap.getTweensOf(img).forEach(tween => tween.play());
+      });
+      rightImages.forEach((img) => {
+        gsap.getTweensOf(img).forEach(tween => tween.play());
+      });
+    };
+
+    // Function to pause all animations
+    const pauseAllAnimations = () => {
+      leftImages.forEach((img) => {
+        gsap.getTweensOf(img).forEach(tween => tween.pause());
+      });
+      rightImages.forEach((img) => {
+        gsap.getTweensOf(img).forEach(tween => tween.pause());
+      });
+    };
+
+    // Play animations when cursor enters the section
+    if (isActive) {
+      playAllAnimations();
+    } else {
+      pauseAllAnimations();
+    }
+
+    // Cleanup function
+    return () => {
+      gsap.killTweensOf(leftImages);
+      gsap.killTweensOf(rightImages);
+    };
+  }, [isActive]); // Add isActive as dependency
 
   const shuffleArray = (array: Element[]) => {
     const newArray = [...array];
@@ -170,9 +238,7 @@ const SectionTwo = () => {
             <Image
               src="/images/icon1.png"
               className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out ml-20 lg:ml-32 ${
-                isHoveringRectangle ? 'scale-110' : ''
-              } ${hoveredImage === 'left1' ? 'scale-150 z-10' : ''} ${
-                isActive ? 'animate-pulse-subtle' : ''
+                hoveredImage === 'left1' ? 'scale-150 z-10' : ''
               }`}
               alt="Left Image 1"
               width={180}
@@ -183,9 +249,7 @@ const SectionTwo = () => {
             <Image 
               src="/images/icon5.png" 
               className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out -ml-8 lg:-ml-12 ${
-                isHoveringRectangle ? 'scale-110' : ''
-              } ${hoveredImage === 'left2' ? 'scale-150 z-10' : ''} ${
-                isActive ? 'animate-pulse-subtle' : ''
+                hoveredImage === 'left2' ? 'scale-150 z-10' : ''
               }`} 
               alt="Left Image 2"
               width={180}
@@ -196,9 +260,7 @@ const SectionTwo = () => {
             <Image 
               src="/images/icon3.png" 
               className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out ml-8 lg:ml-12 ${
-                isHoveringRectangle ? 'scale-110' : ''
-              } ${hoveredImage === 'left3' ? 'scale-150 z-10' : ''} ${
-                isActive ? 'animate-pulse-subtle' : ''
+                hoveredImage === 'left3' ? 'scale-150 z-10' : ''
               }`} 
               alt="Left Image 3"
               width={180}
@@ -239,9 +301,7 @@ const SectionTwo = () => {
             <Image 
               src="/images/icon2.png" 
               className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out mr-32 lg:mr-48 ${
-                isHoveringRectangle ? 'scale-110' : ''
-              } ${hoveredImage === 'right1' ? 'scale-150 z-10' : ''} ${
-                isActive ? 'animate-pulse-subtle' : ''
+                hoveredImage === 'right1' ? 'scale-150 z-10' : ''
               }`} 
               alt="Right Image 1"
               width={180}
@@ -252,9 +312,7 @@ const SectionTwo = () => {
             <Image 
               src="\images\icon4.png" 
               className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out lg:-ml-5 ${
-                isHoveringRectangle ? 'scale-110' : ''
-              } ${hoveredImage === 'right2' ? 'scale-150 z-10' : ''} ${
-                isActive ? 'animate-pulse-subtle' : ''
+                hoveredImage === 'right2' ? 'scale-150 z-10' : ''
               }`} 
               alt="Right Image 2"
               width={180}
@@ -265,9 +323,7 @@ const SectionTwo = () => {
             <Image 
               src="/images/icon6.png" 
               className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out mr-32 lg:mr-48 ${
-                isHoveringRectangle ? 'scale-110' : ''
-              } ${hoveredImage === 'right3' ? 'scale-150 z-10' : ''} ${
-                isActive ? 'animate-pulse-subtle' : ''
+                hoveredImage === 'right3' ? 'scale-150 z-10' : ''
               }`} 
               alt="Right Image 3"
               width={180}

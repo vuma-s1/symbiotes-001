@@ -87,7 +87,7 @@ const CommunitySection = () => {
   }, []);
 
   // Avatar positions for animation
-  const getAvatarStyle = (i: number, avatar: typeof avatars[0]) => {
+  const getAvatarStyle = (i: number, avatar: typeof avatars[0]): React.CSSProperties => {
     if (!avatarsVisible) return { opacity: 0 };
     if (!avatarsAnimating) return { opacity: 1, transition: 'all 0.8s cubic-bezier(0.4,0,0.2,1)' };
     // Animate to logo center
@@ -102,7 +102,7 @@ const CommunitySection = () => {
       const dx = logoCenter.x - avatarCenter.x;
       const dy = logoCenter.y - avatarCenter.y;
       return {
-        transform: `translate(${dx}px, ${dy}px) scale(0.2)`,
+        transform: `translate(${dx}px, ${dy}px) scale(0.2)` as string,
         opacity: 0,
         transition: 'all 0.8s cubic-bezier(0.4,0,0.2,1)',
       };
@@ -111,7 +111,13 @@ const CommunitySection = () => {
   };
 
   return (
-    <section ref={sectionRef} className="relative bg-black py-24 overflow-visible min-h-screen flex items-center justify-center">
+    <section ref={sectionRef} className="relative py-24 overflow-visible min-h-screen flex items-center justify-center" style={{
+      backgroundImage: 'url("/images/background.png")',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      backgroundColor: 'black', // fallback for slow loads
+    }}>
       {/* Floating Avatars */}
       <div className="absolute inset-0 pointer-events-none select-none">
         {avatars.map((avatar, i) => (
@@ -150,7 +156,7 @@ const CommunitySection = () => {
           </button>
         </div>
         <div className="flex justify-center mt-8">
-          <img ref={logoRef} src="/images/icon.jpg" alt="Logo" className="w-32 h-32 object-contain" />
+          <img ref={logoRef} src="\images\icon.png" alt="Logo" className="w-32 h-32 object-contain" style={{ background: 'transparent' }} />
         </div>
       </div>
     </section>

@@ -18,43 +18,49 @@ const AboutSection = () => {
 
     if (!firstBlock || !secondBlock) return;
 
-    // First block animation
+    // First block animation - Image from right, text from left
     gsap.fromTo(
       firstBlock.children,
       {
-        x: (index) => (index === 0 ? -300 : 300),
+        x: (index) => (index === 0 ? -500 : 500), // Increased distance for more dramatic effect
         opacity: 0,
+        scale: 0.8,
       },
       {
         x: 0,
         opacity: 1,
-        ease: "none",
+        scale: 1,
+        duration: 1.5,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: firstBlock,
-          start: "top bottom",
+          start: "top bottom-=100",
           end: "center center",
-          scrub: 1.5,
+          scrub: 1,
           toggleActions: "play none none reverse"
         }
       }
     );
 
-    // Second block animation
+    // Second block animation - Image from left, text from right
     gsap.fromTo(
       secondBlock.children,
       {
-        x: (index) => (index === 0 ? 300 : -300),
+        x: (index) => (index === 0 ? 500 : -500), // Increased distance for more dramatic effect
         opacity: 0,
+        scale: 0.8,
       },
       {
         x: 0,
         opacity: 1,
-        ease: "none",
+        scale: 1,
+        duration: 1.5,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: secondBlock,
-          start: "top bottom",
+          start: "top bottom-=100",
           end: "center center",
-          scrub: 1.5,
+          scrub: 1,
           toggleActions: "play none none reverse"
         }
       }
@@ -66,13 +72,13 @@ const AboutSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="about" className="py-20 bg-[#0a0a0a] overflow-hidden">
+    <section ref={sectionRef} id="about" className="py-16 bg-[#0a0a0a] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Section Heading */}
         <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text mb-12 text-center">
           Fueling Your Ambition, Whether First Flight or Veteran.
         </h2>
-        <div ref={firstBlockRef} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-28 min-h-[80vh]">
+        <div ref={firstBlockRef} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16 min-h-[70vh]">
           <div className="will-change-transform">
             <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text mb-6">
               Turn Your Bold Vision into Reality, Confidently.
@@ -92,7 +98,7 @@ const AboutSection = () => {
           </div>
         </div>
         {/* Alternate block: image left, text right */}
-        <div ref={secondBlockRef} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
+        <div ref={secondBlockRef} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[70vh]">
           <div className="relative order-1 lg:order-none will-change-transform">
             <div className="rounded-xl overflow-hidden max-w-xs md:max-w-sm lg:max-w-md h-56 md:h-64 lg:h-72 mx-auto">
               <img

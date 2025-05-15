@@ -4,33 +4,29 @@ import { motion } from 'framer-motion';
 
 interface Testimonial {
   name: string;
-  role: string;
-  company: string;
-  image: string;
+  subtitle: string;
+  avatarGradient: string;
   quote: string;
 }
 
 const testimonials: Testimonial[] = [
   {
-    name: "Sarah Johnson",
-    role: "Product Manager",
-    company: "TechCorp",
-    image: "https://randomuser.me/api/portraits/women/44.jpg",
-    quote: "This platform has completely transformed how our team manages projects. The intuitive interface and powerful features have increased our productivity by 40%."
+    name: "James",
+    subtitle: "@james",
+    avatarGradient: "bg-gradient-to-br from-green-400 via-blue-500 to-purple-500",
+    quote: "They don't just deliver; they go above and beyond. Exceptional service and outstanding results every time."
   },
   {
-    name: "Michael Chen",
-    role: "Software Engineer",
-    company: "InnovateX",
-    image: "https://randomuser.me/api/portraits/men/32.jpg",
-    quote: "The automation capabilities are game-changing. We've reduced manual work by 60% and can focus on what really matters - building great products."
+    name: "Rahul Mehta",
+    subtitle: "CEO of TechWave",
+    avatarGradient: "bg-gradient-to-br from-yellow-400 via-green-400 to-yellow-600",
+    quote: "Symbiotes is a game-changer. They helped us scale our revenue by 300% while cutting ad costs in half!"
   },
   {
-    name: "Emily Rodriguez",
-    role: "Marketing Director",
-    company: "GrowthLabs",
-    image: "https://randomuser.me/api/portraits/women/65.jpg",
-    quote: "The analytics and reporting features give us unprecedented insights into our team's performance. It's like having a crystal ball for project management."
+    name: "Neha Agarwal",
+    subtitle: "Founder of StyleNests",
+    avatarGradient: "bg-gradient-to-br from-blue-500 via-pink-500 to-purple-500",
+    quote: "From strategy to execution, they've been the partners we didn't know we needed. Outstanding results!"
   }
 ];
 
@@ -88,24 +84,16 @@ const TestimonialsSection: React.FC = () => {
                 <div className="relative bg-black/60 backdrop-blur-sm rounded-2xl p-8 border border-purple-500/10 hover:border-purple-500/20 transition-colors">
                   <div className="flex items-center mb-6">
                     <div className="relative">
-                      <img
-                        src={testimonial.image}
-                        alt={testimonial.name}
-                        className="relative w-16 h-16 rounded-full object-cover border-2 border-purple-500/50"
-                      />
+                      <div className={`w-10 h-10 rounded-full ${testimonial.avatarGradient} mr-3`} />
                     </div>
-                    <div className="ml-4">
+                    <div>
                       <h3 className="text-lg font-semibold text-white">{testimonial.name}</h3>
-                      <p className="text-sm text-purple-200">{testimonial.role} at {testimonial.company}</p>
+                      <p className="text-sm text-gray-300">{testimonial.subtitle}</p>
                     </div>
                   </div>
-                  
-                  <div className="relative px-6">
-                    <div className="absolute -left-2 top-0 text-4xl text-purple-500/30 font-serif">&ldquo;</div>
-                    <p className="text-gray-300 leading-relaxed mb-6 relative z-10 italic">{testimonial.quote}</p>
-                    <div className="absolute -right-2 bottom-0 text-4xl text-purple-500/30 font-serif">&rdquo;</div>
+                  <div className="relative px-0">
+                    <p className="text-gray-200 leading-relaxed mb-0 relative z-10">{testimonial.quote}</p>
                   </div>
-
                   <div className="flex items-center mt-4">
                     {[...Array(5)].map((_, i) => (
                       <svg

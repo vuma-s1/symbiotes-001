@@ -31,7 +31,7 @@ const QuestionsSection = () => {
         {/* AI Chat Section */}
         <div className="relative z-10 w-full max-w-xl mx-auto bg-white/5 rounded-2xl shadow-2xl border border-[#d0ed01]/30 p-4 sm:p-8 flex flex-col items-center backdrop-blur-md">
           <div className="flex justify-center mb-4">
-            <img src="/images/icon.jpg" alt="Symbiotes Icon" className="w-12 h-12 sm:w-16 sm:h-16 object-contain" />
+            <img src="/images/icon.png" alt="Symbiotes Icon" className="w-12 h-12 sm:w-16 sm:h-16 object-contain" />
           </div>
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2 text-center">Symbiotes AI Chat</h2>
           <p className="text-base sm:text-lg text-gray-200 mb-4 sm:mb-6 text-center">Start writing to create with Symbiotes AI Chat.</p>
