@@ -80,3 +80,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+.group:hover > span {
+  opacity: 0;
+  transition: opacity 0.2s;
+}

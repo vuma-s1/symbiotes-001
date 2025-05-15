@@ -168,12 +168,12 @@ const SectionTwo = () => {
           {/* Left Images (Top on mobile) */}
           <div className="hero-left flex flex-row lg:flex-col gap-2 sm:gap-6 flex-1 items-center justify-center flex-wrap lg:w-1/4 mb-4 lg:mb-0">
             <Image
-              src="https://cdn.prod.website-files.com/6177739448baa66404ce1d9c/65af4a6a6baf2d1aa79d942d_Image%203%20(3).webp" 
-              className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out ${
+              src="/images/icon1.png"
+              className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out ml-20 lg:ml-32 ${
                 isHoveringRectangle ? 'scale-110' : ''
               } ${hoveredImage === 'left1' ? 'scale-150 z-10' : ''} ${
                 isActive ? 'animate-pulse-subtle' : ''
-              }`} 
+              }`}
               alt="Left Image 1"
               width={180}
               height={180}
@@ -181,8 +181,8 @@ const SectionTwo = () => {
               onMouseLeave={handleImageLeave}
             />
             <Image 
-              src="https://cdn.prod.website-files.com/6177739448baa66404ce1d9c/66d6c3c1a04a8ab6b5868d6f_Image%2011.png" 
-              className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out ${
+              src="/images/icon5.png" 
+              className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out -ml-8 lg:-ml-12 ${
                 isHoveringRectangle ? 'scale-110' : ''
               } ${hoveredImage === 'left2' ? 'scale-150 z-10' : ''} ${
                 isActive ? 'animate-pulse-subtle' : ''
@@ -194,8 +194,8 @@ const SectionTwo = () => {
               onMouseLeave={handleImageLeave}
             />
             <Image 
-              src="https://cdn.prod.website-files.com/6177739448baa66404ce1d9c/658e82332d3f45a22e364d75_Image%201.webp" 
-              className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out ${
+              src="/images/icon3.png" 
+              className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out ml-8 lg:ml-12 ${
                 isHoveringRectangle ? 'scale-110' : ''
               } ${hoveredImage === 'left3' ? 'scale-150 z-10' : ''} ${
                 isActive ? 'animate-pulse-subtle' : ''
@@ -237,8 +237,8 @@ const SectionTwo = () => {
           {/* Right Images (Bottom on mobile) */}
           <div className="hero-right flex flex-row lg:flex-col gap-2 sm:gap-6 flex-1 items-center justify-center flex-wrap lg:w-1/4 mt-4 lg:mt-0">
             <Image 
-              src="https://cdn.prod.website-files.com/6177739448baa66404ce1d9c/66d6c3c1d03db2b8ae8b2926_Image%207.png" 
-              className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out ${
+              src="/images/icon2.png" 
+              className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out mr-32 lg:mr-48 ${
                 isHoveringRectangle ? 'scale-110' : ''
               } ${hoveredImage === 'right1' ? 'scale-150 z-10' : ''} ${
                 isActive ? 'animate-pulse-subtle' : ''
@@ -250,7 +250,7 @@ const SectionTwo = () => {
               onMouseLeave={handleImageLeave}
             />
             <Image 
-              src="https://cdn.prod.website-files.com/6177739448baa66404ce1d9c/658e839495208ba1f0d1329b_Image%204.webp" 
+              src="\images\icon4.png" 
               className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out lg:-ml-5 ${
                 isHoveringRectangle ? 'scale-110' : ''
               } ${hoveredImage === 'right2' ? 'scale-150 z-10' : ''} ${
@@ -263,8 +263,8 @@ const SectionTwo = () => {
               onMouseLeave={handleImageLeave}
             />
             <Image 
-              src="https://cdn.prod.website-files.com/6177739448baa66404ce1d9c/658e823332cb3de9f06c7e10_Image%205.webp" 
-              className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out ${
+              src="/images/icon6.png" 
+              className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out mr-32 lg:mr-48 ${
                 isHoveringRectangle ? 'scale-110' : ''
               } ${hoveredImage === 'right3' ? 'scale-150 z-10' : ''} ${
                 isActive ? 'animate-pulse-subtle' : ''
@@ -283,7 +283,7 @@ const SectionTwo = () => {
       <div className="absolute z-20" style={{left: 'calc(4% + 0.5rem)', bottom: '2.5%'}}>
         <button
           onClick={handleShuffle}
-          className="flex items-center gap-2 bg-[#2563eb] text-white rounded-lg px-7 py-3 font-bold text-lg shadow-xl hover:bg-[#1d4ed8] transition-colors duration-200 "
+          className="flex items-center gap-2 bg-[#d0ed01] text-black rounded-lg px-7 py-3 font-bold text-lg shadow-xl hover:bg-[#b6e600] transition-colors duration-200 "
         >
           <Shuffle className="w-6 h-6" />
           <span>Shuffle</span>
@@ -306,22 +306,10 @@ const SectionTwo = () => {
             <polygon points="2,2 30,16 18,18 16,30" fill="#d0ed01" stroke="#000" strokeWidth="2"/>
           </svg>
         </span>
-        <span className="text-base font-semibold text-white px-3 py-1 ml-1 shadow-lg">
-          Guest
-        </span>
       </div>
 
       {/* Floating Cursors */}
-      <img
-        src="https://cdn.prod.website-files.com/6177739448baa66404ce1d9c/65949937d9baec1f85575645_cursor-jessica-yellow_3x.png"
-        className="absolute w-[70px] pointer-events-none top-[60%] left-[10%] animate-float hidden lg:block"
-        alt="Jessica Cursor"
-      />
-      <img
-        src="https://cdn.prod.website-files.com/6177739448baa66404ce1d9c/659499374a9e7199f028b4f0_cursor-blue-mario_3x.png"
-        className="absolute w-[70px] pointer-events-none top-[50%] right-[10%] animate-float hidden lg:block"
-        alt="Mario Cursor"
-      />
+      {/* Removed Jessica and Mario floating cursor images */}
     </section>
   );
 };
