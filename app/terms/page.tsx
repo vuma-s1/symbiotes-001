@@ -16,10 +16,10 @@ export default function TermsPage() {
           <section id="agreement">
             <h2 className="text-2xl font-semibold mb-4 text-[#d0ed01]">AGREEMENT TO OUR LEGAL TERMS</h2>
             <div className="space-y-4">
-              <p>The Platform is owned by RAO S DIGITAL MARKETING SOLUTIONS</p>
+              <p>The Platform is owned by Symbiotes MarTech Pvt. Ltd.</p>
               <p>We are Symbiotes (&quot;Company,&quot; &quot;we,&quot; &quot;us,&quot; &quot;our&quot;).</p>
               <p>We operate the website symbiotes.in (the &quot;Site&quot;), as well as any other related products and services that refer or link to these legal terms (the &quot;Legal Terms&quot;) (collectively, the &quot;Services&quot;).</p>
-              <p>You can contact us by email at help@symbiotes.in</p>
+              <p>You can contact us by email at help@symbiotes.ai</p>
               <p>These Legal Terms constitute a legally binding agreement made between you, whether personally or on behalf of an entity (&quot;you&quot;), and Symbiotes, concerning your access to and use of the Services. You agree that by accessing the Services, you have read, understood, and agreed to be bound by all of these Legal Terms. IF YOU DO NOT AGREE WITH ALL OF THESE LEGAL TERMS, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE SERVICES AND YOU MUST DISCONTINUE USE IMMEDIATELY.</p>
             </div>
           </section>
@@ -354,10 +354,10 @@ export default function TermsPage() {
           <section id="contact">
             <h2 className="text-2xl font-semibold mb-4 text-[#d0ed01]">33. CONTACT US</h2>
             <p className="mb-4">
-              In order to resolve a complaint regarding the Services or to receive further information regarding use of the Services, please contact us at: help@symbiotes.in
+              In order to resolve a complaint regarding the Services or to receive further information regarding use of the Services, please contact us at: help@symbiotes.ai
             </p>
             <p className="mb-4">
-              For any questions about our terms, please contact us at: terms@symbiotes.in
+              For any questions about our terms, please contact us at: legal@symbiotes.ai
             </p>
           </section>
         </div>

@@ -117,9 +117,9 @@ const Footer = () => {
           <div className="footer-section flex flex-col items-start">
             <h4 className="text-white font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-white text-sm mb-4">
-              <li>help@Symbiotes.com</li>
-              <li>sales@Symbiotes.com</li>
-              <li>careers@Symbiotes.com</li>
+              <li>help@symbiotes.ai</li>
+              <li>sales@symbiotes.ai</li>
+              <li>careers@symbiotes.ai</li>
             </ul>
             <div className="flex space-x-4 mt-2">
               <a href="#" className="group"><FaInstagram className="text-white text-xl hover:text-[#d0ed01] transition-colors" /></a>

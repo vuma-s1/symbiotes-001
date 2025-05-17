@@ -280,10 +280,10 @@ const SectionTwo = () => {
             </div>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2 text-white max-w-[800px] mx-auto leading-tight break-words">
                 Ignite Your Startup Launch<br className="hidden lg:block" />
-                Conquer the 0-to-1 Journey & Dramatically Increase Your Odds
+                Conquer the 0-to-1 Journey & Get It Right the First Time
             </h1>
             <p className="text-base sm:text-lg lg:text-xl max-w-[600px] mx-auto text-white mb-2 sm:mb-3 break-words">
-            You have the passion, the vision. But 99% of ventures stall. Symbiotes.ai is your strategic co-pilot, transforming that fire into a focused launch. Get your AI-powered flight plan, master PMF, and navigate the critical early stages with a system built to beat the odds.
+            You have the passion, the vision. But 99% of ventures stall. Symbiotes.ai is your strategic co-pilot, transforming that fire into a focused launch. Get your AI-powered flight plan, master Product Market Fitment, and navigate the critical early stages with a system built to beat the odds.
             </p>
             <a 
               href="https://calendly.com/your-calendly-link" 

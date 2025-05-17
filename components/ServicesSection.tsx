@@ -32,7 +32,7 @@ const stepData = [
     stat: '',
     headline: 'Execute with Precision (Launch & Iterate)',
     title: 'Execute with Precision',
-    description: 'Take command! Your blueprint feeds the Symbiotes Launch Pad (Mission Control), guiding daily actions, tracking vital signs (KPIs), coordinating your crew, automating workflows, and ensuring you stay on top of execution. Achieve lift-off, gather intel (feedback), and fuel your next growth stage.',
+    description: 'Take command! Your blueprint feeds the Symbiotes Launchpad (Mission Control), guiding daily actions, tracking vital signs (KPIs), coordinating your crew, automating workflows, and ensuring you stay on top of execution. Achieve lift-off, gather intel (feedback), and fuel your next growth stage.',
     extra: [
       // Add bullet points here if you want
     ],

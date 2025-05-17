@@ -13,7 +13,7 @@ const ContactSection = () => {
             <div className="space-y-6">
               <div>
                 <h3 className="text-white font-semibold mb-2">Email</h3>
-                <p className="text-gray-400">hello@relume.io</p>
+                <p className="text-gray-400">hello@symbiotes.ai</p>
               </div>
               <div>
                 <h3 className="text-white font-semibold mb-2">Location</h3>
