@@ -108,9 +108,9 @@ const QuestionsSection = () => {
               <div className="rounded-lg bg-black/40 border border-[#d0ed01] px-4 py-3 text-white flex items-center cursor-not-allowed opacity-80 select-none">Select response</div>
             </div>
             <div>
-              <label className="block text-white text-sm mb-2">What platforms are you using with Relume:</label>
+              <label className="block text-white text-sm mb-2">What platforms are you using:</label>
               <div className="grid grid-cols-2 gap-x-8 gap-y-2">
-                {['Figma', 'React', 'Other', 'Webflow', 'Wordpress'].map((platform) => (
+                {['Figma', 'React', 'Webflow', 'Wordpress', 'Other'].map((platform) => (
                   <label key={platform} className="flex items-center gap-2 text-white cursor-not-allowed opacity-80 select-none">
                     <span className="w-5 h-5 rounded border border-[#d0ed01] bg-black/40 flex items-center justify-center">
                       <span className="block w-3 h-3 rounded bg-transparent" />

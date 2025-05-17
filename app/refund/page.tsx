@@ -68,8 +68,8 @@ const RefundPage = () => {
               <h2 className="text-xl font-semibold mb-4 text-[#d0ed01]">6. Contact Us</h2>
               <p className="text-gray-300 mb-4">
                 If you have any questions about our refund policy or need assistance with a refund request, please contact us at:{" "}
-                <a href="mailto:help@symbiotes.in" className="text-blue-600 hover:underline">
-                  help@symbiotes.in
+                <a href="mailto:help@symbiotes.ai" className="text-blue-600 hover:underline">
+                  help@symbiotes.ai
                 </a>
               </p>
             </div>
@@ -78,8 +78,8 @@ const RefundPage = () => {
           <div className="mt-8 pt-6 border-t border-gray-700">
             <p className="text-gray-400">
               For any questions about our terms, please contact us at:{" "}
-              <a href="mailto:terms@symbiotes.in" className="text-blue-600 hover:underline">
-                terms@symbiotes.in
+              <a href="mailto:legal@symbiotes.in" className="text-blue-600 hover:underline">
+                legal@symbiotes.ai
               </a>
             </p>
           </div>
