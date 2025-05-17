@@ -130,7 +130,7 @@ const Footer = () => {
         </div>
         {/* Copyright */}
         <div className="copyright-section mt-12 pt-8 border-t border-[#222] flex flex-col md:flex-row justify-between items-center">
-          <p className="text-white text-sm">Copyright © 2025 <a href="#" className="text-[#d0ed01] hover:underline">Symbiotes</a>. All rights reserved.</p>
+          <p className="text-white text-sm">Copyright © 2025 <a href="#" className="text-[#d0ed01] hover:underline">Symbiotes.ai</a> All rights reserved.</p>
         </div>
       </div>
     </footer>
