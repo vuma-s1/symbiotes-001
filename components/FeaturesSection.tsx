@@ -1,52 +1,142 @@
+'use client';
+
+import { FaRocket, FaLightbulb, FaTachometerAlt, FaCogs, FaUsers, FaChartLine } from 'react-icons/fa';
+import React, { useEffect, useRef } from 'react';
+
+const Stars = () => {
+  const starsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const createStars = () => {
+      const starsContainer = starsRef.current;
+      if (!starsContainer) return;
+
+      // Clear existing stars
+      starsContainer.innerHTML = '';
+
+      // Create multiple stars
+      for (let i = 0; i < 100; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        // Random position
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        
+        // Random size
+        const size = Math.random() * 2 + 1;
+        
+        // Random animation duration
+        const duration = Math.random() * 3 + 2;
+        
+        star.style.cssText = `
+          position: absolute;
+          left: ${x}%;
+          top: ${y}%;
+          width: ${size}px;
+          height: ${size}px;
+          background: white;
+          border-radius: 50%;
+          opacity: ${Math.random()};
+          animation: twinkle ${duration}s infinite;
+        `;
+        
+        starsContainer.appendChild(star);
+      }
+    };
+
+    createStars();
+  }, []);
+
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes twinkle {
+        0% {
+          opacity: 0.2;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0.2;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
+  return (
+    <div
+      ref={starsRef}
+      className="absolute inset-0 w-full h-full z-0"
+      style={{
+        background: 'radial-gradient(circle at center, rgba(0,0,0,0) 0%, rgba(0, 0, 0, 0.37) 100%)'
+      }}
+    />
+  );
+};
+
 const features = [
   {
     num: '01',
-    color: 'bg-blue-300 text-blue-800',
+    iconUrl: '/images/fi1.png',
+    color: 'bg-purple-100 text-purple-700',
     hoverBg: 'hover:bg-[#d0ed01] hover:text-black',
     title: 'Dramatically Improve Launch Success Rate',
-    hiddenContent: `Get a personalized roadmap based on 7+ years of proven methods, designed to navigate common early-stage failure points.\nFeature: Custom Mission Blueprints,`,
+    hiddenContent: 'Get a personalized roadmap based on 7+ years of proven methods, designed to navigate common early-stage failure points.\nFeature: Custom Mission Blueprints'
   },
   {
     num: '02',
-    color: 'bg-yellow-300 text-yellow-900',
+    iconUrl: '/images/fi2.png',
+    color: 'bg-purple-100 text-purple-700',
     hoverBg: 'hover:bg-[#d0ed01] hover:text-black',
     title: 'Validate Ideas Faster, Save Resources',
-    hiddenContent: `Leverage AI for rapid market analysis and PMF checks. Avoid costly wrong turns; invest your frugal resources wisely.\nFeature: AI-Powered Validation & Research,`,
+    hiddenContent: 'Leverage AI for rapid market analysis and PMF checks. Avoid costly wrong turns; invest your frugal resources wisely.\nFeature: AI-Powered Validation & Research'
   },
   {
     num: '03',
-    color: 'bg-pink-200 text-pink-700',
+    iconUrl: '/images/fi3.png',
+    color: 'bg-purple-100 text-purple-700',
     hoverBg: 'hover:bg-[#d0ed01] hover:text-black',
     title: 'Stay in Command, Reduce Overwhelm.',
-    hiddenContent: `Manage your entire launch from one central hub. Keep track of everything without feeling timeless or losing control.\nFeature: Mission Control Dashboard (The Launch Pad),`,
+    hiddenContent: 'Manage your entire launch from one central hub. Keep track of everything without feeling timeless or losing control.\nFeature: Mission Control Dashboard (The Launchpad)'
   },
   {
     num: '04',
-    color: 'bg-green-200 text-green-700',
+    iconUrl: '/images/fi4.png',
+    color: 'bg-purple-100 text-purple-700',
     hoverBg: 'hover:bg-[#d0ed01] hover:text-black',
     title: 'Master Each Critical Stage.',
-    hiddenContent: `Our framework ensures you systematically address validation, positioning, presence, leads, and launch – tackling the root causes of early failure.\nFeature: Guided Business Stages Framework,`,
+    hiddenContent: 'Our framework ensures you systematically address validation, positioning, presence, leads, and launch – tackling the root causes of early failure.\nFeature: Guided Business Stages Framework'
   },
   {
     num: '05',
+    iconUrl: '/images/fi5.png',
     color: 'bg-purple-100 text-purple-700',
     hoverBg: 'hover:bg-[#d0ed01] hover:text-black',
     title: 'Execute Efficiently, Stay Accountable.',
-    hiddenContent: `Automate routine tasks and reminders. Focus your energy on high-impact actions while the system keeps things moving.\nFeature: Automated Guidance & Workflow System,`,
+    hiddenContent: 'Automate routine tasks and reminders. Focus your energy on high-impact actions while the system keeps things moving.\nFeature: Automated Guidance & Workflow System'
   },
   {
     num: '06',
-    color: 'bg-pink-200 text-pink-700',
+    iconUrl: '/images/fi6.png',
+    color: 'bg-purple-100 text-purple-700',
     hoverBg: 'hover:bg-[#d0ed01] hover:text-black',
     title: 'Amplify Your Capabilities.',
-    hiddenContent: `Access vetted experts who understand the frugal, high-intensity startup environment.\nFeature: Symbiotes Growth Crew Network,`,
-  },
+    hiddenContent: 'Access vetted experts who understand the frugal, high-intensity startup environment.\nFeature: Symbiotes Growth Crew Network'
+  }
 ];
 
 const FeaturesSection = () => {
   return (
-    <section id="features" className="py-20 bg-[#010101]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="features" className="py-20 bg-[#010101] relative overflow-hidden">
+      {/* Stars Background */}
+      <Stars />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text mb-4">
             Engineered to Maximize Success & Minimize Risk.
@@ -58,8 +148,17 @@ const FeaturesSection = () => {
               key={index}
               className={`group p-8 rounded-2xl bg-[#181818] text-white flex flex-col h-[340px] min-h-[220px] relative shadow-md transition-all duration-300 overflow-hidden cursor-pointer ${feature.hoverBg} hover:scale-105 hover:shadow-2xl`}
             >
-              <span className={`absolute top-2 left-6 flex items-center justify-center w-14 h-14 rounded-full font-extrabold text-xl ${feature.color} group-hover:bg-black group-hover:text-white transition-all duration-300`}>{feature.num}</span>
-              <h3 className="text-2xl font-bold text-white mb-2 mt-20 group-hover:mt-6 group-hover:text-black transition-all duration-300">{feature.title}</h3>
+              <span className={`absolute top-2 left-6 flex items-center justify-center w-14 h-14 rounded-full font-extrabold text-xl ${feature.color} transition-all duration-300 group-hover:opacity-0`}>
+                {feature.num}
+              </span>
+              <span className="absolute top-2 left-6 flex items-center justify-center w-14 h-14 rounded-full font-extrabold text-xl opacity-0 transition-all duration-300 group-hover:opacity-100 text-white bg-transparent">
+                <img
+                  src={feature.iconUrl}
+                  alt="icon"
+                  className="w-20 h-20 object-cover rounded-full [filter:brightness(1.3)_contrast(1.5)] bg-transparent"
+                />
+              </span>
+              <h3 className="text-2xl font-bold text-white mb-2 mt-24 group-hover:mt-10 group-hover:text-black transition-all duration-300">{feature.title}</h3>
               {feature.hiddenContent && (
                 <div className="opacity-0 max-h-0 translate-y-4 group-hover:opacity-100 group-hover:max-h-72 group-hover:translate-y-0 group-hover:mt-4 transition-all duration-500 ease-in-out text-white group-hover:text-black text-base whitespace-pre-line overflow-y-auto pr-2">
                   {feature.hiddenContent}

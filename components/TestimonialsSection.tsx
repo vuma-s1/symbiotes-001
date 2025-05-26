@@ -1,6 +1,62 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+
+const Stars = () => {
+  const starsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const createStars = () => {
+      const starsContainer = starsRef.current;
+      if (!starsContainer) return;
+
+      // Clear existing stars
+      starsContainer.innerHTML = '';
+
+      // Create multiple stars
+      for (let i = 0; i < 100; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        // Random position
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        
+        // Random size
+        const size = Math.random() * 2 + 1;
+        
+        // Random animation duration
+        const duration = Math.random() * 3 + 2;
+        
+        star.style.cssText = `
+          position: absolute;
+          left: ${x}%;
+          top: ${y}%;
+          width: ${size}px;
+          height: ${size}px;
+          background: white;
+          border-radius: 50%;
+          opacity: ${Math.random()};
+          animation: twinkle ${duration}s infinite;
+        `;
+        
+        starsContainer.appendChild(star);
+      }
+    };
+
+    createStars();
+  }, []);
+
+  return (
+    <div 
+      ref={starsRef} 
+      className="absolute inset-0 w-full h-full z-10"
+      style={{
+        background: 'radial-gradient(circle at center, rgba(0,0,0,0) 0%, rgba(0, 0, 0, 0.37) 100%)'
+      }}
+    />
+  );
+};
 
 interface Testimonial {
   name: string;
@@ -31,21 +87,40 @@ const testimonials: Testimonial[] = [
 ];
 
 const TestimonialsSection: React.FC = () => {
+  // Add keyframes for the twinkle animation
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes twinkle {
+        0% {
+          opacity: 0.2;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0.2;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
   return (
-    <section className="py-32 relative overflow-hidden bg-black/80">
-      {/* Space-themed SVG background */}
-      <div className="absolute inset-0 opacity-10">
-        <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <defs>
-            <pattern id="space-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-              <circle cx="2" cy="2" r="1" fill="white" />
-              <circle cx="10" cy="10" r="0.5" fill="white" />
-              <circle cx="15" cy="5" r="0.7" fill="white" />
-              <circle cx="5" cy="15" r="0.3" fill="white" />
-            </pattern>
-          </defs>
-          <rect x="0" y="0" width="100" height="100" fill="url(#space-pattern)" />
-        </svg>
+    <section className="py-32 relative overflow-hidden bg-black">
+      {/* Stars Background */}
+      <Stars />
+      
+      {/* Background Gradient Effect */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-[#0a0a0a] opacity-90" />
+      
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#d0ed01] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-[#eaff6b] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -62,7 +137,7 @@ const TestimonialsSection: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl text-purple-200 max-w-2xl mx-auto"
+            className="text-xl text-gray-400 max-w-2xl mx-auto"
           >
             Discover how teams are achieving extraordinary results
           </motion.p>

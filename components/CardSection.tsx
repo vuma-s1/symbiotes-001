@@ -2,6 +2,63 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
+import gsap from 'gsap';
+
+const Stars = () => {
+  const starsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const createStars = () => {
+      const starsContainer = starsRef.current;
+      if (!starsContainer) return;
+
+      // Clear existing stars
+      starsContainer.innerHTML = '';
+
+      // Create multiple stars
+      for (let i = 0; i < 100; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        // Random position
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        
+        // Random size
+        const size = Math.random() * 2 + 1;
+        
+        // Random animation duration
+        const duration = Math.random() * 3 + 2;
+        
+        star.style.cssText = `
+          position: absolute;
+          left: ${x}%;
+          top: ${y}%;
+          width: ${size}px;
+          height: ${size}px;
+          background: white;
+          border-radius: 50%;
+          opacity: ${Math.random()};
+          animation: twinkle ${duration}s infinite;
+        `;
+        
+        starsContainer.appendChild(star);
+      }
+    };
+
+    createStars();
+  }, []);
+
+  return (
+    <div 
+      ref={starsRef} 
+      className="absolute inset-0 w-full h-full z-0"
+      style={{
+        background: 'radial-gradient(circle at center, rgba(0,0,0,0) 0%, rgba(0, 0, 0, 0.37) 100%)'
+      }}
+    />
+  );
+};
 
 interface ScrollingDiscsProps {
   className?: string;
@@ -70,6 +127,10 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
     ]
   ];
 
+  // GSAP refs for sub-points
+  const leftSubPointsRefs = [useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null)];
+  const rightSubPointsRefs = [useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null)];
+
   useEffect(() => {
     const handleResize = () => {
       const isMobileView = window.innerWidth < 768;
@@ -135,6 +196,123 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [titles.length, isMobile]);
 
+  useEffect(() => {
+    // Create a timeline for better control
+    const tl = gsap.timeline({
+      defaults: {
+        ease: "power3.out",
+        duration: 0.8
+      }
+    });
+
+    // Reset all sub-points to hidden with a staggered initial state
+    leftSubPointsRefs.forEach((ref, index) => {
+      if (ref.current) {
+        gsap.set(ref.current, { 
+          opacity: 0, 
+          y: 50,
+          x: -30,
+          scale: 0.8,
+          rotation: -5
+        });
+      }
+    });
+    rightSubPointsRefs.forEach((ref, index) => {
+      if (ref.current) {
+        gsap.set(ref.current, { 
+          opacity: 0, 
+          y: 50,
+          x: 30,
+          scale: 0.8,
+          rotation: 5
+        });
+      }
+    });
+
+    // Create arrays of valid refs (filtering out nulls)
+    const validLeftRefs = leftSubPointsRefs
+      .map(ref => ref.current)
+      .filter((el): el is HTMLDivElement => el !== null);
+    
+    const validRightRefs = rightSubPointsRefs
+      .map(ref => ref.current)
+      .filter((el): el is HTMLDivElement => el !== null);
+
+    // Animate left sub-points with a staggered entrance
+    if (validLeftRefs.length > 0) {
+      tl.to(validLeftRefs, {
+        opacity: 1,
+        y: 0,
+        x: 0,
+        scale: 1,
+        rotation: 0,
+        stagger: {
+          amount: 0.4,
+          from: "start"
+        },
+        clearProps: "all"
+      });
+    }
+
+    // Animate right sub-points with a staggered entrance
+    if (validRightRefs.length > 0) {
+      tl.to(validRightRefs, {
+        opacity: 1,
+        y: 0,
+        x: 0,
+        scale: 1,
+        rotation: 0,
+        stagger: {
+          amount: 0.4,
+          from: "start"
+        },
+        clearProps: "all"
+      }, "-=0.6"); // Start slightly before the left side finishes
+    }
+
+    // Add a subtle hover animation for all sub-points
+    const allRefs = [...validLeftRefs, ...validRightRefs];
+    allRefs.forEach(ref => {
+      gsap.to(ref, {
+        y: -5,
+        duration: 1.5,
+        repeat: -1,
+        yoyo: true,
+        ease: "power1.inOut"
+      });
+    });
+
+    // Cleanup function
+    return () => {
+      tl.kill();
+      allRefs.forEach(ref => {
+        gsap.killTweensOf(ref);
+      });
+    };
+  }, [currentTitleIndex]);
+
+  // Add keyframes for the twinkle animation
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes twinkle {
+        0% {
+          opacity: 0.2;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0.2;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
   const getDiscStyle = (discIndex: number) => {
     const isActive = discIndex === currentTitleIndex;
     const baseOpacity = isActive ? 1 : 0.5;
@@ -152,8 +330,10 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
 
   return (
     <>
-      <section className={cn('w-full min-h-[60vh] flex items-center justify-center bg-black py-16 px-2 sm:px-6', className)}>
-        <div className="max-w-7xl w-full mx-auto flex flex-col md:flex-row items-center justify-center rounded-[2.5rem] bg-black shadow-2xl p-4 sm:p-8 md:p-16 border border-[#222] relative">
+      <section className={cn('w-full min-h-[60vh] flex items-center justify-center bg-black py-16 px-2 sm:px-6 relative', className)}>
+        {/* Stars Background */}
+        <Stars />
+        <div className="max-w-7xl w-full mx-auto flex flex-col md:flex-row items-center justify-center rounded-[2.5rem] bg-black shadow-2xl p-4 sm:p-8 md:p-16 border border-[#222] relative z-10">
           {/* Illustration/graphic left side */}
           <div className="flex-1 flex items-center justify-center mb-8 md:mb-0 md:mr-12">
             <div className="relative w-80 h-80 md:w-[28rem] md:h-[28rem] flex items-center justify-center bg-[#111] rounded-3xl">
@@ -165,8 +345,10 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
             </div>
           </div>
           {/* Content right side */}
-          <div className="flex-1 flex flex-col items-start justify-center text-left">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text">Your Launch Doesn't Need Guesswork — It Needs a Proven Structure</h2>
+          <div className="flex-1 flex flex-col items-center justify-center text-left w-full">
+            <h2 className="text-xl md:text-3xl font-bold mb-4 bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text w-full text-center mx-auto">
+              Your Launch Doesn't Need Guesswork — It Needs a Proven Structure
+            </h2>
             <ul className="text-gray-300 text-base md:text-lg mb-8 max-w-lg space-y-4">
               <li className="flex items-start gap-3">
                 <span className="mt-1 text-[#d0ed01]">
@@ -207,9 +389,11 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
         {/* Sticky Discs Animation Section */}
         <div
           ref={stickyRef}
-          className="sticky top-0 z-10 w-full flex flex-col items-center justify-center mb-20 md:mb-32"
+          className="sticky top-0 z-10 w-full flex flex-col items-center justify-center mb-20 md:mb-32 relative"
           style={{ height: isMobile ? '65vh' : '100vh', background: 'black' }}
         >
+          {/* Stars Background */}
+          <Stars />
           {/* Discs Section */}
           <div className={cn(
             "relative flex flex-col items-center justify-center mx-auto",
@@ -257,7 +441,7 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
             
             {/* Title and subpoints */}
             <div
-              className="absolute left-1/2 z-30"
+              className="absolute left-1/2 z-30 w-full flex flex-col items-center"
               style={{
                 top: 'calc(50% + 50px)',
                 transform: 'translateX(-50%)',
@@ -279,35 +463,76 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
               >
                 {titles[currentTitleIndex]}
               </h1>
-              <div className="mt-6 flex flex-col items-start gap-2">
-                {subPoints[currentTitleIndex].map((point, index) => (
-                  <div
-                    key={index}
-                    className="flex items-start gap-2 text-sm md:text-lg lg:text-xl text-gray-300 transition-all duration-300"
-                    style={{
-                      opacity: 0.8,
-                      transform: 'translateY(0)',
-                      transition: 'all 0.5s ease-out',
-                      maxWidth: '100%'
-                    }}
-                  >
-                    <div className="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 border border-[#d0ed01] rounded-sm flex items-center justify-center flex-shrink-0 mt-1">
-                      <svg
-                        className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
-                          fill="#d0ed01"
-                        />
-                      </svg>
-                    </div>
-                    <span className="whitespace-normal">{point}</span>
+            </div>
+
+            {/* Sub-points on sides */}
+            {/* Left side sub-points */}
+            <div
+              className="absolute z-30 flex flex-col items-end gap-16"
+              style={{
+                left: '-220px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                minWidth: '120px',
+                maxWidth: '180px'
+              }}
+            >
+              {subPoints[currentTitleIndex].slice(0, 2).map((point, idx) => (
+                <div
+                  key={idx}
+                  ref={leftSubPointsRefs[idx]}
+                  className="flex items-center gap-2 text-sm md:text-lg lg:text-xl text-gray-300"
+                >
+                  <div className="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 border border-[#d0ed01] rounded-sm flex items-center justify-center flex-shrink-0">
+                    <svg
+                      className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                        fill="#d0ed01"
+                      />
+                    </svg>
                   </div>
-                ))}
-              </div>
+                  <span className="whitespace-normal text-right">{point}</span>
+                </div>
+              ))}
+            </div>
+            {/* Right side sub-points */}
+            <div
+              className="absolute z-30 flex flex-col items-start gap-16"
+              style={{
+                right: '-220px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                minWidth: '120px',
+                maxWidth: '180px'
+              }}
+            >
+              {subPoints[currentTitleIndex].slice(2, 4).map((point, idx) => (
+                <div
+                  key={idx}
+                  ref={rightSubPointsRefs[idx]}
+                  className="flex items-center gap-2 text-sm md:text-lg lg:text-xl text-gray-300"
+                >
+                  <div className="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 border border-[#d0ed01] rounded-sm flex items-center justify-center flex-shrink-0">
+                    <svg
+                      className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                        fill="#d0ed01"
+                      />
+                    </svg>
+                  </div>
+                  <span className="whitespace-normal text-left">{point}</span>
+                </div>
+              ))}
             </div>
             
             {/* Gradient overlay */}

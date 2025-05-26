@@ -40,6 +40,12 @@ const avatars = [
   },
 ];
 
+type AvatarStyle = {
+  opacity: number;
+  transform?: string;
+  transition: string;
+};
+
 const CommunitySection = () => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const logoRef = useRef<HTMLImageElement | null>(null);
@@ -87,9 +93,10 @@ const CommunitySection = () => {
   }, []);
 
   // Avatar positions for animation
-  const getAvatarStyle = (i: number, avatar: typeof avatars[0]): React.CSSProperties => {
-    if (!avatarsVisible) return { opacity: 0 };
+  const getAvatarStyle = (i: number, avatar: typeof avatars[0]): AvatarStyle => {
+    if (!avatarsVisible) return { opacity: 0, transition: 'all 0.8s cubic-bezier(0.4,0,0.2,1)' };
     if (!avatarsAnimating) return { opacity: 1, transition: 'all 0.8s cubic-bezier(0.4,0,0.2,1)' };
+    
     // Animate to logo center
     const avatarDiv = document.getElementById(`avatar-${i}`);
     if (avatarDiv && sectionRef.current) {
@@ -102,7 +109,7 @@ const CommunitySection = () => {
       const dx = logoCenter.x - avatarCenter.x;
       const dy = logoCenter.y - avatarCenter.y;
       return {
-        transform: `translate(${dx}px, ${dy}px) scale(0.2)` as string,
+        transform: `translate(${dx}px, ${dy}px) scale(0.2)`,
         opacity: 0,
         transition: 'all 0.8s cubic-bezier(0.4,0,0.2,1)',
       };
@@ -155,8 +162,8 @@ const CommunitySection = () => {
             <span className="inline-block transform transition-transform duration-300 group-hover:translate-x-1">→</span>
           </button>
         </div>
-        <div className="flex justify-center mt-8">
-          <img ref={logoRef} src="\images\icon.png" alt="Logo" className="w-32 h-32 object-contain" style={{ background: 'transparent' }} />
+        <div className="flex justify-center mt-[300px]">
+          <img ref={logoRef} src="/images/icon.png" alt="Logo" className="w-32 h-32 object-contain" style={{ background: 'transparent' }} />
         </div>
       </div>
     </section>
