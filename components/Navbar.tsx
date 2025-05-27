@@ -54,6 +54,7 @@ const Navbar = () => {
               <Link href="https://launch.symbiotes.ai/" onClick={handleLinkClick} className="text-gray-300 font-bold text-lg hover:text-[#d0ed01] transition-colors">Launch 0{'->'}1</Link>
               <Link href="#Incubator" onClick={handleLinkClick} className="text-gray-300 font-bold text-lg hover:text-[#d0ed01] transition-colors">Incubator</Link>
               <Link href="#community" onClick={handleLinkClick} className="text-gray-300 font-bold text-lg hover:text-[#d0ed01] transition-colors">Community</Link>
+              <Link href="/services" onClick={handleLinkClick} className="text-gray-300 font-bold text-lg hover:text-[#d0ed01] transition-colors">Services</Link>
               <Link href="#contact" onClick={handleLinkClick} className="text-gray-300 font-bold text-lg hover:text-[#d0ed01] transition-colors">Contact us</Link>
             </div>
           </div>
@@ -108,6 +109,7 @@ const Navbar = () => {
             <Link href="https://launch.symbiotes.ai/" onClick={handleLinkClick} className="block px-3 py-2 text-gray-300 font-bold text-lg hover:text-[#d0ed01] transition-colors">Launch 0{'->'}1</Link>
             <Link href="#Incubator" onClick={handleLinkClick} className="block px-3 py-2 text-gray-300 font-bold text-lg hover:text-[#d0ed01] transition-colors">Incubator</Link>
             <Link href="#community" onClick={handleLinkClick} className="block px-3 py-2 text-gray-300 font-bold text-lg hover:text-[#d0ed01] transition-colors">Community</Link>
+            <Link href="/services" onClick={handleLinkClick} className="block px-3 py-2 text-gray-300 font-bold text-lg hover:text-[#d0ed01] transition-colors">Services</Link>
             <Link href="#contact" onClick={handleLinkClick} className="block px-3 py-2 text-gray-300 font-bold text-lg hover:text-[#d0ed01] transition-colors">Contact us</Link>
             <div className="flex flex-row justify-center mt-4 relative min-w-[220px]">
               <div className="relative flex w-[200px] h-[44px] bg-black rounded-full border-4 border-[#d0ed01] overflow-hidden">

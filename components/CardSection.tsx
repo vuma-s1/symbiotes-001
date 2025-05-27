@@ -200,8 +200,8 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
     // Create a timeline for better control
     const tl = gsap.timeline({
       defaults: {
-        ease: "power3.out",
-        duration: 0.8
+        ease: "power2.out",
+        duration: 0.6
       }
     });
 
@@ -210,10 +210,10 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
       if (ref.current) {
         gsap.set(ref.current, { 
           opacity: 0, 
-          y: 50,
-          x: -30,
-          scale: 0.8,
-          rotation: -5
+          y: 30,
+          x: -20,
+          scale: 0.9,
+          rotation: -3
         });
       }
     });
@@ -221,10 +221,10 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
       if (ref.current) {
         gsap.set(ref.current, { 
           opacity: 0, 
-          y: 50,
-          x: 30,
-          scale: 0.8,
-          rotation: 5
+          y: 30,
+          x: 20,
+          scale: 0.9,
+          rotation: 3
         });
       }
     });
@@ -247,8 +247,9 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
         scale: 1,
         rotation: 0,
         stagger: {
-          amount: 0.4,
-          from: "start"
+          amount: 0.3,
+          from: "start",
+          ease: "power2.out"
         },
         clearProps: "all"
       });
@@ -263,19 +264,20 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
         scale: 1,
         rotation: 0,
         stagger: {
-          amount: 0.4,
-          from: "start"
+          amount: 0.3,
+          from: "start",
+          ease: "power2.out"
         },
         clearProps: "all"
-      }, "-=0.6"); // Start slightly before the left side finishes
+      }, "-=0.2"); // Start slightly before the left side finishes
     }
 
     // Add a subtle hover animation for all sub-points
     const allRefs = [...validLeftRefs, ...validRightRefs];
     allRefs.forEach(ref => {
       gsap.to(ref, {
-        y: -5,
-        duration: 1.5,
+        y: -3,
+        duration: 2,
         repeat: -1,
         yoyo: true,
         ease: "power1.inOut"
