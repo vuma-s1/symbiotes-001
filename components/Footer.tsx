@@ -5,6 +5,7 @@ import { FaInstagram, FaXTwitter, FaYoutube } from 'react-icons/fa6';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Link from 'next/link';
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -86,16 +87,11 @@ const Footer = () => {
           {/* Logo and Description replaced with image and button */}
           <div className="footer-section flex flex-col items-center justify-center col-span-1 md:col-span-1 pt-0">
             <img src="/images/logo.png" alt="symbiotes.ai logo and tagline" className="mb-4 w-auto h-16 mx-auto" />
-            <a
-              href="https://calendly.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mx-auto block"
-            >
+            <Link href="/book-call" className="mx-auto block">
               <button className="bg-[#d0ed01] text-black px-6 py-2 rounded-full font-bold text-base hover:bg-white transition-colors shadow-md mt-2">
                 Book a Call
               </button>
-            </a>
+            </Link>
           </div>
 
           {/* Products */}

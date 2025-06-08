@@ -5,6 +5,7 @@ import { Shuffle } from 'lucide-react';
 import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Link from 'next/link';
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -376,22 +377,16 @@ const SectionTwo = () => {
                 Conquer your 0-to-1 Journey & Get It Right the First Time
             </h1>
             <p className="text-base sm:text-lg lg:text-xl max-w-[600px] mx-auto text-white mb-2 sm:mb-3 break-words">
-            You have the vision. But 99% of startups stall.
-            Symbiotes.ai is your AI co-pilot, built for founders.
-            Get your strategic launch blueprint and master PMF.
-            Launch smarter, faster — and get it right the first time.
-
-
+              You have the vision. But 99% of startups stall.
+              Symbiotes.ai is your AI co-pilot, built for founders.
+              Get your strategic launch blueprint and master PMF.
+              Launch smarter, faster — and get it right the first time.
             </p>
-            <a 
-              href="https://calendly.com/your-calendly-link" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-block px-6 sm:px-8 py-3 sm:py-4 bg-[#d0ed01] text-black font-bold rounded-lg hover:bg-[[#d0ed22] transition-all duration-300 shadow-lg hover:shadow-[0_0_20px_rgba(208,237,1,0.5)] hover:scale-105 text-sm sm:text-base max-w-full"
-              style={{wordBreak: 'break-word'}}
-            >
-              Book a Call
-            </a>
+            <Link href="/book-call" className="mx-auto block">
+              <button className="bg-[#d0ed01] text-black px-6 py-2 rounded-full font-bold text-base shadow-md mt-2 transition-all duration-200 hover:bg-white hover:scale-110 hover:shadow-[0_0_24px_4px_#d0ed01] focus:outline-none">
+                Book a Call
+              </button>
+            </Link>
           </div>
 
           {/* Right Images (Bottom on mobile) */}
