@@ -1,13 +1,74 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
-const faqs = [
+const Stars = () => {
+  const starsRef = useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const createStars = () => {
+      const starsContainer = starsRef.current;
+      if (!starsContainer) return;
+
+      // Clear existing stars
+      starsContainer.innerHTML = '';
+
+      // Create multiple stars
+      for (let i = 0; i < 100; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        // Random position
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        
+        // Random size
+        const size = Math.random() * 2 + 1;
+        
+        // Random animation duration
+        const duration = Math.random() * 3 + 2;
+        
+        star.style.cssText = `
+          position: absolute;
+          left: ${x}%;
+          top: ${y}%;
+          width: ${size}px;
+          height: ${size}px;
+          background: white;
+          border-radius: 50%;
+          opacity: ${Math.random()};
+          animation: twinkle ${duration}s infinite;
+        `;
+        
+        starsContainer.appendChild(star);
+      }
+    };
+
+    createStars();
+  }, []);
+
+  return (
+    <div 
+      ref={starsRef} 
+      className="absolute inset-0 w-full h-full z-10"
+      style={{
+        background: 'radial-gradient(circle at center, rgba(0,0,0,0) 0%, rgba(0, 0, 0, 0.37) 100%)'
+      }}
+    />
+  );
+};
+
+interface FAQ {
+  question: string;
+  answer: string;
+}
+
+const faqs: FAQ[] = [
   {
     question: "Is this just another info product or course?",
     answer: "Nope. Symbiotes is a system — not just content. You get a personalized launch blueprint, real tools, and ongoing support to help you actually execute."
@@ -54,41 +115,47 @@ const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
-  useEffect(() => {
+  React.useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes twinkle {
+        0% { opacity: 0.2; }
+        50% { opacity: 1; }
+        100% { opacity: 0.2; }
+      }
+    `;
+    document.head.appendChild(style);
+
     if (sectionRef.current) {
-      const section = sectionRef.current;
-      
-      // Create the animation
       gsap.fromTo(
-        section.querySelectorAll('.faq-item'),
-        {
-          y: 100,
-          opacity: 0,
-        },
+        sectionRef.current.querySelectorAll('.faq-item'),
+        { y: 50, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 1,
-          stagger: 0.2,
-          ease: "power3.out",
+          duration: 0.8,
+          stagger: 0.15,
+          ease: "power2.out",
           scrollTrigger: {
-            trigger: section,
-            start: "top 80%",
-            end: "bottom 20%",
-            toggleActions: "play none none reverse"
+            trigger: sectionRef.current,
+            start: "top 85%",
+            end: "bottom 15%",
+            toggleActions: "play none none none",
+            once: true
           }
         }
       );
     }
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      document.head.removeChild(style);
+    };
   }, []);
 
-  const handleToggle = (idx: number) => {
-    setOpenIndex(openIndex === idx ? null : idx);
-  };
-
   return (
-    <section ref={sectionRef} className="py-20 bg-black min-h-screen">
-      <div className="max-w-6xl mx-auto px-4">
+    <section ref={sectionRef} className="relative py-20 bg-black min-h-screen overflow-hidden overflow-x-hidden">
+      <div className="relative max-w-6xl mx-auto px-4">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text">
           Frequently Asked Questions
         </h2>
@@ -96,8 +163,9 @@ const FAQSection = () => {
           {faqs.map((faq, idx) => (
             <div key={idx} className="faq-item border-b border-gray-700 py-4">
               <button
-                className="w-full flex items-center justify-between focus:outline-none"
-                onClick={() => handleToggle(idx)}
+                type="button"
+                className="w-full flex items-center justify-between focus:outline-none hover:opacity-80 transition-opacity duration-200 cursor-pointer"
+                onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
               >
                 <span className="text-lg font-semibold text-white text-left">
                   {faq.question}
@@ -112,11 +180,15 @@ const FAQSection = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              {openIndex === idx && (
-                <div className="mt-3 text-gray-400 text-base animate-fade-in">
+              <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                  openIndex === idx ? 'max-h-40 opacity-100 mt-3' : 'max-h-0 opacity-0'
+                }`}
+              >
+                <p className="text-gray-400 text-base">
                   {faq.answer}
-                </div>
-              )}
+                </p>
+              </div>
             </div>
           ))}
         </div>

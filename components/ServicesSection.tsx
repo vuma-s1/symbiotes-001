@@ -1,52 +1,148 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
-import { gsap } from 'gsap';
+import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-// Register the ScrollTrigger plugin
+// Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
+
+const MOBILE_BREAKPOINT = 768;
+
+export function useIsMobile() {
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    };
+    
+    // Initial check
+    checkMobile();
+    
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  return isMobile;
+}
 
 const stepData = [
   {
     stat: '',
-    headline: 'Nail Your Coordinates (Validate & Strategize)',
+    headline: '(Validate & Strategize)',
     title: 'Nail Your Coordinates',
     description: 'Ground your passion in data. We guide you through rigorously validating your core assumptions, defining your target customer with precision, leveraging AI to truly understand the market landscape, and confirming Product-Market Fit before you burn precious fuel. Build on solid ground.',
-    extra: [
-      // Add bullet points here if you want
-    ],
+    extra: [],
     image: 'https://cdn-icons-png.flaticon.com/512/1925/1925081.png', // Data Analysis and Strategy icon
   },
   {
     stat: '',
-    headline: 'Design Your Mission Architecture (Plan & Blueprint)',
+    headline: '(Plan & Blueprint)',
     title: 'Design Your Mission Architecture',
     description: 'Translate validated strategy into an actionable flight plan. Receive your comprehensive Business Blueprint covering branding, positioning, online presence, content strategy, lead generation tactics tuned for frugal startups, and a detailed, de-risked launch sequence. Know your maneuvers.',
-    extra: [
-      // Add bullet points here if you want
-    ],
+    extra: [],
     image: 'https://cdn-icons-png.flaticon.com/512/1925/1925083.png', // Business Planning and Architecture icon
   },
   {
     stat: '',
-    headline: 'Execute with Precision (Launch & Iterate)',
-    title: 'Execute with Precision',
-    description: 'Take command! Your blueprint feeds the Symbiotes Launchpad (Mission Control), guiding daily actions, tracking vital signs (KPIs), coordinating your crew, automating workflows, and ensuring you stay on top of execution. Achieve lift-off, gather intel (feedback), and fuel your next growth stage.',
-    extra: [
-      // Add bullet points here if you want
-    ],
-    image: 'https://cdn-icons-png.flaticon.com/512/1925/1925085.png', // Execution and Launch icon
+    headline: '(Launch & Iterate)',
+    title: 'Execute with Precision.',
+    description: "The Symbiotes Launchpad is your command center. It's where strategy meets execution. Track your progress, manage resources, and make data-driven decisions. Every feature is designed to keep your launch on track and aligned with your goals.",
+    extra: [],
+    image: "/images/Execution and Launch.svg"
   },
 ];
+
+const Stars = () => {
+  const starsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const createStars = () => {
+      const starsContainer = starsRef.current;
+      if (!starsContainer) return;
+
+      // Clear existing stars
+      starsContainer.innerHTML = '';
+
+      // Create multiple stars
+      for (let i = 0; i < 100; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        // Random position
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        
+        // Random size
+        const size = Math.random() * 2 + 1;
+        
+        // Random animation duration
+        const duration = Math.random() * 3 + 2;
+        
+        star.style.cssText = `
+          position: absolute;
+          left: ${x}%;
+          top: ${y}%;
+          width: ${size}px;
+          height: ${size}px;
+          background: white;
+          border-radius: 50%;
+          opacity: ${Math.random()};
+          animation: twinkle ${duration}s infinite;
+        `;
+        
+        starsContainer.appendChild(star);
+      }
+    };
+
+    createStars();
+  }, []);
+
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes twinkle {
+        0% {
+          opacity: 0.2;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0.2;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
+  return (
+    <div
+      ref={starsRef}
+      className="absolute inset-0 w-full h-full z-0"
+      style={{
+        background: 'radial-gradient(circle at center, rgba(0,0,0,0) 0%, rgba(0, 0, 0, 0.37) 100%)'
+      }}
+    />
+  );
+};
 
 const ServicesSection = () => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const stepsRefs = useRef<HTMLDivElement[]>([]);
-  const [isVisible, setIsVisible] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useIsMobile();
   const [currentStep, setCurrentStep] = useState(0);
+  const [mounted, setMounted] = useState(false);
+  const [cardsVisible, setCardsVisible] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Initialize refs array
   useEffect(() => {
@@ -57,20 +153,33 @@ const ServicesSection = () => {
     }
   }, []);
 
-  // Check if device is mobile
+  // Mobile animation observer
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+    if (!isMobile || !sectionRef.current || !mounted) return;
+    
+    // Create intersection observer for mobile animation
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setCardsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    
+    observer.observe(sectionRef.current);
+    
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
     };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  }, [isMobile, mounted]);
 
-  // GSAP Animation Setup
+  // GSAP Animation Setup for desktop
   useEffect(() => {
+    if (!mounted) return;
+    
     const section = sectionRef.current;
     const container = containerRef.current;
     if (!section || !container || isMobile) return;
@@ -82,12 +191,12 @@ const ServicesSection = () => {
         scrollTrigger: {
           trigger: section,
           start: 'top 30%',
-          end: '+=' + (stepData.length * 70) + '%',
+          end: `+=${stepData.length * 70}%`,
           pin: true,
           pinSpacing: true,
           scrub: 1,
           markers: false,
-          onUpdate: (self: any) => {
+          onUpdate: (self: ScrollTrigger) => {
             const progress = self.progress;
             const stepIndex = Math.floor(progress * stepData.length);
             setCurrentStep(Math.min(stepIndex, stepData.length - 1));
@@ -150,11 +259,17 @@ const ServicesSection = () => {
       });
       ctx.revert();
     };
-  }, [isMobile]);
+  }, [isMobile, mounted]);
+
+  if (!mounted) {
+    return null; // or a loading state
+  }
 
   return (
-    <section id="services" className="py-10 md:py-20 bg-[#111] min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12" ref={containerRef}>
+    <section id="services" className="py-10 md:py-20 bg-black min-h-screen relative overflow-hidden">
+      {/* Stars Background */}
+      <Stars />
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 relative z-10" ref={containerRef}>
         <div className="text-center mb-8 md:mb-16">
           <h2 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text mb-4">
             Our Services
@@ -164,7 +279,7 @@ const ServicesSection = () => {
           </p>
         </div>
         
-        {/* Mobile View - Vertical Stack */}
+        {/* Mobile View - Vertical Stack with all cards visible */}
         {isMobile ? (
           <div 
             ref={sectionRef}
@@ -173,9 +288,7 @@ const ServicesSection = () => {
             {stepData.map((step, index) => (
               <div 
                 key={index} 
-                className={`transform transition-all duration-700 ${
-                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                }`}
+                className="transition-all duration-700 opacity-100 translate-y-0"
                 style={{ transitionDelay: `${index * 200}ms` }}
               >
                 <div className="w-full bg-[#181818] rounded-2xl shadow-2xl p-6 flex flex-col items-center">
@@ -185,11 +298,11 @@ const ServicesSection = () => {
                   <img
                     src={step.image}
                     alt={step.title}
-                    className="w-[180px] h-[180px] sm:w-[200px] sm:h-[200px] object-cover rounded-2xl mb-6"
+                    className="w-28 h-28 sm:w-32 sm:h-32 object-contain rounded-2xl mb-6"
                   />
                   <div className="w-full">
                     <div className="flex flex-col items-center gap-2 mb-4">
-                      <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text text-center">
+                      <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text text-center">
                         {step.headline}
                       </span>
                     </div>
@@ -220,7 +333,7 @@ const ServicesSection = () => {
             {stepData.map((step, index) => (
               <div
                 key={index}
-                ref={el => {
+                ref={(el: HTMLDivElement | null) => {
                   if (el) stepsRefs.current[index] = el;
                 }}
                 className="absolute top-0 left-0 w-full"

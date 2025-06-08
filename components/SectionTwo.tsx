@@ -4,6 +4,67 @@ import { useEffect, useRef, useState } from 'react';
 import { Shuffle } from 'lucide-react';
 import Image from 'next/image';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Link from 'next/link';
+
+// Register ScrollTrigger plugin
+gsap.registerPlugin(ScrollTrigger);
+
+const Stars = () => {
+  const starsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const createStars = () => {
+      const starsContainer = starsRef.current;
+      if (!starsContainer) return;
+
+      // Clear existing stars
+      starsContainer.innerHTML = '';
+
+      // Create multiple stars
+      for (let i = 0; i < 100; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        // Random position
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        
+        // Random size
+        const size = Math.random() * 2 + 1;
+        
+        // Random animation duration
+        const duration = Math.random() * 3 + 2;
+        
+        star.style.cssText = `
+          position: absolute;
+          left: ${x}%;
+          top: ${y}%;
+          width: ${size}px;
+          height: ${size}px;
+          background: white;
+          border-radius: 50%;
+          opacity: ${Math.random()};
+          animation: twinkle ${duration}s infinite;
+        `;
+        
+        starsContainer.appendChild(star);
+      }
+    };
+
+    createStars();
+  }, []);
+
+  return (
+    <div 
+      ref={starsRef} 
+      className="absolute inset-0 w-full h-full z-10"
+      style={{
+        background: 'radial-gradient(circle at center, rgba(0,0,0,0) 0%, rgba(0, 0, 0, 0.37) 100%)'
+      }}
+    />
+  );
+};
 
 const SectionTwo = () => {
   // Add keyframes for the pulse animation
@@ -26,6 +87,18 @@ const SectionTwo = () => {
       }
       .animate-pulse-subtle {
         animation: pulse-subtle 2s ease-in-out infinite;
+      }
+
+      @keyframes twinkle {
+        0% {
+          opacity: 0.2;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0.2;
+        }
       }
     `;
     document.head.appendChild(style);
@@ -147,7 +220,25 @@ const SectionTwo = () => {
       gsap.killTweensOf(leftImages);
       gsap.killTweensOf(rightImages);
     };
-  }, [isActive]); // Add isActive as dependency
+  }, [isActive]);
+
+  useEffect(() => {
+    // Animate images in sequence on section enter
+    const allImages = document.querySelectorAll('.hero-img');
+    gsap.set(allImages, { opacity: 0, scale: 0.8 });
+    gsap.to(allImages, {
+      opacity: 1,
+      scale: 1,
+      duration: 0.7,
+      stagger: 0.3,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: blueRectRef.current,
+        start: 'top 70%',
+        once: true,
+      },
+    });
+  }, []);
 
   const shuffleArray = (array: Element[]) => {
     const newArray = [...array];
@@ -158,7 +249,7 @@ const SectionTwo = () => {
     return newArray;
   };
 
-  const handleShuffle = (e: React.MouseEvent) => {
+  const handleShuffle = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const leftContainer = document.querySelector('.hero-left');
     const rightContainer = document.querySelector('.hero-right');
@@ -172,7 +263,7 @@ const SectionTwo = () => {
     }
   };
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = blueRectRef.current?.getBoundingClientRect();
     if (rect) {
       const isInsideRect = 
@@ -222,10 +313,13 @@ const SectionTwo = () => {
 
   return (
     <section className="relative flex items-center justify-center min-h-screen w-full bg-black overflow-x-hidden py-6 sm:py-0 px-4 sm:px-0">
+      {/* Stars Background */}
+      <Stars />
+      
       {/* Blue Rectangle Background */}
       <div
         ref={blueRectRef}
-        className="relative sm:absolute sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full sm:w-[97.5vw] h-auto sm:h-[90vh] border-[1.5px] border-[#6248ff] rounded-3xl overflow-hidden cursor-none transition-all duration-300 backdrop-blur-md bg-black/30 flex flex-col justify-center items-center py-8 sm:py-0"
+        className="relative sm:absolute sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full sm:w-full h-auto sm:h-[90vh] border-[1.5px] border-[#6248ff] rounded-3xl overflow-hidden cursor-none transition-all duration-300 backdrop-blur-md bg-black/30 flex flex-col justify-center items-center py-8 sm:py-0 max-w-[1600px] mx-auto"
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
@@ -285,15 +379,11 @@ const SectionTwo = () => {
             <p className="text-base sm:text-lg lg:text-xl max-w-[600px] mx-auto text-white mb-2 sm:mb-3 break-words">
             You have the passion, the vision. But 99% of ventures stall. Symbiotes.ai is your strategic co-pilot, transforming that fire into a focused launch. Get your AI-powered flight plan, master Product Market Fitment, and navigate the critical early stages with a system built to beat the odds.
             </p>
-            <a 
-              href="https://calendly.com/your-calendly-link" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-block px-6 sm:px-8 py-3 sm:py-4 bg-[#d0ed01] text-black font-bold rounded-lg hover:bg-[[#d0ed22] transition-all duration-300 shadow-lg hover:shadow-[0_0_20px_rgba(208,237,1,0.5)] hover:scale-105 text-sm sm:text-base max-w-full"
-              style={{wordBreak: 'break-word'}}
-            >
-              Book a Call
-            </a>
+            <Link href="/book-call" className="mx-auto block">
+              <button className="bg-[#d0ed01] text-black px-6 py-2 rounded-full font-bold text-base shadow-md mt-2 transition-all duration-200 hover:bg-white hover:scale-110 hover:shadow-[0_0_24px_4px_#d0ed01] focus:outline-none">
+                Book a Call
+              </button>
+            </Link>
           </div>
 
           {/* Right Images (Bottom on mobile) */}
@@ -310,7 +400,7 @@ const SectionTwo = () => {
               onMouseLeave={handleImageLeave}
             />
             <Image 
-              src="\images\icon4.png" 
+              src="/images/icon4.png" 
               className={`hero-img w-[100px] sm:w-[150px] lg:w-[180px] rounded-xl opacity-100 scale-100 transition-all duration-700 ease-in-out lg:-ml-5 ${
                 hoveredImage === 'right2' ? 'scale-150 z-10' : ''
               }`} 
@@ -339,9 +429,9 @@ const SectionTwo = () => {
       <div className="absolute z-20" style={{left: 'calc(4% + 0.5rem)', bottom: '2.5%'}}>
         <button
           onClick={handleShuffle}
-          className="flex items-center gap-2 bg-[#d0ed01] text-black rounded-lg px-7 py-3 font-bold text-lg shadow-xl hover:bg-[#b6e600] transition-colors duration-200 "
+          className="flex items-center gap-2 bg-[#d0ed01] text-black rounded-lg px-7 py-3 font-bold text-lg shadow-xl hover:bg-[#b6e600] transition-colors duration-200"
         >
-          <Shuffle className="w-6 h-6" />
+          <Shuffle size={24} />
           <span>Shuffle</span>
         </button>
       </div>
@@ -363,9 +453,6 @@ const SectionTwo = () => {
           </svg>
         </span>
       </div>
-
-      {/* Floating Cursors */}
-      {/* Removed Jessica and Mario floating cursor images */}
     </section>
   );
 };
