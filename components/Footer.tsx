@@ -5,6 +5,7 @@ import { FaInstagram, FaXTwitter, FaYoutube } from 'react-icons/fa6';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Link from 'next/link';
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -16,50 +17,67 @@ const Footer = () => {
     if (footerRef.current) {
       const footer = footerRef.current;
       
-      // Animate the main content sections
+      // Animate the main content sections with refined settings
       gsap.fromTo(
         footer.querySelectorAll('.footer-section'),
         {
-          x: -100,
+          y: 20,
           opacity: 0,
+          scale: 0.98
         },
         {
-          x: 0,
+          y: 0,
           opacity: 1,
-          duration: 1,
-          stagger: 0.2,
-          ease: "power3.out",
+          scale: 1,
+          duration: 0.6,
+          stagger: {
+            amount: 0.8,
+            from: "start",
+            ease: "power2.out"
+          },
+          ease: "power2.out",
           scrollTrigger: {
             trigger: footer,
-            start: "top 90%",
-            end: "bottom 20%",
-            toggleActions: "play none none reverse"
+            start: "top 85%",
+            end: "bottom 15%",
+            toggleActions: "play none none reverse",
+            markers: false,
+            scrub: false,
+            invalidateOnRefresh: true
           }
         }
       );
 
-      // Animate the copyright section
+      // Animate the copyright section with refined settings
       gsap.fromTo(
         footer.querySelector('.copyright-section'),
         {
-          y: 50,
+          y: 15,
           opacity: 0,
         },
         {
           y: 0,
           opacity: 1,
-          duration: 1,
-          delay: 0.5,
-          ease: "power3.out",
+          duration: 0.5,
+          delay: 0.2,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: footer,
-            start: "top 90%",
-            end: "bottom 20%",
-            toggleActions: "play none none reverse"
+            start: "top 85%",
+            end: "bottom 15%",
+            toggleActions: "play none none reverse",
+            markers: false,
+            scrub: false,
+            invalidateOnRefresh: true
           }
         }
       );
     }
+
+    // Cleanup function to kill ScrollTrigger instances
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
   }, []);
 
   return (
@@ -69,16 +87,11 @@ const Footer = () => {
           {/* Logo and Description replaced with image and button */}
           <div className="footer-section flex flex-col items-center justify-center col-span-1 md:col-span-1 pt-0">
             <img src="/images/logo.png" alt="symbiotes.ai logo and tagline" className="mb-4 w-auto h-16 mx-auto" />
-            <a
-              href="https://calendly.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mx-auto block"
-            >
+            <Link href="/book-call" className="mx-auto block">
               <button className="bg-[#d0ed01] text-black px-6 py-2 rounded-full font-bold text-base hover:bg-white transition-colors shadow-md mt-2">
                 Book a Call
               </button>
-            </a>
+            </Link>
           </div>
 
           {/* Products */}
