@@ -87,11 +87,11 @@ const HeroSection = () => {
         const isLeft = i < 3
         let leftPosition = isMobile 
           ? (isLeft ? "10%" : "90%") 
-          : (isLeft ? "20%" : "65%")
+          : (isLeft ? "30%" : "70%")
 
-        // Nudge the right-side third card (index 5: "Scale") further left
+        // Nudge the right-side third card (index 5: "Scale") further left for clear visibility
         if (!isLeft && i === 5) {
-          leftPosition = isMobile ? "81%" : "54%"
+          leftPosition = isMobile ? "90%" : "62%"
         }
 
         gsap.set(el, { left: leftPosition })
@@ -214,6 +214,11 @@ const HeroSection = () => {
           // Right side: Position (3), Launch (4), Scale (5)
           const isLeft = index < 3
           const sideIndex = isLeft ? index : index - 3
+          // Default desktop-aligned left positions to make effect immediately visible
+          let initialLeft = isLeft ? "30%" : "70%"
+          if (!isLeft && index === 5) {
+            initialLeft = typeof window !== 'undefined' && window.innerWidth < 640 ? "90%" : "62%"
+          }
           
           return (
             <div
@@ -223,13 +228,13 @@ const HeroSection = () => {
               }}
               className="absolute"
               style={{
-                left: isLeft ? "10%" : "90%",
+                left: initialLeft,
                 top: `${35 + sideIndex * 12}vh`,
                 transform: "translate(-50%, -50%)",
                 willChange: "transform, opacity",
               }}
               data-mobile-left={isLeft ? "10%" : "90%"}
-              data-desktop-left={isLeft ? "20%" : "65%"}
+              data-desktop-left={isLeft ? "30%" : "70%"}
             >
               <div className="bg-black/80 backdrop-blur-sm border border-[#d0ed01] rounded-lg p-2 sm:p-3 min-w-[120px] sm:min-w-[160px] max-w-[150px] sm:max-w-none text-center">
                 <div className="w-2 h-2 bg-[#d0ed01] rounded-full mx-auto mb-1 sm:mb-2 animate-pulse"></div>
