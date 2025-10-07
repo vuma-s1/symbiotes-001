@@ -118,7 +118,7 @@ const CommunitySection = () => {
   };
 
   return (
-    <section ref={sectionRef} className="relative py-24 overflow-visible min-h-screen flex items-center justify-center" style={{
+    <section ref={sectionRef} aria-labelledby="community-heading" className="relative py-24 overflow-visible min-h-screen flex items-center justify-center" style={{
       backgroundImage: 'url("/images/background.png")',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
@@ -126,7 +126,7 @@ const CommunitySection = () => {
       backgroundColor: 'black', // fallback for slow loads
     }}>
       {/* Floating Avatars */}
-      <div className="absolute inset-0 pointer-events-none select-none">
+      <div className="absolute inset-0 pointer-events-none select-none" aria-hidden="true">
         {avatars.map((avatar, i) => (
           <div
             key={i}
@@ -137,7 +137,9 @@ const CommunitySection = () => {
             <div className={`rounded-full ${avatar.color} ${avatar.size} flex items-center justify-center shadow-lg`}>
               <img
                 src={avatar.src}
-                alt="avatar"
+                alt=""
+                loading="lazy"
+                decoding="async"
                 className="rounded-full object-cover w-full h-full border-4 border-white"
               />
             </div>
@@ -147,7 +149,7 @@ const CommunitySection = () => {
 
       {/* Center Content */}
       <div className="max-w-3xl mx-auto flex flex-col items-center justify-center text-center relative z-20 px-4">
-        <h1 className="text-3xl md:text-4xl font-extrabold mb-14 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-[#d0ed01] to-[#b6e600]">
+        <h1 className="text-2xl md:text-3xl font-extrabold mb-14 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-[#d0ed01] to-[#b6e600]">
           The Symbiotes Growth Crew
         </h1>
         <p className="text-gray-400 text-lg mb-10 max-w-xl">
@@ -163,7 +165,7 @@ const CommunitySection = () => {
           </button>
         </div>
         <div className="flex justify-center mt-[300px]">
-          <img ref={logoRef} src="/images/icon.png" alt="Logo" className="w-32 h-32 object-contain" style={{ background: 'transparent' }} />
+          <img ref={logoRef} src="/images/icon.png" alt="Symbiotes logo" className="w-32 h-32 object-contain" style={{ background: 'transparent' }} />
         </div>
       </div>
     </section>

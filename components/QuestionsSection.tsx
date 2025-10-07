@@ -116,7 +116,7 @@ const QuestionsSection = () => {
           <div className="flex justify-center mb-4">
             <img src="/images/icon.png" alt="Symbiotes Icon" className="w-12 h-12 sm:w-16 sm:h-16 object-contain" />
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2 text-center">Symbiotes AI Chat</h2>
+          <h2 className="text-lg sm:text-xl font-bold text-white mb-2 text-center">Symbiotes AI Chat</h2>
           <p className="text-base sm:text-lg text-gray-200 mb-4 sm:mb-6 text-center">Start writing to create with Symbiotes AI Chat.</p>
           <form className="w-full max-w-lg flex flex-col items-center gap-3">
             <div className="flex flex-col sm:flex-row w-full items-center gap-2 justify-center">
@@ -181,7 +181,7 @@ const QuestionsSection = () => {
               WebkitBackdropFilter: 'blur(32px) saturate(180%)',
             }}
           >
-            <h2 className="text-3xl font-bold text-white mb-6">What's your name?</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-white mb-6">What's your name?</h2>
             <form className="space-y-6">
               <div>
                 <input
@@ -215,7 +215,7 @@ const QuestionsSection = () => {
               WebkitBackdropFilter: 'blur(32px) saturate(180%)',
             }}
           >
-            <h2 className="text-3xl font-bold text-white mb-6">Tell us about yourself</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-white mb-6">Tell us about yourself</h2>
             <form className="space-y-6">
               <div>
                 <label className="block text-white text-sm mb-2">What best describes you?</label>
@@ -261,7 +261,7 @@ const QuestionsSection = () => {
               WebkitBackdropFilter: 'blur(32px) saturate(180%)',
             }}
           >
-            <h2 className="text-3xl font-bold text-white mb-6">Which role best describes you?</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-white mb-6">Which role best describes you?</h2>
             <p className="text-white text-base mb-4">If you're multi-talented, pick what you do most often.</p>
             <div className="grid grid-cols-2 gap-2 mb-4">
               {['UX Writing', 'Product management', 'Educator', 'Research', 'Software development', 'Marketing', 'Data analytics', 'Design', 'Student', 'Other'].map((role) => (
@@ -302,7 +302,7 @@ const QuestionsSection = () => {
               WebkitBackdropFilter: 'blur(32px) saturate(180%)',
             }}
           >
-            <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#d0ed01] via-white to-[#baff39] bg-clip-text text-transparent">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-[#d0ed01] via-white to-[#baff39] bg-clip-text text-transparent">
               Take control of your destiny. Launch smart, launch strong, and build the future you envision.
             </h2>
           </div>

@@ -332,55 +332,21 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
 
   return (
     <>
-      <section className={cn('w-full min-h-[60vh] flex items-center justify-center bg-black py-16 px-2 sm:px-6 relative', className)}>
-        {/* Stars Background */}
-        <Stars />
-        <div className="max-w-7xl w-full mx-auto flex flex-col md:flex-row items-center justify-center rounded-[2.5rem] bg-black shadow-2xl p-4 sm:p-8 md:p-16 border border-[#222] relative z-10">
-          {/* Illustration/graphic left side */}
-          <div className="flex-1 flex items-center justify-center mb-8 md:mb-0 md:mr-12">
-            <div className="relative w-80 h-80 md:w-[28rem] md:h-[28rem] flex items-center justify-center bg-[#111] rounded-3xl">
-              <img
-                src="/images/image.png"
-                alt="Integration Illustration"
-                className="w-64 h-64 md:w-96 md:h-96 object-contain mx-auto"
-              />
-            </div>
-          </div>
-          {/* Content right side */}
-          <div className="flex-1 flex flex-col items-center justify-center text-left w-full">
-            <h2 className="text-xl md:text-3xl font-bold mb-4 bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text w-full text-center mx-auto">
-              Your Launch Doesn't Need Guesswork — It Needs a Proven Structure
-            </h2>
-            <ul className="text-gray-300 text-base md:text-lg mb-8 max-w-lg space-y-4">
-              <li className="flex items-start gap-3">
-                <span className="mt-1 text-[#d0ed01]">
-                  <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#d0ed01" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                </span>
-                <span>Most founders don't fail because they lack effort — they fail because they lack a real system.</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="mt-1 text-[#d0ed01]">
-                  <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#d0ed01" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                </span>
-                <span>Without structure, launches waste time, energy, and momentum.</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="mt-1 text-[#d0ed01]">
-                  <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#d0ed01" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                </span>
-                <span>Symbiotes solves this by mapping 7 proven stages used in over 100 successful launches — so you move faster, smarter, and with confidence.</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="mt-1 text-[#d0ed01]">
-                  <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#d0ed01" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                </span>
-                <span className="text-[#d0ed01] font-semibold">Skip a step, and you're stuck fixing what could've been avoided.</span>
-              </li>
-            </ul>
-            <button className="bg-[#d0ed01] text-black font-semibold px-8 py-3 rounded-full shadow-lg hover:bg-[#b6e600] hover:text-black transition-all text-lg">Get started</button>
-          </div>
-        </div>
-      </section>
+       <section className={cn('w-full min-h-[5vh] flex items-center justify-center bg-black py-8 px-2 sm:px-6 relative', className)}>
+         {/* Stars Background */}
+         <Stars />
+         <div className="max-w-7xl w-full mx-auto flex flex-col items-center justify-center p-4 relative z-10">
+           {/* Content center */}
+           <div className="flex flex-col items-center justify-center text-center w-full">
+             <h2 className="text-xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text w-full text-center mx-auto">
+               Your Launch Blueprint Isn't Just a Plan. It's Your Launch Structure
+             </h2>
+             <p className="text-gray-300 text-base md:text-lg mb-2 max-w-2xl mx-auto text-center">
+               Symbiotes maps 7 proven stages behind 100+ launches — so you move faster, smarter, and with clarity.
+             </p>
+           </div>
+         </div>
+       </section>
       <section
         ref={sectionRef}
         className={cn(

@@ -137,16 +137,16 @@ const PricingSection = () => {
       
       {/* Animated Background Elements */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#d0ed01] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-[#eaff6b] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-primary rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-brand-secondary rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text mb-4">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-brand-primary to-brand-secondary text-transparent bg-clip-text mb-4">
             Simple, Transparent Pricing
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
+          <p className="text-base text-gray-400 max-w-2xl mx-auto">
             Choose the perfect plan for your needs
           </p>
         </div>
@@ -156,32 +156,32 @@ const PricingSection = () => {
               key={index}
               className={`p-8 rounded-xl border transition-all duration-200 ${
                 plan.popular
-                  ? "border-[#d0ed01] scale-105 bg-black/90"
-                  : "border-[#d0ed01]/40 bg-black/80"
+                  ? "border-brand-primary scale-105 bg-black/90"
+                  : "border-brand-primary/40 bg-black/80"
               } relative`}
             >
               {plan.popular && (
-                <div className="absolute top-0 right-0 bg-[#d0ed01] text-black px-4 py-1 rounded-bl-xl rounded-tr-xl text-sm font-medium">
+                <div className="absolute top-0 right-0 bg-brand-primary text-black px-4 py-1 rounded-bl-xl rounded-tr-xl text-sm font-medium">
                   Most Popular
                 </div>
               )}
-              <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
-              <div className="text-3xl font-bold mb-2 text-[#d0ed01]">{plan.price}</div>
-              <p className="text-gray-300 mb-6">{plan.description}</p>
+              <h3 className="text-xl font-bold text-white mb-2">{plan.name}</h3>
+              <div className="text-2xl font-bold mb-2 text-brand-primary">{plan.price}</div>
+              <p className="text-gray-300 mb-6 text-sm">{plan.description}</p>
               <ul className="space-y-3 mb-8">
                 {plan.features.map((feature, featureIndex) => (
                   <li key={featureIndex} className="flex items-center text-gray-100">
-                    <span className="mr-2 text-[#d0ed01]">✓</span>
+                    <span className="mr-2 text-brand-primary">✓</span>
                     {feature}
                   </li>
                 ))}
               </ul>
               {plan.button.filled ? (
-                <button className="w-full py-3 px-6 rounded-full bg-[#d0ed01] text-black font-semibold text-lg hover:bg-[#eaff6b] transition-colors">
+                <button className="w-full py-3 px-6 rounded-full bg-brand-primary text-black font-semibold text-lg hover:bg-brand-secondary transition-colors">
                   {plan.button.text}
                 </button>
               ) : (
-                <button className="w-full py-3 px-6 rounded-full border border-[#d0ed01] text-[#d0ed01] font-semibold text-lg bg-transparent hover:bg-[#d0ed01] hover:text-black transition-colors">
+                <button className="w-full py-3 px-6 rounded-full border border-brand-primary text-brand-primary font-semibold text-lg bg-transparent hover:bg-brand-primary hover:text-black transition-colors">
                   {plan.button.text}
                 </button>
               )}

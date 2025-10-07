@@ -133,13 +133,13 @@ const features = [
 
 const FeaturesSection = () => {
   return (
-    <section id="features" className="py-20 bg-[#010101] relative overflow-hidden">
+    <section id="features" className="py-20 bg-dark-bg relative overflow-hidden">
       {/* Stars Background */}
       <Stars />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text mb-4">
-            Engineered to Maximize Success & Minimize Risk.
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-brand-primary to-brand-secondary text-transparent bg-clip-text mb-4">
+            Engineered to Maximize Success & Minimize Risk
           </h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
@@ -158,7 +158,7 @@ const FeaturesSection = () => {
                   className="w-20 h-20 object-cover rounded-full [filter:brightness(1.3)_contrast(1.5)] bg-transparent"
                 />
               </span>
-              <h3 className="text-2xl font-bold text-white mb-2 mt-24 group-hover:mt-10 group-hover:text-black transition-all duration-300">{feature.title}</h3>
+              <h3 className="text-lg font-bold text-white mb-2 mt-24 group-hover:mt-10 group-hover:text-black transition-all duration-300">{feature.title}</h3>
               {feature.hiddenContent && (
                 <div className="opacity-0 max-h-0 translate-y-4 group-hover:opacity-100 group-hover:max-h-72 group-hover:translate-y-0 group-hover:mt-4 transition-all duration-500 ease-in-out text-white group-hover:text-black text-base whitespace-pre-line overflow-y-auto pr-2">
                   {feature.hiddenContent}

@@ -62,7 +62,7 @@ const Stars = () => {
 };
 
 const HeroSection = () => {
-  const rocketRef = useRef(null);
+  const rocketRef = useRef<HTMLDivElement | null>(null);
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -145,9 +145,8 @@ const HeroSection = () => {
       <Stars />
 
       {/* Rocket Image */}
-      <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[230px] sm:w-[250px] md:w-[350px] lg:w-[400px] xl:w-[500px] z-20">
+      <div ref={rocketRef} className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[230px] sm:w-[250px] md:w-[350px] lg:w-[400px] xl:w-[500px] z-20">
         <Image
-          ref={rocketRef}
           src="https://cdn.prod.website-files.com/680743e828b8ecbf8967ab43/68161c1f03b8cabc97b89c31_rocket.webp"
           alt="Rocket"
           width={500}
@@ -160,9 +159,9 @@ const HeroSection = () => {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto mt-[70vh] sm:mt-[65vh]">
         <div className="text-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-[#e0e0e0] to-[#baff39] text-transparent bg-clip-text">
-            Launchpad for your<br />startup idea
-          </h1>
+      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-brand-primary to-brand-accent text-transparent bg-clip-text leading-tight">
+        If You're Not Launching Through Symbiotes, You're Launching Wrong
+      </h1>
         </div>
       </div>
     </section>

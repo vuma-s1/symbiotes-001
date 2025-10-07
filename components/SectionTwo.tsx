@@ -319,12 +319,12 @@ const SectionTwo = () => {
       {/* Blue Rectangle Background */}
       <div
         ref={blueRectRef}
-        className="relative sm:absolute sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full sm:w-full h-auto sm:h-[90vh] border-[1.5px] border-[#6248ff] rounded-3xl overflow-hidden cursor-none transition-all duration-300 backdrop-blur-md bg-black/30 flex flex-col justify-center items-center py-8 sm:py-0 max-w-[1600px] mx-auto"
+        className="relative sm:absolute sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full sm:w-full h-auto sm:h-[90vh] border-[1.5px] border-[#d0ed01] rounded-3xl overflow-hidden cursor-none transition-all duration-300 backdrop-blur-md bg-black/30 flex flex-col justify-center items-center py-8 sm:py-0 max-w-[1600px] mx-auto"
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
-        <div className="absolute -bottom-[6px] -left-[6px] w-3 h-3 bg-[#6248ff] rounded" />
-        <div className="absolute -bottom-[6px] -right-[6px] w-3 h-3 bg-[#6248ff] rounded" />
+        <div className="absolute -bottom-[6px] -left-[6px] w-3 h-3 bg-[#d0ed01] rounded" />
+        <div className="absolute -bottom-[6px] -right-[6px] w-3 h-3 bg-[#d0ed01] rounded" />
 
         <div className="flex flex-col lg:flex-row justify-between items-center gap-4 sm:gap-8 max-w-[1300px] w-full flex-1 mx-auto relative py-4 sm:py-8 px-2 sm:px-4 overflow-visible pb-8 sm:pb-12">
           {/* Left Images (Top on mobile) */}
@@ -372,15 +372,14 @@ const SectionTwo = () => {
               </span>
               <span className="text-white relative z-10">{" "}Business owners, Startups, and Trust</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2 text-white max-w-[800px] mx-auto leading-tight break-words">
-                Ignite Your Startup Launch<br className="hidden lg:block" />
-                Conquer the 0-to-1 Journey & Get It Right the First Time
-            </h1>
-            <p className="text-base sm:text-lg lg:text-xl max-w-[600px] mx-auto text-white mb-2 sm:mb-3 break-words">
-            You have the passion, the vision. But 99% of ventures stall. Symbiotes.ai is your strategic co-pilot, transforming that fire into a focused launch. Get your AI-powered flight plan, master Product Market Fitment, and navigate the critical early stages with a system built to beat the odds.
+      <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 text-white max-w-[800px] mx-auto leading-tight">
+        Ignite Your Startup Launch: Conquer the 0-to-1 Journey & Get It Right the First Time
+      </h1>
+            <p className="text-base sm:text-lg max-w-[600px] mx-auto text-gray-300 mb-6 leading-relaxed">
+            You have the passion, the vision. But 99% of ventures stall. Symbiotes.ai is your strategic co-pilot, transforming that fire into a focused launch. Get your AI-powered flight plan, master Product Market Fit, and navigate the critical early stages with a system built to beat the odds.
             </p>
             <Link href="/book-call" className="mx-auto block">
-              <button className="bg-[#d0ed01] text-black px-6 py-2 rounded-full font-bold text-base shadow-md mt-2 transition-all duration-200 hover:bg-white hover:scale-110 hover:shadow-[0_0_24px_4px_#d0ed01] focus:outline-none">
+              <button className="bg-brand-primary text-black px-6 py-2 rounded-full font-bold text-base shadow-md mt-2 transition-all duration-200 hover:bg-white hover:scale-110 hover:shadow-[0_0_24px_4px_#d0ed01] focus:outline-none">
                 Book a Call
               </button>
             </Link>

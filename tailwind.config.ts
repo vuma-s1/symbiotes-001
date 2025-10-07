@@ -20,6 +20,20 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       colors: {
+        // Brand Colors
+        brand: {
+          primary: '#d0ed01',    // Main lime green
+          secondary: '#eaff6b',  // Bright lime
+          accent: '#baff39',     // Neon green
+          purple: '#6248ff',     // Purple accent
+        },
+        // Dark Theme Colors
+        dark: {
+          bg: '#111',           // Main dark background
+          surface: '#0a0a0a',   // Dark surface
+          card: '#1a1a1a',      // Card background
+        },
+        // System Colors
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

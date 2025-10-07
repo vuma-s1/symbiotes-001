@@ -67,22 +67,22 @@ interface Testimonial {
 
 const testimonials: Testimonial[] = [
   {
-    name: "James",
-    subtitle: "@james",
+    name: "Sarah Chen",
+    subtitle: "Founder of DataFlow",
     avatarGradient: "bg-gradient-to-br from-green-400 via-blue-500 to-purple-500",
-    quote: "They don't just deliver; they go above and beyond. Exceptional service and outstanding results every time."
+    quote: "Before Symbiotes: 6 months of confusion, no traction. After: $50K MRR in 3 months. The blueprint changed everything."
   },
   {
-    name: "Rahul Mehta",
-    subtitle: "CEO of TechWave",
+    name: "Marcus Rodriguez",
+    subtitle: "CEO of CloudSync",
     avatarGradient: "bg-gradient-to-br from-yellow-400 via-green-400 to-yellow-600",
-    quote: "Symbiotes is a game-changer. They helped us scale our revenue by 300% while cutting ad costs in half!"
+    quote: "We went from 0 to 10,000 users in 60 days using their launch structure. The execution pods handled everything we couldn't."
   },
   {
-    name: "Neha Agarwal",
-    subtitle: "Founder of StyleNests",
+    name: "Priya Patel",
+    subtitle: "Founder of EcoTech",
     avatarGradient: "bg-gradient-to-br from-blue-500 via-pink-500 to-purple-500",
-    quote: "From strategy to execution, they've been the partners we didn't know we needed. Outstanding results!"
+    quote: "The incubator sprints helped us close $200K in pre-sales before we even built the product. Pure validation magic."
   }
 ];
 
@@ -129,17 +129,17 @@ const TestimonialsSection: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-5xl font-bold text-white mb-6"
+            className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-6"
           >
-            Voices of Success
+            And it's working
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl text-gray-400 max-w-2xl mx-auto"
+            className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto"
           >
-            Discover how teams are achieving extraordinary results
+            You've seen the system. Now see what it looks like when real founders put it in motion
           </motion.p>
         </div>
 
@@ -162,7 +162,7 @@ const TestimonialsSection: React.FC = () => {
                       <div className={`w-10 h-10 rounded-full ${testimonial.avatarGradient} mr-3`} />
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-white">{testimonial.name}</h3>
+                      <h3 className="text-base font-semibold text-white">{testimonial.name}</h3>
                       <p className="text-sm text-gray-300">{testimonial.subtitle}</p>
                     </div>
                   </div>

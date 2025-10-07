@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import { FaPen, FaPalette, FaChartLine, FaDollarSign, FaCogs } from 'react-icons/fa';
 
 const Stars = () => {
   const starsRef = useRef<HTMLDivElement>(null);
@@ -62,27 +63,27 @@ const tickItems = [
   {
     name: 'Copywriting',
     description: 'Compelling content that converts',
-    icon: '✍️'
+    icon: FaPen
   },
   {
     name: 'Design',
     description: 'Visual excellence that engages',
-    icon: '🎨'
+    icon: FaPalette
   },
   {
     name: 'Performance Marketing',
     description: 'Data-driven growth strategies',
-    icon: '📈'
+    icon: FaChartLine
   },
   {
     name: 'Sales',
     description: 'Revenue acceleration',
-    icon: '💰'
+    icon: FaDollarSign
   },
   {
     name: 'Tech/Automation',
     description: 'Efficient scaling solutions',
-    icon: '⚡'
+    icon: FaCogs
   }
 ];
 
@@ -124,7 +125,7 @@ const FiveProcessSection = () => {
       </div>
 
       <div className="relative max-w-6xl mx-auto px-4">
-        <h2 className="text-center text-3xl md:text-4xl font-bold text-[#d0ed01] mb-6">
+        <h2 className="text-center text-2xl md:text-3xl font-bold text-[#d0ed01] mb-6">
           Your Growth Support System
         </h2>
         <p className="text-center text-gray-400 mb-16 max-w-2xl mx-auto">
@@ -144,7 +145,7 @@ const FiveProcessSection = () => {
                 <div className="relative flex flex-col items-center">
                   {/* Circle with Icon and Tick Mark */}
                   <div className="w-24 h-24 rounded-full bg-black border-2 border-[#d0ed01] flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-300 relative overflow-hidden group-hover:border-[#d0ed01] group-hover:shadow-[0_0_20px_rgba(208,237,1,0.3)]">
-                    <span className="text-3xl z-10 group-hover:scale-110 transition-transform duration-300">{item.icon}</span>
+                    <item.icon className="text-3xl text-white z-10 group-hover:scale-110 transition-transform duration-300" />
                     
                     {/* Tick Mark SVG */}
                     <svg 

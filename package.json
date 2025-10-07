@@ -1,12 +1,17 @@
 {
-  "name": "nextjs",
-  "version": "0.1.0",
+  "name": "symbiotes-ai-website",
+  "version": "1.0.0",
+  "description": "AI-powered startup launch platform website for Symbiotes.ai",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "clean": "rm -rf .next && rm -rf node_modules && rm -f package-lock.json",
+    "fresh": "npm run clean && npm install && npm run build",
+    "analyze": "npm run build && npx @next/bundle-analyzer",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -39,6 +44,7 @@
     "@radix-ui/react-toggle-group": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.2",
     "@types/react-dom": "18.2.7",
+    "@use-gesture/react": "^10.3.1",
     "autoprefixer": "10.4.15",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

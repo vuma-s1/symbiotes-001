@@ -1,58 +1,21 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-// Register ScrollTrigger plugin
-gsap.registerPlugin(ScrollTrigger);
-
-const MOBILE_BREAKPOINT = 768;
-
-export function useIsMobile() {
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
-    };
-    
-    // Initial check
-    checkMobile();
-    
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  return isMobile;
-}
-
-const stepData = [
-  {
-    stat: '',
-    headline: '(Validate & Strategize)',
-    title: 'Nail Your Coordinates',
-    description: 'Ground your passion in data. We guide you through rigorously validating your core assumptions, defining your target customer with precision, leveraging AI to truly understand the market landscape, and confirming Product-Market Fit before you burn precious fuel. Build on solid ground.',
-    extra: [],
-    image: 'https://cdn-icons-png.flaticon.com/512/1925/1925081.png', // Data Analysis and Strategy icon
-  },
-  {
-    stat: '',
-    headline: '(Plan & Blueprint)',
-    title: 'Design Your Mission Architecture',
-    description: 'Translate validated strategy into an actionable flight plan. Receive your comprehensive Business Blueprint covering branding, positioning, online presence, content strategy, lead generation tactics tuned for frugal startups, and a detailed, de-risked launch sequence. Know your maneuvers.',
-    extra: [],
-    image: 'https://cdn-icons-png.flaticon.com/512/1925/1925083.png', // Business Planning and Architecture icon
-  },
-  {
-    stat: '',
-    headline: '(Launch & Iterate)',
-    title: 'Execute with Precision.',
-    description: "The Symbiotes Launchpad is your command center. It's where strategy meets execution. Track your progress, manage resources, and make data-driven decisions. Every feature is designed to keep your launch on track and aligned with your goals.",
-    extra: [],
-    image: "/images/Execution and Launch.svg"
-  },
-];
+import React, { useRef, useEffect } from 'react';
+import Image from 'next/image';
+import { 
+  FaRocket, 
+  FaChartLine, 
+  FaRobot, 
+  FaUsers, 
+  FaChartBar, 
+  FaSync,
+  FaPlay,
+  FaLightbulb,
+  FaCogs,
+  FaHandshake,
+  FaEye,
+  FaArrowUp
+} from 'react-icons/fa';
 
 const Stars = () => {
   const starsRef = useRef<HTMLDivElement>(null);
@@ -113,6 +76,33 @@ const Stars = () => {
           opacity: 0.2;
         }
       }
+      
+      @keyframes float {
+        0%, 100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+      
+      @keyframes pulse-glow {
+        0%, 100% {
+          box-shadow: 0 0 20px rgba(208, 237, 1, 0.3);
+        }
+        50% {
+          box-shadow: 0 0 40px rgba(208, 237, 1, 0.6);
+        }
+      }
+      
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
     `;
     document.head.appendChild(style);
     return () => {
@@ -131,258 +121,161 @@ const Stars = () => {
   );
 };
 
-const ServicesSection = () => {
-  const sectionRef = useRef<HTMLDivElement | null>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const stepsRefs = useRef<HTMLDivElement[]>([]);
-  const isMobile = useIsMobile();
-  const [currentStep, setCurrentStep] = useState(0);
-  const [mounted, setMounted] = useState(false);
-  const [cardsVisible, setCardsVisible] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Initialize refs array
-  useEffect(() => {
-    if (stepsRefs.current.length !== stepData.length) {
-      stepsRefs.current = Array(stepData.length).fill(null).map((_, i) => 
-        stepsRefs.current[i] || null
-      );
-    }
-  }, []);
-
-  // Mobile animation observer
-  useEffect(() => {
-    if (!isMobile || !sectionRef.current || !mounted) return;
-    
-    // Create intersection observer for mobile animation
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setCardsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-    
-    observer.observe(sectionRef.current);
-    
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, [isMobile, mounted]);
-
-  // GSAP Animation Setup for desktop
-  useEffect(() => {
-    if (!mounted) return;
-    
-    const section = sectionRef.current;
-    const container = containerRef.current;
-    if (!section || !container || isMobile) return;
-
-    let scrollTriggers: gsap.core.Timeline[] = [];
-    let ctx = gsap.context(() => {
-      // Desktop: Pin the section and animate through steps
-      const timeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: 'top 30%',
-          end: `+=${stepData.length * 70}%`,
-          pin: true,
-          pinSpacing: true,
-          scrub: 1,
-          markers: false,
-          onUpdate: (self: ScrollTrigger) => {
-            const progress = self.progress;
-            const stepIndex = Math.floor(progress * stepData.length);
-            setCurrentStep(Math.min(stepIndex, stepData.length - 1));
-          }
-        }
-      });
-
-      // Create animations for each step
-      stepData.forEach((_, index) => {
-        const stepEl = stepsRefs.current[index];
-        if (!stepEl) return;
-        
-        // For all steps except the first one, start by hiding them
-        if (index > 0) {
-          gsap.set(stepEl, { opacity: 0, y: 30 });
-        } else {
-          gsap.set(stepEl, { opacity: 1, y: 0 });
-        }
-        
-        // For first step, show immediately
-        if (index === 0) {
-          timeline.to(stepEl, { 
-            opacity: 1, 
-            y: 0, 
-            duration: 0.8,
-            ease: "power2.inOut"
-          });
-        }
-        
-        // All steps fade in
-        if (index > 0) {
-          timeline.to(stepEl, { 
-            opacity: 1, 
-            y: 0, 
-            duration: 0.8,
-            ease: "power2.inOut"
-          });
-        }
-        
-        // All steps except the last one fade out
-        if (index < stepData.length - 1) {
-          timeline.to(stepEl, { 
-            opacity: 0, 
-            y: -30, 
-            duration: 0.8,
-            ease: "power2.inOut"
-          }, "+=0.2");
-        }
-      });
-
-      scrollTriggers.push(timeline);
-    }, section);
-
-    // Cleanup
-    return () => {
-      scrollTriggers.forEach(tl => {
-        if (tl.scrollTrigger) {
-          tl.scrollTrigger.kill(false);
-        }
-      });
-      ctx.revert();
-    };
-  }, [isMobile, mounted]);
-
-  if (!mounted) {
-    return null; // or a loading state
+const servicesData = [
+  {
+    id: 1,
+    icon: FaRocket,
+    title: 'Execution Pods',
+    subtitle: 'Launch 0–1',
+    description: 'Blueprints are useless without builders. Our in-house pods handle strategy, design, growth, and tech — mapped to your blueprint. You stay on vision. We handle the rest.',
+    features: ['Strategy Development', 'Design & Branding', 'Growth Marketing', 'Tech Implementation'],
+    gradient: 'from-[#d0ed01] to-[#eaff6b]',
+    bgGradient: 'from-[#d0ed01]/10 to-[#eaff6b]/5',
+    status: 'ACTIVE'
+  },
+  {
+    id: 2,
+    icon: FaChartLine,
+    title: 'Sprint-Driven Incubator',
+    subtitle: 'Speed is good. Signal is better.',
+    description: 'The incubator puts you in traction sprints: onboard users, pressure-test offers, close sales. Momentum, measured.',
+    features: ['User Onboarding', 'Offer Testing', 'Sales Closing', 'Momentum Tracking'],
+    gradient: 'from-[#d0ed01] to-[#eaff6b]',
+    bgGradient: 'from-[#d0ed01]/10 to-[#eaff6b]/5',
+    status: 'ONLINE'
+  },
+  {
+    id: 3,
+    icon: FaUsers,
+    title: 'EdTech-Powered Community',
+    subtitle: 'A system is only as strong as its people.',
+    description: 'Symbiotes trains operators who plug straight into your launch. No hiring lag. No onboarding lag. Just doers who already know how to move.',
+    features: ['Trained Operators', 'Instant Deployment', 'No Onboarding Lag', 'Ready-to-Move Talent'],
+    gradient: 'from-[#d0ed01] to-[#eaff6b]',
+    bgGradient: 'from-[#d0ed01]/10 to-[#eaff6b]/5',
+    status: 'READY'
   }
+];
 
+const ServicesSection = () => {
   return (
-    <section id="services" className="py-10 md:py-20 bg-black min-h-screen relative overflow-hidden">
+    <section id="services" className="py-20 bg-black relative overflow-hidden">
       {/* Stars Background */}
       <Stars />
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 relative z-10" ref={containerRef}>
-        <div className="text-center mb-8 md:mb-16">
-          <h2 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text mb-4">
-            Our Services
+      
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#d0ed01]/5 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#6248ff]/5 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#ff6b6b]/5 rounded-full blur-3xl animate-pulse" style={{animationDelay: '4s'}}></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Header Section */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-2 bg-brand-primary/10 border border-brand-primary/20 rounded-full px-4 py-1 mb-4">
+            <FaPlay className="text-brand-primary text-xs" />
+            <span className="text-brand-primary text-xs font-semibold">Our Services</span>
+          </div>
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-brand-primary to-brand-secondary text-transparent bg-clip-text mb-4">
+            A Blueprint Alone Isn't Enough. <span className="text-white">Execution Demands an Ecosystem</span>
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-base">
-            Comprehensive solutions for your design and development needs
+          <p className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
+            Symbiotes powers your launch with three engines that work together to turn your blueprint into reality.
           </p>
+          <div className="mt-4 flex items-center justify-center gap-3">
+            <div className="w-1.5 h-1.5 bg-brand-primary rounded-full animate-pulse"></div>
+            <div className="w-1.5 h-1.5 bg-brand-primary rounded-full animate-pulse" style={{animationDelay: '0.5s'}}></div>
+            <div className="w-1.5 h-1.5 bg-brand-primary rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
+          </div>
         </div>
-        
-        {/* Mobile View - Vertical Stack with all cards visible */}
-        {isMobile ? (
-          <div 
-            ref={sectionRef}
-            className="space-y-8 md:space-y-12"
-          >
-            {stepData.map((step, index) => (
-              <div 
-                key={index} 
-                className="transition-all duration-700 opacity-100 translate-y-0"
-                style={{ transitionDelay: `${index * 200}ms` }}
+
+        {/* Services Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {servicesData.map((service, index) => {
+            const IconComponent = service.icon;
+            return (
+              <div
+                key={service.id}
+                className="group relative bg-[#111]/50 backdrop-blur-sm border border-[#333] rounded-2xl p-6 hover:border-[#d0ed01]/30 transition-all duration-500 overflow-hidden"
+                style={{
+                  animationDelay: `${index * 100}ms`,
+                  animation: 'fadeInUp 0.6s ease-out forwards'
+                }}
               >
-                <div className="w-full bg-[#181818] rounded-2xl shadow-2xl p-6 flex flex-col items-center">
-                  <h3 className="text-xl font-bold text-[#d0ed01] text-center mb-4">
-                    {step.title}
-                  </h3>
-                  <img
-                    src={step.image}
-                    alt={step.title}
-                    className="w-28 h-28 sm:w-32 sm:h-32 object-contain rounded-2xl mb-6"
-                  />
-                  <div className="w-full">
-                    <div className="flex flex-col items-center gap-2 mb-4">
-                      <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text text-center">
-                        {step.headline}
-                      </span>
-                    </div>
-                    <p className="text-sm sm:text-base text-gray-200 mb-4 text-center">
-                      {step.description}
-                    </p>
-                    {step.extra && step.extra.length > 0 && (
-                      <ul className="list-none pl-0 space-y-2 mt-2">
-                        {step.extra.map((point, i) => (
-                          <li key={i} className="flex items-start gap-2 text-sm text-[#d0ed01]">
-                            <span className="mt-1 w-2 h-2 rounded-full bg-[#d0ed01] inline-block"></span>
-                            <span className="text-gray-300">{point}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
+                {/* Futuristic Grid Pattern */}
+                <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
+                  <div className="absolute inset-0" style={{
+                    backgroundImage: `
+                      linear-gradient(rgba(208,237,1,0.1) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(208,237,1,0.1) 1px, transparent 1px)
+                    `,
+                    backgroundSize: '20px 20px'
+                  }}></div>
+                </div>
+
+                {/* Status Indicator */}
+                <div className="absolute top-3 right-3">
+                  <div className={`px-2 py-1 rounded-full text-xs font-mono font-bold ${
+                    service.status === 'ACTIVE' ? 'bg-[#d0ed01] text-black' :
+                    service.status === 'ONLINE' ? 'bg-[#d0ed01] text-black' :
+                    'bg-[#d0ed01] text-black'
+                  }`}>
+                    {service.status}
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          // Desktop View - Horizontal Layout with GSAP Scroll Animation
-          <div 
-            ref={sectionRef} 
-            className="relative min-h-[500px]"
-          >
-            {stepData.map((step, index) => (
-              <div
-                key={index}
-                ref={(el: HTMLDivElement | null) => {
-                  if (el) stepsRefs.current[index] = el;
-                }}
-                className="absolute top-0 left-0 w-full"
-                style={{ opacity: index === 0 ? 1 : 0 }}
-              >
-                <div className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8 md:gap-16 items-center`}>
-                  {/* Image Section */}
-                  <div className="w-full md:w-2/5 flex justify-center">
-                    <div className="relative w-72 h-72 md:w-96 md:h-96 overflow-hidden rounded-2xl">
-                      <img
-                        src={step.image}
-                        alt={step.title}
-                        className="w-full h-full object-contain p-4"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-tr from-[#d0ed01]/20 to-transparent rounded-2xl pointer-events-none"></div>
+
+                {/* Background Gradient */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${service.bgGradient} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
+                
+                {/* Content */}
+                <div className="relative z-10">
+                  {/* Icon */}
+                  <div className="mb-4">
+                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${service.gradient} flex items-center justify-center text-black text-xl animate-float transition-all duration-500 relative`}>
+                      <IconComponent />
                     </div>
                   </div>
                   
-                  {/* Content Section */}
-                  <div className="w-full md:w-3/5">
-                    <div className="space-y-6">
-                      <div>
-                        <h3 className="text-3xl md:text-4xl font-bold text-[#d0ed01] mb-3">
-                          {step.title}
-                        </h3>
-                        <h4 className="text-2xl text-[#eaff6b] mb-6">
-                          {step.headline}
-                        </h4>
-                      </div>
-                      <p className="text-gray-300 text-lg md:text-xl leading-relaxed">
-                        {step.description}
-                      </p>
-                      {step.extra && step.extra.length > 0 && (
-                        <ul className="space-y-3">
-                          {step.extra.map((point, i) => (
-                            <li key={i} className="flex items-start gap-3 text-gray-200">
-                              <span className="mt-2 text-[#d0ed01] text-xl">•</span>
-                              <span className="text-lg">{point}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
+                  {/* Title & Subtitle */}
+                  <div className="mb-3">
+                    <h3 className="text-lg font-bold text-white mb-1 group-hover:text-[#d0ed01] transition-colors duration-300">
+                      {service.title}
+                    </h3>
+                    <p className={`text-sm font-semibold bg-gradient-to-r ${service.gradient} text-transparent bg-clip-text`}>
+                      {service.subtitle}
+                    </p>
                   </div>
+                  
+                  {/* Description */}
+                  <p className="text-gray-400 mb-4 leading-relaxed text-sm">
+                    {service.description}
+                  </p>
+                  
+                  {/* Features */}
+                  <ul className="space-y-2">
+                    {service.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="flex items-center gap-2 text-gray-300 transition-colors duration-300">
+                        <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${service.gradient} animate-pulse`} style={{animationDelay: `${featureIndex * 0.2}s`}}></div>
+                        <span className="text-xs font-medium">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
-            ))}
-          </div>
-        )}
+            );
+          })}
+        </div>
+
+        {/* View All Button */}
+        <div className="mt-12 text-center">
+          <button 
+            onClick={() => window.location.href = '/services'}
+            className="bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-black font-bold px-8 py-3 rounded-full hover:scale-105 transition-transform duration-300"
+          >
+            View All Services
+          </button>
+        </div>
       </div>
     </section>
   );

@@ -156,7 +156,7 @@ const FAQSection = () => {
   return (
     <section ref={sectionRef} className="relative py-20 bg-black min-h-screen overflow-hidden overflow-x-hidden">
       <div className="relative max-w-6xl mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-16 bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text">
           Frequently Asked Questions
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
@@ -167,7 +167,7 @@ const FAQSection = () => {
                 className="w-full flex items-center justify-between focus:outline-none hover:opacity-80 transition-opacity duration-200 cursor-pointer"
                 onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
               >
-                <span className="text-lg font-semibold text-white text-left">
+                <span className="text-base font-semibold text-white text-left">
                   {faq.question}
                 </span>
                 <svg
