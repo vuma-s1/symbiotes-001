@@ -85,9 +85,15 @@ const HeroSection = () => {
       const isMobile = window.innerWidth < 640 // sm breakpoint
       pointEls.forEach((el, i) => {
         const isLeft = i < 3
-        const leftPosition = isMobile 
+        let leftPosition = isMobile 
           ? (isLeft ? "10%" : "90%") 
           : (isLeft ? "20%" : "65%")
+
+        // Nudge the right-side third card (index 5: "Scale") further left
+        if (!isLeft && i === 5) {
+          leftPosition = isMobile ? "81%" : "54%"
+        }
+
         gsap.set(el, { left: leftPosition })
       })
     }
