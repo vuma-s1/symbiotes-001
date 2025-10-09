@@ -125,7 +125,7 @@ const FiveProcessSection = () => {
       </div>
 
       <div className="relative max-w-6xl mx-auto px-4">
-        <h2 className="text-center text-2xl md:text-3xl font-bold text-[#d0ed01] mb-6">
+        <h2 className="text-center text-xl sm:text-2xl md:text-3xl font-bold text-brand-primary mb-6">
           Your Growth Support System
         </h2>
         <p className="text-center text-gray-400 mb-16 max-w-2xl mx-auto">

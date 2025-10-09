@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X, LogIn, UserPlus } from 'lucide-react';
+import { Menu, X, LogIn, UserPlus, ChevronDown, ChevronUp } from 'lucide-react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
@@ -10,13 +10,14 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
+  const [isWhatWeDoDropdownOpen, setIsWhatWeDoDropdownOpen] = useState(false);
   const pathname = usePathname();
   const isMainPage = pathname === '/';
   const isBlueprintPage = pathname.startsWith('/blueprint');
   const isServicesPage = pathname === '/services';
+  const isWhatWeDoPage = pathname === '/what-we-do';
   const isLoginPage = pathname === '/login';
   const isSignupPage = pathname === '/signup';
-  const [highlighted, setHighlighted] = useState<'login' | 'signup'>('login');
 
   const handleLinkClick = (section: string) => {
     setIsOpen(false);
@@ -27,6 +28,8 @@ const Navbar = () => {
   useEffect(() => {
     if (isServicesPage) {
       setActiveSection('services');
+    } else if (isWhatWeDoPage) {
+      setActiveSection('what-we-do');
     } else if (isLoginPage) {
       setActiveSection('login');
     } else if (isSignupPage) {
@@ -34,7 +37,7 @@ const Navbar = () => {
     } else if (isMainPage) {
       setActiveSection('home');
     }
-  }, [pathname, isServicesPage, isLoginPage, isSignupPage, isMainPage]);
+  }, [pathname, isServicesPage, isWhatWeDoPage, isLoginPage, isSignupPage, isMainPage]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,10 +56,10 @@ const Navbar = () => {
   const getActiveStyles = (section: string) => {
     const isActive = activeSection === section;
     return {
-      text: isActive ? 'text-[#d0ed01]' : 'text-gray-300',
-      background: isActive ? 'bg-[#d0ed01]/10' : 'bg-transparent',
+      text: isActive ? 'text-brand-primary' : 'text-gray-300',
+      background: isActive ? 'bg-brand-primary/10' : 'bg-transparent',
       border: 'border-transparent',
-      hover: isActive ? 'hover:text-[#d0ed01]' : 'hover:text-[#d0ed01]',
+      hover: 'hover:text-brand-primary',
       padding: 'px-4 py-2',
       rounded: 'rounded-lg',
       transition: 'transition-all duration-300',
@@ -104,14 +107,297 @@ const Navbar = () => {
                 >
                   Incubator
                 </Link>
-                {/* cleaned up: removed leftover comment */}
-                <Link 
-                  href="/ar-tech" 
-                  onClick={() => handleLinkClick('ar-tech')} 
-                  className={`${getActiveStyles('ar-tech')?.text || ''} ${getActiveStyles('ar-tech')?.background || ''} ${getActiveStyles('ar-tech')?.border || ''} ${getActiveStyles('ar-tech')?.hover || ''} ${getActiveStyles('ar-tech')?.padding || ''} ${getActiveStyles('ar-tech')?.rounded || ''} ${getActiveStyles('ar-tech')?.transition || ''} ${getActiveStyles('ar-tech')?.font || ''}`}
+                {/* What We Do with Dropdown */}
+                <div 
+                  className="relative"
+                  onMouseEnter={() => setIsWhatWeDoDropdownOpen(true)}
+                  onMouseLeave={() => setIsWhatWeDoDropdownOpen(false)}
                 >
-                  AR Tech
+                  <button
+                    onClick={() => {
+                      setIsWhatWeDoDropdownOpen(!isWhatWeDoDropdownOpen);
+                      handleLinkClick('what-we-do');
+                    }}
+                    className={`${getActiveStyles('what-we-do')?.text || ''} ${getActiveStyles('what-we-do')?.background || ''} ${getActiveStyles('what-we-do')?.border || ''} ${getActiveStyles('what-we-do')?.hover || ''} ${getActiveStyles('what-we-do')?.padding || ''} ${getActiveStyles('what-we-do')?.rounded || ''} ${getActiveStyles('what-we-do')?.transition || ''} ${getActiveStyles('what-we-do')?.font || ''} flex items-center gap-1`}
+                  >
+                    What We Do
+                    {isWhatWeDoDropdownOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                  </button>
+                  
+                  {/* Dropdown Menu */}
+                  {isWhatWeDoDropdownOpen && (
+                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-[900px] bg-black/95 backdrop-blur-lg border border-[#d0ed01]/30 rounded-2xl shadow-2xl z-50 overflow-hidden">
+                      <div className="p-8">
+                        <div className="grid grid-cols-5 gap-6">
+                          {/* Column 1 */}
+                          <div>
+                            <div className="space-y-3">
+                              {[
+                                'Aerospace',
+                                'Automotive',
+                                'Banking',
+                                'Capital Markets',
+                                'Chemicals',
+                                'Communications'
+                              ].map((item, index) => (
+                                <Link
+                                  key={index}
+                                  href={item === 'Aerospace' ? '/what-we-do/aerospace' : 
+                                        item === 'Automotive' ? '/what-we-do/automotive' : 
+                                        item === 'Banking' ? '/what-we-do/banking' :
+                                        item === 'Capital Markets' ? '/what-we-do/capital-markets' :
+                                        item === 'Chemicals' ? '/what-we-do/chemicals' :
+                                        item === 'Communications' ? '/what-we-do/communications' :
+                                        item === 'Consumer' ? '/what-we-do/consumer' :
+                                        item === 'Energy' ? '/what-we-do/energy' :
+                                        item === 'Healthcare' ? '/what-we-do/healthcare' :
+                                        item === 'High Tech' ? '/what-we-do/high-tech' :
+                                        item === 'Industrial' ? '/what-we-do/industrial' :
+                                        item === 'Insurance' ? '/what-we-do/insurance' :
+                                        item === 'Life Sciences' ? '/what-we-do/life-sciences' :
+                                        item === 'Natural Resources' ? '/what-we-do/natural-resources' :
+                                        item === 'Public Sector' ? '/what-we-do/public-sector' :
+                                        item === 'Private Equity' ? '/what-we-do/private-equity' :
+                                        item === 'Retail' ? '/what-we-do/retail' :
+                                        item === 'Software' ? '/what-we-do/software' :
+                                        item === 'Travel' ? '/what-we-do/travel' :
+                                        item === 'Utilities' ? '/what-we-do/utilities' :
+                                        item === 'Education' ? '/what-we-do/education' :
+                                        item === 'Legal' ? '/what-we-do/legal' :
+                                        item === 'Climate' ? '/what-we-do/climate' :
+                                        item === 'Agriculture' ? '/what-we-do/agriculture' :
+                                        item === 'Real Estate' ? '/what-we-do/real-estate' :
+                                        item === 'Media' ? '/what-we-do/media' :
+                                        item === 'Fashion' ? '/what-we-do/fashion' :
+                                        item === 'Impact' ? '/what-we-do/impact' :
+                                        item === 'Logistics' ? '/what-we-do/logistics' :
+                                        item === 'Security' ? '/what-we-do/security' :
+                                        `/what-we-do/${item.toLowerCase().replace(/\s+/g, '-')}`}
+                                  className="block text-gray-300 hover:text-brand-primary transition-colors duration-200 py-1 text-sm"
+                                  onClick={() => setIsWhatWeDoDropdownOpen(false)}
+                                >
+                                  {item}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                          
+                          {/* Column 2 */}
+                          <div>
+                            <div className="space-y-3">
+                              {[
+                                'Consumer',
+                                'Energy',
+                                'Healthcare',
+                                'High Tech',
+                                'Industrial',
+                                'Insurance'
+                              ].map((item, index) => (
+                                <Link
+                                  key={index}
+                                  href={item === 'Aerospace' ? '/what-we-do/aerospace' : 
+                                        item === 'Automotive' ? '/what-we-do/automotive' : 
+                                        item === 'Banking' ? '/what-we-do/banking' :
+                                        item === 'Capital Markets' ? '/what-we-do/capital-markets' :
+                                        item === 'Chemicals' ? '/what-we-do/chemicals' :
+                                        item === 'Communications' ? '/what-we-do/communications' :
+                                        item === 'Consumer' ? '/what-we-do/consumer' :
+                                        item === 'Energy' ? '/what-we-do/energy' :
+                                        item === 'Healthcare' ? '/what-we-do/healthcare' :
+                                        item === 'High Tech' ? '/what-we-do/high-tech' :
+                                        item === 'Industrial' ? '/what-we-do/industrial' :
+                                        item === 'Insurance' ? '/what-we-do/insurance' :
+                                        item === 'Life Sciences' ? '/what-we-do/life-sciences' :
+                                        item === 'Natural Resources' ? '/what-we-do/natural-resources' :
+                                        item === 'Public Sector' ? '/what-we-do/public-sector' :
+                                        item === 'Private Equity' ? '/what-we-do/private-equity' :
+                                        item === 'Retail' ? '/what-we-do/retail' :
+                                        item === 'Software' ? '/what-we-do/software' :
+                                        item === 'Travel' ? '/what-we-do/travel' :
+                                        item === 'Utilities' ? '/what-we-do/utilities' :
+                                        item === 'Education' ? '/what-we-do/education' :
+                                        item === 'Legal' ? '/what-we-do/legal' :
+                                        item === 'Climate' ? '/what-we-do/climate' :
+                                        item === 'Agriculture' ? '/what-we-do/agriculture' :
+                                        item === 'Real Estate' ? '/what-we-do/real-estate' :
+                                        item === 'Media' ? '/what-we-do/media' :
+                                        item === 'Fashion' ? '/what-we-do/fashion' :
+                                        item === 'Impact' ? '/what-we-do/impact' :
+                                        item === 'Logistics' ? '/what-we-do/logistics' :
+                                        item === 'Security' ? '/what-we-do/security' :
+                                        `/what-we-do/${item.toLowerCase().replace(/\s+/g, '-')}`}
+                                  className="block text-gray-300 hover:text-brand-primary transition-colors duration-200 py-1 text-sm"
+                                  onClick={() => setIsWhatWeDoDropdownOpen(false)}
+                                >
+                                  {item}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Column 3 */}
+                          <div>
+                            <div className="space-y-3">
+                              {[
+                                'Life Sciences',
+                                'Natural Resources',
+                                'Public Sector',
+                                'Private Equity',
+                                'Retail',
+                                'Software'
+                              ].map((item, index) => (
+                                <Link
+                                  key={index}
+                                  href={item === 'Aerospace' ? '/what-we-do/aerospace' : 
+                                        item === 'Automotive' ? '/what-we-do/automotive' : 
+                                        item === 'Banking' ? '/what-we-do/banking' :
+                                        item === 'Capital Markets' ? '/what-we-do/capital-markets' :
+                                        item === 'Chemicals' ? '/what-we-do/chemicals' :
+                                        item === 'Communications' ? '/what-we-do/communications' :
+                                        item === 'Consumer' ? '/what-we-do/consumer' :
+                                        item === 'Energy' ? '/what-we-do/energy' :
+                                        item === 'Healthcare' ? '/what-we-do/healthcare' :
+                                        item === 'High Tech' ? '/what-we-do/high-tech' :
+                                        item === 'Industrial' ? '/what-we-do/industrial' :
+                                        item === 'Insurance' ? '/what-we-do/insurance' :
+                                        item === 'Life Sciences' ? '/what-we-do/life-sciences' :
+                                        item === 'Natural Resources' ? '/what-we-do/natural-resources' :
+                                        item === 'Public Sector' ? '/what-we-do/public-sector' :
+                                        item === 'Private Equity' ? '/what-we-do/private-equity' :
+                                        item === 'Retail' ? '/what-we-do/retail' :
+                                        item === 'Software' ? '/what-we-do/software' :
+                                        item === 'Travel' ? '/what-we-do/travel' :
+                                        item === 'Utilities' ? '/what-we-do/utilities' :
+                                        item === 'Education' ? '/what-we-do/education' :
+                                        item === 'Legal' ? '/what-we-do/legal' :
+                                        item === 'Climate' ? '/what-we-do/climate' :
+                                        item === 'Agriculture' ? '/what-we-do/agriculture' :
+                                        item === 'Real Estate' ? '/what-we-do/real-estate' :
+                                        item === 'Media' ? '/what-we-do/media' :
+                                        item === 'Fashion' ? '/what-we-do/fashion' :
+                                        item === 'Impact' ? '/what-we-do/impact' :
+                                        item === 'Logistics' ? '/what-we-do/logistics' :
+                                        item === 'Security' ? '/what-we-do/security' :
+                                        `/what-we-do/${item.toLowerCase().replace(/\s+/g, '-')}`}
+                                  className="block text-gray-300 hover:text-brand-primary transition-colors duration-200 py-1 text-sm"
+                                  onClick={() => setIsWhatWeDoDropdownOpen(false)}
+                                >
+                                  {item}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Column 4 */}
+                          <div>
+                            <div className="space-y-3">
+                              {[
+                                'Travel',
+                                'Utilities',
+                                'Education',
+                                'Legal',
+                                'Climate',
+                                'Agriculture'
+                              ].map((item, index) => (
+                                <Link
+                                  key={index}
+                                  href={item === 'Aerospace' ? '/what-we-do/aerospace' : 
+                                        item === 'Automotive' ? '/what-we-do/automotive' : 
+                                        item === 'Banking' ? '/what-we-do/banking' :
+                                        item === 'Capital Markets' ? '/what-we-do/capital-markets' :
+                                        item === 'Chemicals' ? '/what-we-do/chemicals' :
+                                        item === 'Communications' ? '/what-we-do/communications' :
+                                        item === 'Consumer' ? '/what-we-do/consumer' :
+                                        item === 'Energy' ? '/what-we-do/energy' :
+                                        item === 'Healthcare' ? '/what-we-do/healthcare' :
+                                        item === 'High Tech' ? '/what-we-do/high-tech' :
+                                        item === 'Industrial' ? '/what-we-do/industrial' :
+                                        item === 'Insurance' ? '/what-we-do/insurance' :
+                                        item === 'Life Sciences' ? '/what-we-do/life-sciences' :
+                                        item === 'Natural Resources' ? '/what-we-do/natural-resources' :
+                                        item === 'Public Sector' ? '/what-we-do/public-sector' :
+                                        item === 'Private Equity' ? '/what-we-do/private-equity' :
+                                        item === 'Retail' ? '/what-we-do/retail' :
+                                        item === 'Software' ? '/what-we-do/software' :
+                                        item === 'Travel' ? '/what-we-do/travel' :
+                                        item === 'Utilities' ? '/what-we-do/utilities' :
+                                        item === 'Education' ? '/what-we-do/education' :
+                                        item === 'Legal' ? '/what-we-do/legal' :
+                                        item === 'Climate' ? '/what-we-do/climate' :
+                                        item === 'Agriculture' ? '/what-we-do/agriculture' :
+                                        item === 'Real Estate' ? '/what-we-do/real-estate' :
+                                        item === 'Media' ? '/what-we-do/media' :
+                                        item === 'Fashion' ? '/what-we-do/fashion' :
+                                        item === 'Impact' ? '/what-we-do/impact' :
+                                        item === 'Logistics' ? '/what-we-do/logistics' :
+                                        item === 'Security' ? '/what-we-do/security' :
+                                        `/what-we-do/${item.toLowerCase().replace(/\s+/g, '-')}`}
+                                  className="block text-gray-300 hover:text-brand-primary transition-colors duration-200 py-1 text-sm"
+                                  onClick={() => setIsWhatWeDoDropdownOpen(false)}
+                                >
+                                  {item}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Column 5 */}
+                          <div>
+                            <div className="space-y-3">
+                              {[
+                                'Real Estate',
+                                'Media',
+                                'Fashion',
+                                'Impact',
+                                'Logistics',
+                                'Security'
+                              ].map((item, index) => (
+                                <Link
+                                  key={index}
+                                  href={item === 'Aerospace' ? '/what-we-do/aerospace' : 
+                                        item === 'Automotive' ? '/what-we-do/automotive' : 
+                                        item === 'Banking' ? '/what-we-do/banking' :
+                                        item === 'Capital Markets' ? '/what-we-do/capital-markets' :
+                                        item === 'Chemicals' ? '/what-we-do/chemicals' :
+                                        item === 'Communications' ? '/what-we-do/communications' :
+                                        item === 'Consumer' ? '/what-we-do/consumer' :
+                                        item === 'Energy' ? '/what-we-do/energy' :
+                                        item === 'Healthcare' ? '/what-we-do/healthcare' :
+                                        item === 'High Tech' ? '/what-we-do/high-tech' :
+                                        item === 'Industrial' ? '/what-we-do/industrial' :
+                                        item === 'Insurance' ? '/what-we-do/insurance' :
+                                        item === 'Life Sciences' ? '/what-we-do/life-sciences' :
+                                        item === 'Natural Resources' ? '/what-we-do/natural-resources' :
+                                        item === 'Public Sector' ? '/what-we-do/public-sector' :
+                                        item === 'Private Equity' ? '/what-we-do/private-equity' :
+                                        item === 'Retail' ? '/what-we-do/retail' :
+                                        item === 'Software' ? '/what-we-do/software' :
+                                        item === 'Travel' ? '/what-we-do/travel' :
+                                        item === 'Utilities' ? '/what-we-do/utilities' :
+                                        item === 'Education' ? '/what-we-do/education' :
+                                        item === 'Legal' ? '/what-we-do/legal' :
+                                        item === 'Climate' ? '/what-we-do/climate' :
+                                        item === 'Agriculture' ? '/what-we-do/agriculture' :
+                                        item === 'Real Estate' ? '/what-we-do/real-estate' :
+                                        item === 'Media' ? '/what-we-do/media' :
+                                        item === 'Fashion' ? '/what-we-do/fashion' :
+                                        item === 'Impact' ? '/what-we-do/impact' :
+                                        item === 'Logistics' ? '/what-we-do/logistics' :
+                                        item === 'Security' ? '/what-we-do/security' :
+                                        `/what-we-do/${item.toLowerCase().replace(/\s+/g, '-')}`}
+                                  className="block text-gray-300 hover:text-brand-primary transition-colors duration-200 py-1 text-sm"
+                                  onClick={() => setIsWhatWeDoDropdownOpen(false)}
+                                >
+                                  {item}
                 </Link>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
                 <Link 
                   href="/services" 
                   onClick={() => handleLinkClick('services')} 
@@ -132,38 +418,29 @@ const Navbar = () => {
 
           {/* Login/Signup - hidden on blueprint page */}
           {!isBlueprintPage && (
-            <div className="hidden md:flex items-center justify-center w-[200px] relative">
-              <div className="relative flex w-[260px] h-[52px] overflow-visible rounded-full pl-2">
-                <div
-                  className="absolute top-0 left-0 h-full w-1/2 animated-highlight z-0 rounded-full"
-                  style={{
-                    transform: highlighted === 'login' ? 'translateX(0%)' : 'translateX(100%)',
-                    transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1)',
-                  }}
-                >
-                  <img src='/images/icc18.png' alt='' className='absolute left-[55%] top-1/2 w-[200%] h-[200%] -translate-x-1/2 -translate-y-1/2 object-cover' />
-                </div>
-                <Link
-                  href="/login"
-                  className={`relative flex-1 flex items-center justify-center font-bold text-lg z-10 transition-colors duration-300 rounded-full ${highlighted === 'login' || activeSection === 'login' ? 'text-white' : 'text-[#d0ed01]'} hover:text-white`}
-                  onMouseEnter={() => setHighlighted('login')}
-                  onFocus={() => setHighlighted('login')}
-                  onClick={() => handleLinkClick('login')}
-                  tabIndex={0}
-                >
-                  Login
-                </Link>
-                <Link
-                  href="/signup"
-                  className={`relative flex-1 flex items-center justify-center font-bold text-lg z-10 transition-colors duration-300 rounded-full ${highlighted === 'signup' || activeSection === 'signup' ? 'text-white' : 'text-[#d0ed01]'} hover:text-white`}
-                  onMouseEnter={() => setHighlighted('signup')}
-                  onFocus={() => setHighlighted('signup')}
-                  onClick={() => handleLinkClick('signup')}
-                  tabIndex={0}
-                >
-                  Sign up
-                </Link>
-              </div>
+            <div className="hidden md:flex items-center justify-center w-[200px] gap-4">
+              <Link
+                href="/login"
+                className={`px-4 py-1.5 rounded-full font-medium text-sm transition-all duration-300 ${
+                  activeSection === 'login'
+                    ? 'bg-brand-primary text-black'
+                    : 'bg-transparent text-gray-300 border border-brand-primary/30 hover:bg-brand-primary hover:text-black hover:border-brand-primary'
+                }`}
+                onClick={() => handleLinkClick('login')}
+              >
+                Login
+              </Link>
+              <Link
+                href="/signup"
+                className={`px-4 py-1.5 rounded-full font-medium text-sm transition-all duration-300 ${
+                  activeSection === 'signup'
+                    ? 'bg-brand-primary text-black'
+                    : 'bg-transparent text-gray-300 border border-brand-primary/30 hover:bg-brand-primary hover:text-black hover:border-brand-primary'
+                }`}
+                onClick={() => handleLinkClick('signup')}
+              >
+                Sign in
+              </Link>
             </div>
           )}
 
@@ -200,13 +477,47 @@ const Navbar = () => {
               Incubator
             </Link>
             // ...existing code...
+            <div className="space-y-2">
+              <button
+                onClick={() => {
+                  setIsWhatWeDoDropdownOpen(!isWhatWeDoDropdownOpen);
+                  handleLinkClick('what-we-do');
+                }}
+                className={`w-full flex items-center justify-between px-3 py-2 font-bold text-lg transition-colors rounded-lg ${getActiveStyles('what-we-do')?.text || ''} ${getActiveStyles('what-we-do')?.background || ''} ${getActiveStyles('what-we-do')?.border || ''} ${getActiveStyles('what-we-do')?.hover || ''}`}
+              >
+                What We Do
+                {isWhatWeDoDropdownOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              </button>
+              
+              {/* Mobile Dropdown */}
+              {isWhatWeDoDropdownOpen && (
+                <div className="ml-4 space-y-2 bg-gray-900/50 rounded-lg p-3">
+                  <div className="space-y-2">
+                    <div className="grid grid-cols-2 gap-2">
+                      {[
+                        'Aerospace', 'Automotive', 'Banking', 'Capital Markets', 'Chemicals', 'Communications',
+                        'Consumer', 'Energy', 'Healthcare', 'High Tech', 'Industrial', 'Insurance',
+                        'Life Sciences', 'Natural Resources', 'Public Sector', 'Private Equity', 'Retail', 'Software',
+                        'Travel', 'Utilities', 'Education', 'Legal', 'Climate', 'Agriculture',
+                        'Real Estate', 'Media', 'Fashion', 'Impact', 'Logistics', 'Security'
+                      ].map((item, index) => (
             <Link 
-              href="/ar-tech" 
-              onClick={() => handleLinkClick('ar-tech')} 
-              className={`block px-3 py-2 font-bold text-lg transition-colors rounded-lg ${getActiveStyles('ar-tech')?.text || ''} ${getActiveStyles('ar-tech')?.background || ''} ${getActiveStyles('ar-tech')?.border || ''} ${getActiveStyles('ar-tech')?.hover || ''}`}
-            >
-              AR Tech
+                          key={index}
+                          href={`/what-we-do/${item.toLowerCase().replace(/\s+/g, '-')}`}
+                          className="block text-gray-400 hover:text-brand-primary transition-colors text-xs py-1"
+                          onClick={() => {
+                            setIsWhatWeDoDropdownOpen(false);
+                            setIsOpen(false);
+                          }}
+                        >
+                          {item}
             </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
             <Link 
               href="/services" 
               onClick={() => handleLinkClick('services')} 
@@ -221,33 +532,28 @@ const Navbar = () => {
             >
               Contact us
             </Link>
-            <div className="relative flex w-[240px] h-[52px] bg-black rounded-full border-4 border-[#d0ed01] overflow-hidden">
-              <div
-                className="absolute top-0 left-0 h-full w-1/2 animated-highlight bg-[#d0ed01] z-0 rounded-full"
-                style={{
-                  transform: highlighted === 'login' ? 'translateX(0%)' : 'translateX(100%)',
-                  transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1)',
-                }}
-              />
+            <div className="flex gap-2 px-3 py-2">
               <Link
                 href="/login"
-                className={`relative flex-1 flex items-center justify-center font-bold text-base z-10 transition-colors duration-300 rounded-full ${highlighted === 'login' || activeSection === 'login' ? 'text-white' : 'text-[#d0ed01]'} hover:text-white`}
-                onMouseEnter={() => setHighlighted('login')}
-                onFocus={() => setHighlighted('login')}
+                className={`flex-1 text-center px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 ${
+                  activeSection === 'login'
+                    ? 'bg-brand-primary text-black'
+                    : 'bg-transparent text-gray-300 border border-brand-primary/30'
+                }`}
                 onClick={() => handleLinkClick('login')}
-                tabIndex={0}
               >
                 Login
               </Link>
               <Link
                 href="/signup"
-                className={`relative flex-1 flex items-center justify-center font-bold text-base z-10 transition-colors duration-300 rounded-full ${highlighted === 'signup' || activeSection === 'signup' ? 'text-white' : 'text-[#d0ed01]'} hover:text-white`}
-                onMouseEnter={() => setHighlighted('signup')}
-                onFocus={() => setHighlighted('signup')}
+                className={`flex-1 text-center px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 ${
+                  activeSection === 'signup'
+                    ? 'bg-brand-primary text-black'
+                    : 'bg-transparent text-gray-300 border border-brand-primary/30'
+                }`}
                 onClick={() => handleLinkClick('signup')}
-                tabIndex={0}
               >
-                Sign up
+                Sign in
               </Link>
             </div>
           </div>

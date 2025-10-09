@@ -22,11 +22,11 @@ const TrustedBySection = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-12">
-          <Typography.H2 className="text-white mb-6">Trusted by founders, backed by results.</Typography.H2>
+          <Typography.H2 className="text-white mb-6">Trusted by</Typography.H2>
         </div>
 
         {/* Marquee Logo Scrolling */}
-        <div className="relative overflow-hidden mb-10">
+        <div className="relative overflow-hidden">
           <div className="flex animate-marquee">
             <div className="flex items-center gap-12 whitespace-nowrap">
               <div className="text-gray-400 text-sm font-semibold opacity-60">LOGO</div>
@@ -47,28 +47,6 @@ const TrustedBySection = () => {
               <div className="text-gray-400 text-sm font-semibold opacity-60">LOGO</div>
               <div className="text-gray-400 text-sm font-semibold opacity-60">LOGO</div>
               <div className="text-gray-400 text-sm font-semibold opacity-60">LOGO</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Statistics Bar */}
-        <div className="bg-gradient-to-r from-[#111] to-[#222] border border-[#d0ed01]/20 rounded-xl p-4 mb-6 mt-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="text-center relative py-2">
-              <div className="text-2xl md:text-3xl font-bold text-white mb-0.5">100+</div>
-              <div className="text-gray-400 text-xs">launches structured</div>
-              <div className="hidden md:block absolute right-0 top-1/2 transform -translate-y-1/2 w-px h-8 bg-[#d0ed01]/30"></div>
-            </div>
-
-            <div className="text-center relative py-2">
-              <div className="text-2xl md:text-3xl font-bold text-white mb-0.5">Millions</div>
-              <div className="text-gray-400 text-xs">raised by Symbiotes founders</div>
-              <div className="hidden md:block absolute right-0 top-1/2 transform -translate-y-1/2 w-px h-8 bg-[#d0ed01]/30"></div>
-            </div>
-
-            <div className="text-center py-2">
-              <div className="text-2xl md:text-3xl font-bold text-white mb-0.5">40+</div>
-              <div className="text-gray-400 text-xs">nations</div>
             </div>
           </div>
         </div>

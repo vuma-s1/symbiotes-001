@@ -137,6 +137,62 @@ const FeaturesSection = () => {
       {/* Stars Background */}
       <Stars />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* New Launch Pad Section */}
+        <div className="text-center mb-20">
+          <h2 
+            className="text-xl sm:text-2xl md:text-3xl font-bold text-[#d0ed01] mb-6 leading-tight"
+            style={{fontFamily: "'Neue Haas Display Bold', sans-serif"}}
+          >
+            Once you've got your plan, you need a place to make it real.
+          </h2>
+          <h3 
+            className="text-lg sm:text-xl md:text-2xl font-medium text-white mb-6 leading-tight"
+            style={{fontFamily: "'Neue Haas Display Medium', sans-serif"}}
+          >
+            That's where the Symbiotes Launch Pad comes in.
+          </h3>
+          <p 
+            className="text-base sm:text-lg text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed"
+            style={{fontFamily: "'Neue Haas Display Light', sans-serif"}}
+          >
+            It's your focused workspace built to help you track progress, stay aligned, and move faster than founders lost in chaos.
+          </p>
+          
+          <div className="bg-gradient-to-r from-[#d0ed01]/10 to-[#6248ff]/10 p-8 rounded-2xl border border-[#d0ed01]/20 max-w-4xl mx-auto mb-8">
+            <div className="space-y-4">
+              <p 
+                className="text-base sm:text-lg text-white"
+                style={{fontFamily: "'Neue Haas Display Medium', sans-serif"}}
+              >
+                No more Notion graveyards.
+              </p>
+              <p 
+                className="text-base sm:text-lg text-white"
+                style={{fontFamily: "'Neue Haas Display Medium', sans-serif"}}
+              >
+                No more sticky-note walls.
+              </p>
+              <div className="pt-2">
+                <p 
+                  className="text-lg sm:text-xl text-[#d0ed01] font-bold"
+                  style={{fontFamily: "'Neue Haas Display Bold', sans-serif"}}
+                >
+                  Just structured momentum, mapped directly to your Blueprint.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-[#d0ed01] text-black px-6 py-3 rounded-full inline-block">
+            <h4 
+              className="text-sm font-bold uppercase tracking-wider"
+              style={{fontFamily: "'Neue Haas Display Bold', sans-serif"}}
+            >
+              PROJECT MANAGEMENT TOOL
+            </h4>
+          </div>
+        </div>
+
         <div className="text-center mb-16">
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-brand-primary to-brand-secondary text-transparent bg-clip-text mb-4">
             Engineered to Maximize Success & Minimize Risk

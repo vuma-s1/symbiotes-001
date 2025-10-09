@@ -249,9 +249,12 @@ const HeroSection = () => {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto mt-[70vh] sm:mt-[65vh]">
         <div className="text-center">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-brand-primary to-brand-accent text-transparent bg-clip-text leading-tight">
-            If You're Not Launching Through Symbiotes, You're Launching Wrong
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 bg-gradient-to-r from-brand-primary to-brand-accent text-transparent bg-clip-text leading-tight" style={{fontFamily: "'Neue Haas Display Bold', sans-serif"}}>
+            The Launchpad for Your Ideas
           </h1>
+          <h2 className="text-lg sm:text-xl md:text-2xl font-medium mb-6 text-gray-300 leading-tight" style={{fontFamily: "'Neue Haas Display Medium', sans-serif"}}>
+            Build. Launch. Scale.
+          </h2>
         </div>
       </div>
     </section>

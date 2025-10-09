@@ -82,6 +82,16 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
     "Growth & Performance"
   ];
 
+  const descriptions = [
+    "See the truth before you build. Every successful launch starts long before the product does. This is where we help you see your audience clearly, understand their pain points, and uncover where the real demand lies. Once you know that, every decision becomes faster and sharper.",
+    "Turn clarity into a message that moves. Even the best product can't survive poor messaging. Here, we help you sharpen how you talk about your offer so it instantly clicks with the right audience. Clear words create confident buyers, and clarity always converts better than complexity.",
+    "Show up where it matters. Visibility isn't about showing up everywhere, it's about showing up where it counts. We help you create a rhythm that keeps your brand top-of-mind without draining your time or attention. Consistency builds trust, and trust drives growth.",
+    "Warm your audience before you sell. The best launches don't start on launch day. They start when people are already waiting. We help you build anticipation, capture leads, and nurture them with purpose so your launch day feels like a reveal, not a gamble.",
+    "Build less, validate more. You don't need perfection to grow, you need proof. We help you build only what matters, collect feedback early, and make data-backed improvements that save months of wasted effort. Progress is measured by learning, not by how much you build.",
+    "Make your launch an experience, not an event. A great launch doesn't rely on luck. It's timed, planned, and orchestrated with precision. Together we build your timeline, your story, and your moment the kind of launch that captures attention and converts it into action.",
+    "Once it works, make it unstoppable. Scaling only works when the foundation is solid. Once your offer has proven its fit, we help you amplify it through data-driven growth engines that compound over time. Growth becomes predictable when performance meets purpose."
+  ];
+
   const subPoints = [
     [
       "Audience Mapping",
@@ -90,40 +100,40 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
       "Demand Research"
     ],
     [
-      "Demographic Analysis",
-      "Psychographic Profiling",
-      "Behavioral Patterns",
-      "Audience Segmentation"
+      "Core Offer",
+      "Key Hooks",
+      "Brand Voice",
+      "Value Proposition"
     ],
     [
-      "Problem Identification",
-      "Solution Validation",
-      "Market Need Analysis",
-      "User Pain Points"
+      "Content Pillars",
+      "Posting Rhythm",
+      "Channel Focus",
+      "Engagement Loops"
     ],
     [
-      "Competitive Analysis",
-      "Unique Value Proposition",
-      "Market Positioning",
-      "Brand Differentiation"
+      "Lead Magnet",
+      "Waitlist Capture",
+      "Email Nurture",
+      "Pre-Launch Hype"
     ],
     [
-      "Market Demand Analysis",
-      "Trend Research",
-      "Growth Potential",
-      "Market Size Assessment"
+      "Minimum Features",
+      "User Feedback",
+      "Live Demos",
+      "Validation Metrics"
     ],
     [
-      "Customer Experience",
-      "Social Media Strategy",
-      "Brand Advocacy",
-      "Loyalty Programs"
+      "Launch Timeline",
+      "Influencer Boost",
+      "Storytelling Sequence",
+      "Scarcity Offers"
     ],
     [
-      "Analytics & Insights",
-      "Brand Perception",
-      "ROI Measurement",
-      "Growth Strategy"
+      "Paid Ads",
+      "Funnel Optimization",
+      "Sales Systems",
+      "Retention Strategy"
     ]
   ];
 
@@ -338,11 +348,11 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
          <div className="max-w-7xl w-full mx-auto flex flex-col items-center justify-center p-4 relative z-10">
            {/* Content center */}
            <div className="flex flex-col items-center justify-center text-center w-full">
-             <h2 className="text-xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text w-full text-center mx-auto">
+             <h2 className="text-xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-[#d0ed01] to-[#eaff6b] text-transparent bg-clip-text w-full text-center mx-auto" style={{fontFamily: "'Neue Haas Display Bold', sans-serif"}}>
                Your Launch Blueprint Isn't Just a Plan. It's Your Launch Structure
              </h2>
-             <p className="text-gray-300 text-base md:text-lg mb-2 max-w-2xl mx-auto text-center">
-               Symbiotes maps 7 proven stages behind 100+ launches — so you move faster, smarter, and with clarity.
+             <p className="text-gray-300 text-base md:text-lg mb-2 max-w-2xl mx-auto text-center" style={{fontFamily: "'Neue Haas Display Medium', sans-serif"}}>
+               Symbiotes maps 7 proven stages behind 100+ launches so you move faster, smarter, and with clarity.
              </p>
            </div>
          </div>
@@ -350,7 +360,7 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
       <section
         ref={sectionRef}
         className={cn(
-          'relative min-h-[80vh] md:min-h-[700vh] bg-black flex flex-col items-center',
+          'relative min-h-[80vh] md:min-h-[400vh] bg-black flex flex-col items-center',
           className
         )}
       >
@@ -407,20 +417,20 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
               alt=""
             />
             
-            {/* Title and subpoints */}
+            {/* Title and description */}
             <div
               className="absolute left-1/2 z-30 w-full flex flex-col items-center"
               style={{
-                top: 'calc(50% + 50px)',
+                top: 'calc(50% + 70px)',
                 transform: 'translateX(-50%)',
                 margin: 0,
                 padding: 0
               }}
             >
               <h1
-                className="text-center text-lg md:text-3xl lg:text-5xl font-light leading-tight transition-all duration-300 whitespace-nowrap"
+                className="text-center text-lg md:text-3xl lg:text-5xl font-light leading-tight transition-all duration-300 whitespace-nowrap mb-8"
                 style={{
-                  fontFamily: 'Inter, sans-serif',
+                  fontFamily: "'Neue Haas Display Bold', sans-serif",
                   color: '#fff',
                   opacity: 1,
                   transform: 'translateY(0)',
@@ -431,6 +441,21 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
               >
                 {titles[currentTitleIndex]}
               </h1>
+              
+              {/* Description paragraph */}
+              <p
+                className="text-center text-sm md:text-base lg:text-lg text-gray-300 leading-relaxed max-w-lg mx-auto px-6 transition-all duration-300 mb-10"
+                style={{
+                  fontFamily: "'Neue Haas Display Light', sans-serif",
+                  opacity: 1,
+                  transform: 'translateY(0)',
+                  transition: 'all 0.5s ease-out',
+                  textShadow: 'none',
+                  margin: 0
+                }}
+              >
+                {descriptions[currentTitleIndex]}
+              </p>
             </div>
 
             {/* Sub-points on sides */}
@@ -511,8 +536,33 @@ const ScrollingDiscs: React.FC<ScrollingDiscsProps> = ({ className }) => {
           </div>
         </div>
         
-        {/* Bottom spacer for padding */}
-        <div className="h-20 md:h-32"></div>
+      </section>
+
+      {/* Final content section after disc animation */}
+      <section className="w-full bg-black px-4 sm:px-6 relative pb-12 md:pb-16">
+        {/* Stars Background */}
+        <Stars />
+        <div className="max-w-4xl mx-auto text-center relative z-10 -mt-24 md:-mt-32">
+          <h2 
+            className="text-xl md:text-2xl lg:text-3xl text-[#d0ed01] leading-tight mb-4"
+            style={{fontFamily: "'Neue Haas Display Bold', sans-serif"}}
+          >
+            Your custom Blueprint is built on this system.
+          </h2>
+          <p 
+            className="text-base md:text-lg lg:text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto mb-4"
+            style={{fontFamily: "'Neue Haas Display Light', sans-serif"}}
+          >
+            Every quiz result, every workbook, and every recommendation inside Symbiotes connects directly to these seven stages. This framework isn't theory — it's the distilled pattern behind hundreds of real launches that actually worked.
+          </p>
+          <p 
+            className="text-base md:text-lg lg:text-xl text-white leading-relaxed max-w-2xl mx-auto font-medium mb-2"
+            style={{fontFamily: "'Neue Haas Display Medium', sans-serif"}}
+          >
+            When you move through these stages in order, momentum compounds.
+            You stop guessing. You start growing
+          </p>
+        </div>
       </section>
     </>
   );

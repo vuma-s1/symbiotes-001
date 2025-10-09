@@ -372,10 +372,10 @@ const SectionTwo = () => {
               </span>
               <span className="text-white relative z-10">{" "}Business owners, Startups, and Trust</span>
             </div>
-      <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 text-white max-w-[800px] mx-auto leading-tight">
+      <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 text-white max-w-[800px] mx-auto leading-tight" style={{fontFamily: "'Neue Haas Display Bold', sans-serif"}}>
         Ignite Your Startup Launch: Conquer the 0-to-1 Journey & Get It Right the First Time
       </h1>
-            <p className="text-base sm:text-lg max-w-[600px] mx-auto text-gray-300 mb-6 leading-relaxed">
+            <p className="text-base sm:text-lg max-w-[600px] mx-auto text-gray-300 mb-6 leading-relaxed" style={{fontFamily: "'Neue Haas Display Light', sans-serif"}}>
             You have the passion, the vision. But 99% of ventures stall. Symbiotes.ai is your strategic co-pilot, transforming that fire into a focused launch. Get your AI-powered flight plan, master Product Market Fit, and navigate the critical early stages with a system built to beat the odds.
             </p>
             <Link href="/book-call" className="mx-auto block">
