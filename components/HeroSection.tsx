@@ -3,77 +3,20 @@
 import { useLayoutEffect, useRef } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import Image from "next/image"
-
-const Stars = () => {
-  const starsRef = useRef<HTMLDivElement>(null)
-
-  useLayoutEffect(() => {
-    const createStars = () => {
-      const starsContainer = starsRef.current
-      if (!starsContainer) return
-
-      // Clear existing stars
-      starsContainer.innerHTML = ""
-
-      // Create multiple stars
-      for (let i = 0; i < 100; i++) {
-        const star = document.createElement("div")
-        star.className = "star"
-
-        // Random position
-        const x = Math.random() * 100
-        const y = Math.random() * 100
-
-        // Random size
-        const size = Math.random() * 2 + 1
-
-        // Random animation duration
-        const duration = Math.random() * 3 + 2
-
-        star.style.cssText = `
-          position: absolute;
-          left: ${x}%;
-          top: ${y}%;
-          width: ${size}px;
-          height: ${size}px;
-          background: white;
-          border-radius: 50%;
-          opacity: ${Math.random()};
-          animation: twinkle ${duration}s infinite;
-        `
-
-        starsContainer.appendChild(star)
-      }
-    }
-
-    createStars()
-  }, [])
-
-  return (
-    <div
-      ref={starsRef}
-      className="absolute inset-0 w-full h-full z-10"
-      style={{
-        background: "radial-gradient(circle at center, rgba(0,0,0,0) 0%, rgba(0, 0, 0, 0.37) 100%)",
-      }}
-    />
-  )
-}
 
 const HeroSection = () => {
   const rocketRef = useRef<HTMLDivElement | null>(null)
   const sectionRef = useRef(null)
   const pointsRef = useRef<(HTMLDivElement | null)[]>([])
 
-  // 6 progressive points with meaningful data
+  // 6 progressive points with meaningful data - sequential reveal one by one
   const points = [
-    { id: 1, title: "Ideate", description: "Capture and validate the raw idea." },
-    { id: 2, title: "Define", description: "Clarify problem, audience, and market." },
-    { id: 3, title: "Build", description: "Design and develop the MVP or core offer." },
-    { id: 4, title: "Position", description: "Craft brand, messaging, and digital presence." },
-    { id: 5, title: "Launch", description: "Execute go-to-market and run campaigns." },
-    { id: 6, title: "Scale", description: "Refine, optimize, and expand growth systems." },
+    { id: 1, title: "Ideate", description: "Capture and Validate the raw idea.", order: 1 },
+    { id: 2, title: "Define", description: "Clarify problem, audience & market", order: 2 },
+    { id: 3, title: "Build", description: "Design & Develop the MVP or core offer", order: 3 },
+    { id: 4, title: "Position", description: "Craft brand, messaging & digital presence", order: 4 },
+    { id: 5, title: "Launch", description: "Execute go-to market & run campaigns", order: 5 },
+    { id: 6, title: "Scale", description: "Refine, Optimize & expand growth systems", order: 6 },
   ]
 
   useLayoutEffect(() => {
@@ -83,17 +26,16 @@ const HeroSection = () => {
     const updateCardPositions = () => {
       const pointEls = pointsRef.current.filter(Boolean) as HTMLDivElement[]
       const isMobile = window.innerWidth < 640 // sm breakpoint
+
+      // Desktop: slight variations for each card around the arcs
+      // Mobile: tucked further to edges but still staggered for structure
+      const desktopLefts = ["33%", "68%", "24%", "75%", "18%", "82%"] // [Ideate, Define, Build, Position, Launch, Scale]
+      const mobileLefts = ["20%", "84%", "12%", "87%", "8%", "92%"]
+
       pointEls.forEach((el, i) => {
-        const isLeft = i < 3
-        let leftPosition = isMobile 
-          ? (isLeft ? "10%" : "90%") 
-          : (isLeft ? "30%" : "70%")
-
-        // Nudge the right-side third card (index 5: "Scale") further left for clear visibility
-        if (!isLeft && i === 5) {
-          leftPosition = isMobile ? "90%" : "62%"
-        }
-
+        const leftPosition =
+          (isMobile ? mobileLefts[i] : desktopLefts[i]) ||
+          (i < 3 ? (isMobile ? "10%" : "30%") : isMobile ? "90%" : "70%")
         gsap.set(el, { left: leftPosition })
       })
     }
@@ -124,7 +66,7 @@ const HeroSection = () => {
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: "+=5000", // longer scroll distance for bigger gaps between steps
+          end: "+=6000", // longer scroll distance for 6 individual steps
           scrub: 1,
           pin: true,
           pinSpacing: true,
@@ -137,32 +79,57 @@ const HeroSection = () => {
         },
       })
 
-      // Generate 7 vertical positions from bottom (0) to top (-100vh) evenly spaced
+      // Generate 6 vertical positions from bottom (0) to top (-100vh) evenly spaced
       for (let i = 1; i <= steps; i++) {
         const yTo = `${-((100 / steps) * i)}vh` // -16.66..vh per step, ample and visible
         tl.to(rocket, { y: yTo, duration: 1 }) // one "unit" per step for consistent snapping
       }
 
-      // Keep milestone reveals aligned with step progression, left/right sides
+      // Individual card reveals - one by one in sequence
       pointEls.forEach((el, i) => {
-        const isLeft = i < 3 // Left side: first 3 cards, Right side: last 3 cards
+        const point = points[i]
+        const isLeft = i % 2 === 0 // Alternating left/right: Ideate(left), Define(right), Build(left), Position(right), Launch(left), Scale(right)
         const isMobile = window.innerWidth < 640
-        const fromX = isLeft ? (isMobile ? -20 : -40) : (isMobile ? 20 : 40)
-        // Animate from left/right sides with mobile-optimized distances
+        const fromX = isLeft ? (isMobile ? -20 : -40) : isMobile ? 20 : 40
+
+        // Sequential reveal: each card appears individually based on its order
+        const revealTime = (point.order - 1) * 1.0 + 0.2
+
+        const origin = isLeft ? "left center" : "right center"
+
+        // Consistent scaling for all cards
+        const popScale = 1.2
+        const settleScale = 1.0
+
         tl.fromTo(
           el,
-          { autoAlpha: 0, x: fromX, y: 10, scale: 0.95 },
-          { autoAlpha: 1, x: 0, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.6)" },
-          i + 0.2,
+          { autoAlpha: 0, x: fromX, y: 10, scaleX: 0.7, scaleY: 0.7, transformOrigin: origin },
+          {
+            autoAlpha: 1,
+            x: 0,
+            y: 0,
+            scaleX: popScale,
+            scaleY: popScale,
+            duration: 0.8,
+            ease: "back.out(1.7)",
+            transformOrigin: origin,
+          },
+          revealTime,
+        )
+
+        tl.to(
+          el,
+          { scaleX: settleScale, scaleY: settleScale, duration: 0.25, ease: "power1.out", transformOrigin: origin },
+          revealTime + 0.85,
         )
       })
     })
 
     // Add resize listener
-    window.addEventListener('resize', updateCardPositions)
+    window.addEventListener("resize", updateCardPositions)
 
     return () => {
-      window.removeEventListener('resize', updateCardPositions)
+      window.removeEventListener("resize", updateCardPositions)
       ctx.revert()
     }
   }, [])
@@ -172,24 +139,22 @@ const HeroSection = () => {
       ref={sectionRef}
       className="relative overflow-hidden h-screen flex items-center justify-center py-6 px-4 sm:py-20 sm:px-8"
     >
-      {/* Background Image */}
+      {/* Star Background */}
       <div className="absolute inset-0 w-full h-full z-0">
-        <Image
-          src="https://cdn.prod.website-files.com/680743e828b8ecbf8967ab43/68161aa76bddfb2447bf7340_hero-bg.webp"
-          alt="Hero Background"
-          fill
-          className="object-cover object-center"
-          priority
-          sizes="100vw"
-          quality={100}
+        <img
+          src="/images/hero section/starbg.png"
+          alt="Star Background"
+          className="w-full h-full object-cover object-center scale-105"
         />
       </div>
 
-      {/* Stars Background */}
-      <Stars />
-
-      <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-px z-10">
-        <div className="h-full w-px bg-white/20" />
+      {/* Arc Background */}
+      <div className="absolute left-1/2 top-[70%] -translate-x-1/2 -translate-y-1/2 w-full h-full z-5">
+        <img
+          src="/images/hero section/arcbg.png"
+          alt="Arc Background"
+          className="w-full h-full object-contain object-center"
+        />
       </div>
 
       {/* Rocket Image */}
@@ -197,29 +162,32 @@ const HeroSection = () => {
         ref={rocketRef}
         className="absolute left-1/2 top-[60%] w-[230px] sm:w-[250px] md:w-[350px] lg:w-[400px] xl:w-[500px] z-20"
       >
-        <Image
+        <img
           src="https://cdn.prod.website-files.com/680743e828b8ecbf8967ab43/68161c1f03b8cabc97b89c31_rocket.webp"
           alt="Rocket"
-          width={500}
-          height={500}
           className="w-full h-auto"
-          priority
         />
       </div>
 
-      {/* 6 Cards - Left and Right Sides */}
+      {/* 6 Cards - Alternating Left and Right Sides */}
       <div className="absolute inset-0 z-10 pointer-events-none">
         {points.map((point, index) => {
-          // Left side: Ideate (0), Define (1), Build (2)
-          // Right side: Position (3), Launch (4), Scale (5)
-          const isLeft = index < 3
-          const sideIndex = isLeft ? index : index - 3
+          // Alternating: Ideate(left), Define(right), Build(left), Position(right), Launch(left), Scale(right)
+          const isLeft = index % 2 === 0
           // Default desktop-aligned left positions to make effect immediately visible
-          let initialLeft = isLeft ? "30%" : "70%"
-          if (!isLeft && index === 5) {
-            initialLeft = typeof window !== 'undefined' && window.innerWidth < 640 ? "90%" : "62%"
-          }
-          
+          const isMobile = typeof window !== "undefined" && window.innerWidth < 640
+          const desktopLefts = ["33%", "68%", "24%", "75%", "18%", "82%"] // [Ideate, Define, Build, Position, Launch, Scale]
+          const mobileLefts = ["20%", "84%", "12%", "87%", "8%", "92%"]
+          const initialLeft =
+            (isMobile ? mobileLefts[index] : desktopLefts[index]) ||
+            (isLeft ? (isMobile ? "10%" : "30%") : isMobile ? "90%" : "70%")
+
+          // Sequential positioning from bottom to top:
+          // Each card appears at a different height based on its order
+          const topByOrder = isMobile
+            ? `${72 - (point.order - 1) * 8}vh` // 72vh, 64vh, 56vh, 48vh, 40vh, 32vh
+            : `${68 - (point.order - 1) * 8}vh` // 68vh, 60vh, 52vh, 44vh, 36vh, 28vh
+
           return (
             <div
               key={point.id}
@@ -229,17 +197,50 @@ const HeroSection = () => {
               className="absolute"
               style={{
                 left: initialLeft,
-                top: `${35 + sideIndex * 12}vh`,
+                top: topByOrder,
                 transform: "translate(-50%, -50%)",
                 willChange: "transform, opacity",
               }}
               data-mobile-left={isLeft ? "10%" : "90%"}
               data-desktop-left={isLeft ? "30%" : "70%"}
             >
-              <div className="bg-black/80 backdrop-blur-sm border border-[#d0ed01] rounded-lg p-2 sm:p-3 min-w-[120px] sm:min-w-[160px] max-w-[150px] sm:max-w-none text-center">
-                <div className="w-2 h-2 bg-[#d0ed01] rounded-full mx-auto mb-1 sm:mb-2 animate-pulse"></div>
-                <h3 className="text-xs sm:text-base font-semibold text-white mb-1">{point.title}</h3>
-                <p className="text-xs text-gray-300 leading-tight">{point.description}</p>
+              <div
+                className="relative bg-[#1a2600cc] backdrop-blur-md border border-[#d0ed01]/30 rounded-xl px-3 py-1.5 sm:px-4 sm:py-2 min-w-[220px] sm:min-w-[260px] max-w-[240px] sm:max-w-none text-center shadow-xl"
+                style={{
+                  background: "linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(208,237,1,0.2) 100%)",
+                  backdropFilter: "blur(8px)",
+                  WebkitBackdropFilter: "blur(8px)",
+                  boxShadow: "0 4px 32px 0 #d0ed0133",
+                }}
+              >
+                {/* Star positioning based on alternating left/right pattern */}
+                <img
+                  src="/images/hero%20section/stars.png"
+                  alt="Star"
+                  className={`absolute w-36 h-36 opacity-90 ${
+                    isLeft 
+                      ? "-top-20 -left-16" // Left side cards
+                      : "-top-20 -right-20" // Right side cards
+                  }`}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    console.log('Star image failed to load:', target.src);
+                    target.style.display = 'none';
+                  }}
+                  onLoad={() => console.log('Star image loaded successfully')}
+                />
+                <h3
+                  className="text-sm sm:text-base font-semibold text-white mb-1 leading-tight"
+                  style={{ fontFamily: "'Neue Haas Display Medium', sans-serif" }}
+                >
+                  {point.title}
+                </h3>
+                <p
+                  className="text-xs sm:text-sm font-light text-gray-300 leading-tight"
+                  style={{ fontFamily: "'Neue Haas Display Light', sans-serif" }}
+                >
+                  {point.description}
+                </p>
               </div>
             </div>
           )
@@ -249,10 +250,16 @@ const HeroSection = () => {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto mt-[70vh] sm:mt-[65vh]">
         <div className="text-center">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 bg-gradient-to-r from-brand-primary to-brand-accent text-transparent bg-clip-text leading-tight" style={{fontFamily: "'Neue Haas Display Bold', sans-serif"}}>
+          <h1
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 bg-gradient-to-r from-brand-primary to-brand-accent text-transparent bg-clip-text leading-tight"
+            style={{ fontFamily: "'Neue Haas Display Bold', sans-serif" }}
+          >
             The Launchpad for Your Ideas
           </h1>
-          <h2 className="text-lg sm:text-xl md:text-2xl font-medium mb-6 text-gray-300 leading-tight" style={{fontFamily: "'Neue Haas Display Medium', sans-serif"}}>
+          <h2
+            className="text-lg sm:text-xl md:text-2xl font-medium mb-6 text-gray-300 leading-tight"
+            style={{ fontFamily: "'Neue Haas Display Medium', sans-serif" }}
+          >
             Build. Launch. Scale.
           </h2>
         </div>
