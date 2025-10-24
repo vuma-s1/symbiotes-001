@@ -312,7 +312,18 @@ export default function Galaxy({
       renderer.render({ scene: mesh });
     }
     animateId = requestAnimationFrame(update);
-    ctn.appendChild(gl.canvas);
+    
+    // Type guard to handle HTMLCanvasElement | OffscreenCanvas
+    const canvas = gl.canvas;
+    if (canvas instanceof HTMLCanvasElement) {
+      ctn.appendChild(canvas);
+    } else {
+      // OffscreenCanvas is not a DOM Node. Create a visible HTML canvas instead:
+      const visible = document.createElement('canvas');
+      visible.width = canvas.width;
+      visible.height = canvas.height;
+      ctn.appendChild(visible);
+    }
 
     function handleMouseMove(e: MouseEvent) {
       const rect = ctn.getBoundingClientRect();
@@ -338,8 +349,9 @@ export default function Galaxy({
         ctn.removeEventListener("mousemove", handleMouseMove);
         ctn.removeEventListener("mouseleave", handleMouseLeave);
       }
-      if (ctn.contains(gl.canvas)) {
-        ctn.removeChild(gl.canvas);
+      const canvas = gl.canvas;
+      if (canvas instanceof HTMLCanvasElement && ctn.contains(canvas)) {
+        ctn.removeChild(canvas);
       }
       gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
